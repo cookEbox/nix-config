@@ -185,7 +185,7 @@
         ll = "exa -lah";
 	lt = "exa --tree";
         ip = "ip --color=auto";
-        update = "sudo nixos-rebuild switch --flake '.#' --impure";
+        update = "cd ~/.config/nix-config/ && sudo nixos-rebuild switch --flake '.#' --impure && cd -";
 	upgrade = "sudo nixos-rebuild switch --flake '.#' --impure --upgrade && nix-store --gc && nix-store --optimise -vv";
         config = "nvim ~/.config/nix-config/configuration.nix";
         };
