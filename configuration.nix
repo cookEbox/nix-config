@@ -188,6 +188,7 @@
         update = "cd ~/.config/nix-config/ && sudo nixos-rebuild switch --flake '.#' --impure && cd - && source ~/.zshrc";
 	upgrade = "cd ~/.config/nix-config/ && sudo nixos-rebuild switch --flake '.#' --impure --upgrade && nix-store --gc && nix-store --optimise -vv && cd -";
         config = "nvim ~/.config/nix-config/configuration.nix";
+	server = "ssh root@192.168.1.140";
         };
       history = {
         size = 10000;
