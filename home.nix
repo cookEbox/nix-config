@@ -19,6 +19,7 @@
      onlyoffice-bin
      whatsapp-for-linux
      unzip
+     cmus
    ];
 
    programs.zsh = {
