@@ -37,7 +37,7 @@
        update = "cd ~/.config/nix-config/ && sudo nixos-rebuild switch --flake '.#' --impure && cd - && source ~/.zshrc";
        upgrade = "cd ~/.config/nix-config/ && sudo nixos-rebuild switch --flake '.#' --impure --upgrade && nix-store --gc && nix-store --optimise -vv && cd -";
        config = "nvim ~/.config/nix-config/configuration.nix";
-       add = "~/.config/nix-config/addandcommit.sh";
+       add = "~/.config/nix-config/gitaddcommit.sh";
        server = "ssh root@192.168.1.140";
        };
      history = {
