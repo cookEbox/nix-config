@@ -1,26 +1,6 @@
-{ config, lib, pkgs, nixpkgs, ... }:
-
+{ pkgs, ... }:
 {
-   home.stateVersion = "23.05";
-   home.packages = with pkgs; [ 
-     kde-gruvbox
-     bat
-     btop
-     git
-     git-crypt
-     gnupg
-     thunderbird
-     zoom-us
-     zsh
-     exa
-     libreoffice-qt
-     zathura
-     onlyoffice-bin
-     whatsapp-for-linux
-     unzip
-   ];
-
-   programs.zsh = {
+   programs.zsh {
      enable = true;
      enableAutosuggestions = true;
      enableCompletion = true;
