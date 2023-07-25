@@ -27,8 +27,13 @@
   nixpkgs.config.allowUnfree = true; 
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = { 
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
+    efi.canTouchEfiVariables = true;
+  };
 
   networking.hostName = "nixBox"; # Define your hostname.
   # Pick only one of the below networking options.
