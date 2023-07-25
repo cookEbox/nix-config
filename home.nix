@@ -1,7 +1,7 @@
 { config, lib, pkgs, nixpkgs, ... }:
 
 {
-   imports = (import ./zsh.nix);
+   imports = [ import ./zsh.nix ];
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
