@@ -1,7 +1,10 @@
 { config, lib, pkgs, nixpkgs, ... }:
 
 {
-   imports = [ ./zsh.nix ];
+   imports = [ 
+               ./zsh.nix 
+	       ./nvim/nvim.nix
+	     ];
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
