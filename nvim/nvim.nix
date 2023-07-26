@@ -1,4 +1,3 @@
-
 { pkgs, ... }:
 {
   programs.neovim = {
@@ -10,6 +9,7 @@
 
     plugins = with pkgs.vimPlugins; [
       indentLine   
+      vim-nix
       gruvbox-nvim
     ];
   };
