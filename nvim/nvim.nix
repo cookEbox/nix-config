@@ -4,12 +4,13 @@
     enable = true;
     vimAlias = true;
     extraConfig = ''
-      luafile ./settings.lua
+      luafile ~/.config/nix-config/nvim/settings.lua
     '';
 
     plugins = with pkgs.vimPlugins; [
       indentLine   
       vim-nix
+      gruvbox-nvim
     ];
   };
 

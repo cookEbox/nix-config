@@ -23,6 +23,7 @@
        whatsapp-for-linux
        unzip
        cmus
+       xclip
      ];
    };
 }
