@@ -1,16 +1,16 @@
 
 { pkgs, ... }:
 {
-   programs.neovim = {
-     enable = true;
-     vimAlias = true;
-     extraConfig = ''
-       luafile ./settings.lua
-     '';
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+    extraConfig = ''
+      luafile ./settings.lua
+    '';
 
-     plugins = with pkgs.vimPlugins; [
-
-     ];
-   };
+    plugins = with pkgs.vimPlugins; [
+      indentline   
+    ];
+  };
 
 }
