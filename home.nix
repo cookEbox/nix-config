@@ -24,6 +24,8 @@
        unzip
        cmus
        xclip
+       rnix-lsp
+       haskell-language-server
      ];
    };
 }
