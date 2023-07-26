@@ -22,6 +22,11 @@
       nvim-lspconfig
       nvim-compe
       haskell-tools-nvim
+      undotree
+      lualine-nvim
+      comment-nvim
+      nvim-autopairs
+      nvim-surround
     ];
   };
 

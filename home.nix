@@ -26,6 +26,7 @@
        xclip
        rnix-lsp
        haskell-language-server
+       nodePackages_latest.typescript-language-server
      ];
    };
 }

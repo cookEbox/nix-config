@@ -1,5 +1,6 @@
 require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
+require('lspconfig').tsserver.setup{}
 
 require('compe').setup {
   enabled = true;
