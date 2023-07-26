@@ -9,7 +9,7 @@
     '';
 
     plugins = with pkgs.vimPlugins; [
-      indentline   
+      indentLine   
     ];
   };
 
