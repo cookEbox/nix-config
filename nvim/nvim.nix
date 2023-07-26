@@ -10,6 +10,7 @@
 
     plugins = with pkgs.vimPlugins; [
       indentLine   
+      gruvbox-nvim
     ];
   };
 
