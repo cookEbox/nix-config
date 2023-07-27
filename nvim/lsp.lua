@@ -9,13 +9,18 @@ require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
 require('lspconfig').tsserver.setup{}
 require('lspconfig').html.setup{}
--- require('lspconfig').css.setup{} --does not work
+require('lspconfig').cssls.setup{} 
 
 require('lualine').setup{}
 require('Comment').setup{}
 require('nvim-autopairs').setup{}
 require('nvim-surround').setup{}
-require('luasnip').setup{}
+require('haskell-tools').setup{}
+require('telescope').setup{}
+-- require('luasnip').setup{}
+-- require('nvim-cmp').setup {}
+-- require('cmp-nvim-lsp').setup {}
+-- require('cmp_luasnip').setup {}
 
 require('compe').setup {
   enabled = true;

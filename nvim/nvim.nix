@@ -1,6 +1,5 @@
 { pkgs, ... }:
-{
-  programs.neovim = {
+{ programs.neovim = {
     enable = true;
     vimAlias = true;
     extraConfig = ''
@@ -18,7 +17,7 @@
       indentLine   
       vim-nix
       gruvbox-nvim
-      nvim-treesitter.withAllGrammars
+      # nvim-treesitter.withAllGrammars
       nvim-lspconfig
       nvim-compe
       haskell-tools-nvim
@@ -27,7 +26,25 @@
       comment-nvim
       nvim-autopairs
       nvim-surround
+      nvim-cmp
+      cmp-nvim-lsp
       luasnip
+      cmp_luasnip
+      plenary-nvim
+      telescope-nvim
+      {
+        plugin = nvim-treesitter;
+        config = ''
+          lua << EOF
+          require('nvim-treesitter.configs').setup {
+            highlight = {
+              enable = true,
+              additional_vim_regex_highlighting = false,
+            },
+          }
+          EOF
+          '';
+      }
     ];
   };
 

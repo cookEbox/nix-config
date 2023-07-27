@@ -2,9 +2,9 @@
 
 {
    imports = [ 
-               ./zsh.nix 
-	       ./nvim/nvim.nix
-	     ];
+                ./zsh.nix 
+                ./nvim/nvim.nix
+	 ];
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
@@ -27,8 +27,8 @@
        rnix-lsp
        haskell-language-server
        nodePackages_latest.typescript-language-server
-       nodePackages.vscode-html-languageserver-bin
-       nodePackages.vscode-css-languageserver-bin
+       nodePackages.vscode-langservers-extracted
+       nodePackages.browser-sync
      ];
    };
 }
