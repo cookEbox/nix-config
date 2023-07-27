@@ -2,6 +2,11 @@ require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
 require('lspconfig').tsserver.setup{}
 
+require('lualine').setup{}
+require('Comment').setup{}
+require('nvim-autopairs').setup{}
+require('nvim-surround').setup{}
+
 require('compe').setup {
   enabled = true;
   autocomplete = true;
