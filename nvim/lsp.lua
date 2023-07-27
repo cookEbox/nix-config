@@ -1,6 +1,8 @@
 require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
 require('lspconfig').tsserver.setup{}
+require('lspconfig').vscode-css-language-server.setup{}
+require('lspconfig').vscode-html-language-server.setup{}
 
 require('lualine').setup{}
 require('Comment').setup{}
