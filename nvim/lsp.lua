@@ -1,13 +1,21 @@
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.cssls.setup {
+  capabilities = capabilities,
+}
+
 require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
 require('lspconfig').tsserver.setup{}
-require('lspconfig').vscode-css-language-server.setup{}
-require('lspconfig').vscode-html-language-server.setup{}
+require('lspconfig').html.setup{}
+-- require('lspconfig').css.setup{} --does not work
 
 require('lualine').setup{}
 require('Comment').setup{}
 require('nvim-autopairs').setup{}
 require('nvim-surround').setup{}
+require('luasnip').setup{}
 
 require('compe').setup {
   enabled = true;

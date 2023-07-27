@@ -27,6 +27,8 @@
        rnix-lsp
        haskell-language-server
        nodePackages_latest.typescript-language-server
+       nodePackages.vscode-html-languageserver-bin
+       nodePackages.vscode-css-languageserver-bin
      ];
    };
 }

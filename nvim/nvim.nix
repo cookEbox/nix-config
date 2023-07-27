@@ -27,6 +27,7 @@
       comment-nvim
       nvim-autopairs
       nvim-surround
+      luasnip
     ];
   };
 
