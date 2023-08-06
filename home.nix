@@ -27,6 +27,7 @@
        nodejs_20
        cargo
        gccgo13
+       tmux
 
        # rnix-lsp
        # haskell-language-server
