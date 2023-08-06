@@ -6,6 +6,8 @@
      enableCompletion = true;
      shellAliases = {
        cat = "bat";
+       n = "nvim .";
+       v = "nvim";
        sl = "exa";
        ls = "exa";
        l = "exa -l";
