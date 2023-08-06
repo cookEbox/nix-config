@@ -6,6 +6,7 @@ end
 
 local luasnip = require("luasnip")
 local cmp = require("cmp")
+local cmp = require("cmp")
 local lspkind = require('lspkind')
 
 cmp.setup({
@@ -112,3 +113,11 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
+
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- The following example advertise capabilities to `clangd`.
+require'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+}

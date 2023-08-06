@@ -8,11 +8,11 @@
         vim.cmd [[
           luafile ~/.config/nix-config/nvim/settings.lua
           luafile ~/.config/nix-config/nvim/lsp.lua
+          luafile ~/.config/nix-config/nvim/cmp.lua
         ]]
       end, 70)
       EOF
     '';
-          # luafile ~/.config/nix-config/nvim/cmp.lua
     plugins = with pkgs.vimPlugins; [
       vim-nix
       plenary-nvim
