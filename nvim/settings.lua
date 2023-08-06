@@ -5,11 +5,11 @@ vim.g.maplocalleader = ' '
 
 -- [[ Colorsheme ]]
 
-vim.cmd [[
-
-  colorscheme gruvbox
-
-]]
+-- vim.cmd [[
+--
+--   colorscheme gruvbox
+--
+-- ]]
 
 -- [[ Setting options ]]
 -- See `:help vim.o`

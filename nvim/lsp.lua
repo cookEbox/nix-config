@@ -22,29 +22,29 @@ require('telescope').setup{}
 -- require('cmp-nvim-lsp').setup {}
 -- require('cmp_luasnip').setup {}
 
-require('compe').setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 88;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = false;
-
-  source = {
-    path = true;
-    buffer = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    tags = true;
-    treesitter = true;
-  };
-}
+-- require('compe').setup {
+--   enabled = true;
+--   autocomplete = true;
+--   debug = false;
+--   min_length = 1;
+--   preselect = 'enable';
+--   throttle_time = 88;
+--   source_timeout = 200;
+--   incomplete_delay = 400;
+--   max_abbr_width = 100;
+--   max_kind_width = 100;
+--   max_menu_width = 100;
+--   documentation = false;
+--
+--   source = {
+--     path = true;
+--     buffer = true;
+--     nvim_lsp = true;
+--     nvim_lua = true;
+--     tags = true;
+--     treesitter = true;
+--   };
+-- }
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
