@@ -24,10 +24,12 @@
        unzip
        cmus
        xclip
-       rnix-lsp
-       haskell-language-server
-       nodePackages_latest.typescript-language-server
-       nodePackages.vscode-langservers-extracted
+       nodejs_20
+       cargo
+       gccgo13
+
+       # rnix-lsp
+       # haskell-language-server
        nodePackages.browser-sync
      ];
    };

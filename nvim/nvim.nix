@@ -12,96 +12,36 @@
       end, 70)
       EOF
     '';
-
-# require('lualine').setup{}
-# require('Comment').setup{}
-# require('nvim-autopairs').setup{}
-# require('nvim-surround').setup{}
-# require('haskell-tools').setup{}
-# require('telescope').setup{}
-# -- require('luasnip').setup{}
-# -- require('nvim-cmp').setup {}
-# -- require('cmp-nvim-lsp').setup {}
-# -- require('cmp_luasnip').setup {}
-#
-# require('compe').setup {
-#   enabled = true;
-#   autocomplete = true;
-#   debug = false;
-#   min_length = 1;
-#   preselect = 'enable';
-#   throttle_time = 88;
-#   source_timeout = 200;
-#   incomplete_delay = 400;
-#   max_abbr_width = 100;
-#   max_kind_width = 100;
-#   max_menu_width = 100;
-#   documentation = false;
-#
-#   source = {
-#     path = true;
-#     buffer = true;
-#     nvim_lsp = true;
-#     nvim_lua = true;
-#     tags = true;
-#     treesitter = true;
-#   };
-# }
-
     plugins = with pkgs.vimPlugins; [
       vim-nix
       plenary-nvim
+      nvim-compe
       indentLine   
+      undotree
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";
       }
       {
-        plugin = nvim-lspconfig;
-        config = "lua require(nvim-lspconfig)";
+        plugin = lualine-nvim;
+        config = "lua require('lualine').setup()";
       }
       {
-        plugin = nvim-compe;
-        config = ''
-          lua << EOF
-            require('compe').setup {
-              enabled = true;
-              autocomplete = true;
-              debug = false;
-              min_length = 1;
-              preselect = 'enable';
-              throttle_time = 88;
-              source_timeout = 200;
-              incomplete_delay = 400;
-              max_abbr_width = 100;
-              max_kind_width = 100;
-              max_menu_width = 100;
-              documentation = false;
-
-              source = {
-                path = true;
-                buffer = true;
-                nvim_lsp = true;
-                nvim_lua = true;
-                tags = true;
-                treesitter = true;
-              };
-            }
-            EOF
-        '';
+        plugin = comment-nvim;
+        config = "lua require('Comment').setup()";
       }
-      nvim-compe
-      haskell-tools-nvim
-      undotree
-      lualine-nvim
-      comment-nvim
-      nvim-autopairs
-      nvim-surround
-      nvim-cmp
-      cmp-nvim-lsp
-      luasnip
-      cmp_luasnip
-      telescope-nvim
+      {
+        plugin = nvim-autopairs;
+        config = "lua require('nvim-autopairs').setup()";
+      }
+      {
+        plugin = nvim-surround;
+        config = "lua require('nvim-surround').setup()";
+      }
+      {
+        plugin = telescope-nvim;
+        config = "lua require('telescope').setup()";
+      }
       {
         plugin = nvim-treesitter;
         config = ''
@@ -115,7 +55,24 @@
           EOF
           '';
       }
+      {
+        plugin = mason-nvim;
+        config = "lua require('mason').setup()";
+      }
+      {
+        plugin = mason-lspconfig-nvim;
+        config = ''
+          lua << EOF
+          require('mason-lspconfig').setup {
+            ensure_installed = { "bashls", "clangd", "dockerls", "elmls", "html", "jsonls", "rnix", "rust_analyzer", "tsserver", "lua_ls", "sqlls", "lemminx"
+            },
+          }
+          EOF
+          '';
+      }
+      nvim-lspconfig
     ];
+
   };
 
 }
