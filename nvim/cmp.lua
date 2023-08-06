@@ -6,7 +6,6 @@ end
 
 local luasnip = require("luasnip")
 local cmp = require("cmp")
-local cmp = require("cmp")
 local lspkind = require('lspkind')
 
 cmp.setup({

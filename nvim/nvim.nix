@@ -1,14 +1,15 @@
-{ pkgs, ... }:
+{pkgs, ... }:
 { programs.neovim = {
     enable = true;
     vimAlias = true;
     extraConfig = ''
+      luafile ~/.config/nix-config/nvim/settings.lua
+      luafile ~/.config/nix-config/nvim/cmp.lua
+
       lua << EOF
       vim.defer_fn(function()
         vim.cmd [[
-          luafile ~/.config/nix-config/nvim/settings.lua
           luafile ~/.config/nix-config/nvim/lsp.lua
-          luafile ~/.config/nix-config/nvim/cmp.lua
         ]]
       end, 70)
       EOF
@@ -16,7 +17,6 @@
     plugins = with pkgs.vimPlugins; [
       vim-nix
       plenary-nvim
-      nvim-compe
       indentLine   
       undotree
       {
@@ -33,7 +33,7 @@
       }
       {
         plugin = nvim-autopairs;
-        config = "lua require('nvim-autopairs').setup()";
+        config = "lua require('nvim-autopairs').setup({check_ts = true})";
       }
       {
         plugin = nvim-surround;
@@ -92,6 +92,14 @@
       }
       luasnip
       cmp_luasnip
+      {
+        plugin = snippets-nvim;
+        config = "lua require('snippets').use_suggested_mappings()";
+      }
+      {
+        plugin = nvim-compe;
+        # config = "let g:completion_enable_snippet = 'snippets.nvim'";
+      }
     ];
 
   };
