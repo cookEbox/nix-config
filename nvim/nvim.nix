@@ -12,6 +12,7 @@
       end, 70)
       EOF
     '';
+          # luafile ~/.config/nix-config/nvim/cmp.lua
     plugins = with pkgs.vimPlugins; [
       vim-nix
       plenary-nvim
@@ -71,6 +72,26 @@
           '';
       }
       nvim-lspconfig
+      lspkind-nvim
+      nvim-cmp
+      {
+        plugin = cmp-nvim-lsp;
+        config = "lua after = 'nvim-cmp'";
+      }
+      {
+        plugin = cmp-buffer;
+        config = "lua after = 'nvim-cmp'";
+      }
+      {
+        plugin = cmp-path;
+        config = "lua after = 'nvim-cmp'";
+      }
+      {
+        plugin = cmp-cmdline;
+        config = "lua after = 'nvim-cmp'";
+      }
+      luasnip
+      cmp_luasnip
     ];
 
   };
