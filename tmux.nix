@@ -30,7 +30,6 @@
       bind-key v split-window -h
       bind-key h split-window -v
        
-      bind-key r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded."
       '';
   };
 }
