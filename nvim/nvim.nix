@@ -57,6 +57,10 @@
           '';
       }
       {
+        plugin = nvim-ts-autotag;
+        config = "lua require('nvim-ts-autotag').setup()";
+      }
+      {
         plugin = mason-nvim;
         config = "lua require('mason').setup()";
       }
