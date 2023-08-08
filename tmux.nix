@@ -40,6 +40,9 @@
        
       bind -n S-Left previous-window
       bind -n S-Right next-window
+
+      unbind r
+      bind r source-file ~/.config/tmux/tmux.conf
        
       setw -g mouse on
        
@@ -48,6 +51,7 @@
       bind-key [ split-window -h
       unbind '"'
       bind-key ] split-window -v
+      bind-key . split-window -v -p 20
 
       bind-key -n 'C-y' copy-mode
       bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
@@ -56,7 +60,7 @@
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
 
       bind -r j resize-pane -D 5
-      bind -r k resize-pane -U 6
+      bind -r k resize-pane -U 5
       bind -r l resize-pane -R 5
       bind -r h resize-pane -L 5
       bind -r m resize-pane -Z
