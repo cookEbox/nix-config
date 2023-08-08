@@ -10,6 +10,7 @@
       vim.defer_fn(function()
         vim.cmd [[
           luafile ~/.config/nix-config/nvim/lsp.lua
+          luafile ~/.config/nix-config/nvim/telescope.lua
         ]]
       end, 70)
       EOF
@@ -40,10 +41,8 @@
         plugin = nvim-surround;
         config = "lua require('nvim-surround').setup()";
       }
-      {
-        plugin = telescope-nvim;
-        config = "lua require('telescope').setup()";
-      }
+      telescope-nvim
+      telescope-fzf-native-nvim
       nvim-treesitter.withAllGrammars
       {
         plugin = nvim-ts-autotag;
