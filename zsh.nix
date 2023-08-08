@@ -7,6 +7,7 @@
      shellAliases = {
        cat = "bat";
        n = "nvim .";
+       c = "clear";
        v = "nvim";
        sl = "exa";
        ls = "exa";
