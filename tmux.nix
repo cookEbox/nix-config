@@ -8,6 +8,22 @@
     keyMode = "vi";
     terminal = "tmux-256color";
     historyLimit = 50000;
+    plugins = with pkgs.tmuxPlugins;
+      [
+        gruvbox
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-capture-pane-contents 'on'
+            '';
+        }
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            '';
+        }
+      ];
 
     extraConfig = ''
       unbind C-q
@@ -27,8 +43,23 @@
        
       setw -g mouse on
        
-      bind-key v split-window -h
-      bind-key h split-window -v
+      unbind %
+      unbind [
+      bind-key [ split-window -h
+      unbind '"'
+      bind-key ] split-window -v
+
+      bind-key -n 'C-y' copy-mode
+      bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
+      bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+
+      unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
+
+      bind -r j resize-pane -D 5
+      bind -r k resize-pane -U 6
+      bind -r l resize-pane -R 5
+      bind -r h resize-pane -L 5
+      bind -r m resize-pane -Z
        
       '';
   };
