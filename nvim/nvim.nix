@@ -15,6 +15,7 @@
       EOF
     '';
     plugins = with pkgs.vimPlugins; [
+      vim-tmux-navigator
       vim-nix
       plenary-nvim
       indentLine   
@@ -43,19 +44,7 @@
         plugin = telescope-nvim;
         config = "lua require('telescope').setup()";
       }
-      {
-        plugin = nvim-treesitter;
-        config = ''
-          lua << EOF
-          require('nvim-treesitter.configs').setup {
-            highlight = {
-              enable = true,
-              additional_vim_regex_highlighting = false,
-            },
-          }
-          EOF
-          '';
-      }
+      nvim-treesitter.withAllGrammars
       {
         plugin = nvim-ts-autotag;
         config = "lua require('nvim-ts-autotag').setup()";
