@@ -29,6 +29,7 @@
        cargo
        gccgo13
        ripgrep
+       tldr
 
        # rnix-lsp
        # haskell-language-server
