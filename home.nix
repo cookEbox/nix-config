@@ -30,6 +30,7 @@
        gccgo13
        ripgrep
        tldr
+       nerdfonts
 
        # rnix-lsp
        # haskell-language-server
