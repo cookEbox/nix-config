@@ -16,37 +16,46 @@ for _, server in pairs({"html", "cssls"}) do
   lsp_config[server].setup {
     -- Add capabilities
     capabilities = capabilities,
-    on_attach = general_on_attach
+    on_attach = general_on_attach,
+    single_file_support = false
   }
 end
 
 require('neodev').setup()
 require'lspconfig'.lua_ls.setup {
-  on_init = function(client)
-    local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
-      local settings = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-        runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = 'LuaJIT'
-        },
-        -- Make the server aware of Neovim runtime files
-        workspace = {
-          library = { vim.env.VIMRUNTIME }
-          -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-          -- library = vim.api.nvim_get_runtime_file("", true)
-        }
-      })
-
-      client.notify("workspace/didChangeConfiguration", { settings = settings })
-    end
-    return true
-  end
+  on_attach = general_on_attach,
+  capabilities = capabilities,
+  single_file_support = false,
+  cmd = { "/home/nick/.local/share/nvim/mason/bin/lua-language-server" },
+  filetypes = { "lua" },
+  log_level = 2,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT'
+      },
+      semantic = {
+        enable = false,
+      },
+      diagnostics = {
+        globals = { "vim "},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = { enable = false },
+      completion = {
+        callSnippet = "Replace",
+      },
+    },
+  },
 }
 
 require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
-require('lspconfig').tsserver.setup{}
+require('lspconfig').tsserver.setup{
+  single_file_support = false
+}
 -- require('lspconfig').html.setup{}
 -- require('lspconfig').cssls.setup{} 
 
