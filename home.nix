@@ -31,7 +31,6 @@
        ripgrep
        tldr
        nerdfonts
-       autocutsel
 
        # rnix-lsp
        # haskell-language-server
