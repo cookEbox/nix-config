@@ -46,6 +46,7 @@
       telescope-nvim
       telescope-fzf-native-nvim
       nvim-treesitter.withAllGrammars
+      neodev-nvim
       {
         plugin = nvim-ts-autotag;
         config = "lua require('nvim-ts-autotag').setup()";

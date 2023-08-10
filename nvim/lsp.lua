@@ -20,6 +20,7 @@ for _, server in pairs({"html", "cssls"}) do
   }
 end
 
+require('neodev').setup()
 require'lspconfig'.lua_ls.setup {
   on_init = function(client)
     local path = client.workspace_folders[1].name
