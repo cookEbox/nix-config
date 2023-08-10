@@ -17,7 +17,6 @@ for _, server in pairs({"html", "cssls"}) do
     -- Add capabilities
     capabilities = capabilities,
     on_attach = general_on_attach,
-    single_file_support = false
   }
 end
 
@@ -25,7 +24,6 @@ require('neodev').setup()
 require'lspconfig'.lua_ls.setup {
   on_attach = general_on_attach,
   capabilities = capabilities,
-  single_file_support = false,
   cmd = { "/home/nick/.local/share/nvim/mason/bin/lua-language-server" },
   filetypes = { "lua" },
   log_level = 2,
@@ -53,9 +51,7 @@ require'lspconfig'.lua_ls.setup {
 
 require('lspconfig').rnix.setup{}
 require('lspconfig').hls.setup{}
-require('lspconfig').tsserver.setup{
-  single_file_support = false
-}
+require('lspconfig').tsserver.setup{}
 -- require('lspconfig').html.setup{}
 -- require('lspconfig').cssls.setup{} 
 
