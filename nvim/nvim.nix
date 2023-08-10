@@ -11,6 +11,7 @@
         vim.cmd [[
           luafile ~/.config/nix-config/nvim/lsp.lua
           luafile ~/.config/nix-config/nvim/telescope.lua
+          luafile ~/.config/nix-config/nvim/harpoon.lua
         ]]
       end, 70)
       EOF
@@ -41,6 +42,7 @@
         plugin = nvim-surround;
         config = "lua require('nvim-surround').setup()";
       }
+      harpoon
       telescope-nvim
       telescope-fzf-native-nvim
       nvim-treesitter.withAllGrammars
@@ -88,10 +90,11 @@
         plugin = snippets-nvim;
         config = "lua require('snippets').use_suggested_mappings()";
       }
-      {
-        plugin = nvim-compe;
-        # config = "let g:completion_enable_snippet = 'snippets.nvim'";
-      }
+      # {
+      #   plugin = friendly-snippets;
+      #   config = "lua require('friendly-snippets').setup()"
+      # }
+      nvim-compe
     ];
 
   };
