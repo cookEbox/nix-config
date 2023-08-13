@@ -36,6 +36,7 @@
        vscode-langservers-extracted
        elmPackages.elm-language-server
        haskellPackages.haskell-language-server
+       ghc
        luajitPackages.lua-lsp
        nodePackages.browser-sync
        nodePackages.typescript-language-server

@@ -21,21 +21,21 @@ lsp.ensure_installed({
 
 -- Fix Undefined global 'vim'
 lsp.configure('lua-language-server', {
-    cmd = { "lua-lsp" },
-    settings = {
-        Lua = {
-            runtime = {
-              version = 'LuaJIT'
-            },
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
+    force_setup = true,
+    -- settings = {
+    --     Lua = {
+    --         runtime = {
+    --           version = 'LuaJIT'
+    --         },
+    --         diagnostics = {
+    --             globals = { 'vim' }
+    --         }
+    --     }
+    -- }
 })
 
 lsp.configure('hls', {
-  cmd = { "hls" },
+  force_setup = true
 })
 
 
