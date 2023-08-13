@@ -25,16 +25,22 @@
        unzip
        cmus
        xclip
-       nodejs_20
        cargo
        gccgo13
        ripgrep
        tldr
        nerdfonts
 
-       # rnix-lsp
-       # haskell-language-server
+       nodejs_20
+       rnix-lsp
+       vscode-langservers-extracted
+       elmPackages.elm-language-server
+       haskellPackages.haskell-language-server
+       luajitPackages.lua-lsp
        nodePackages.browser-sync
+       nodePackages.typescript-language-server
+       nodePackages.bash-language-server
+       sqls
      ];
    };
 }

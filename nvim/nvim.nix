@@ -9,7 +9,7 @@
       lua << EOF
       vim.defer_fn(function()
         vim.cmd [[
-          luafile ~/.config/nix-config/nvim/lsp.lua
+          luafile ~/.config/nix-config/nvim/lsp-zero.lua
           luafile ~/.config/nix-config/nvim/compe.lua
           luafile ~/.config/nix-config/nvim/telescope.lua
           luafile ~/.config/nix-config/nvim/harpoon.lua
@@ -68,6 +68,7 @@
           '';
       }
       nvim-lspconfig
+      lsp-zero-nvim
       lspkind-nvim
       nvim-cmp
       {
