@@ -16,22 +16,21 @@ lsp.ensure_installed({
   'dockerls',
   'clangd',
   'sqlls',
-  'lemminx'
+  'lemminx',
 })
 
 -- Fix Undefined global 'vim'
-lsp.configure('lua-language-server', {
-    force_setup = true,
-    -- settings = {
-    --     Lua = {
-    --         runtime = {
-    --           version = 'LuaJIT'
-    --         },
-    --         diagnostics = {
-    --             globals = { 'vim' }
-    --         }
-    --     }
-    -- }
+lsp.configure('lua_ls', {
+    settings = {
+        Lua = {
+            runtime = {
+              version = 'LuaJIT'
+            },
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
 })
 
 lsp.configure('hls', {

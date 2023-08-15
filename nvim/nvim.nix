@@ -56,17 +56,7 @@
         plugin = mason-nvim;
         config = "lua require('mason').setup()";
       }
-      {
-        plugin = mason-lspconfig-nvim;
-        config = ''
-          lua << EOF
-          require('mason-lspconfig').setup {
-            ensure_installed = { "bashls", "clangd", "dockerls", "elmls", "html", "jsonls", "rnix", "rust_analyzer", "tsserver", "lua_ls", "sqlls", "lemminx"
-            },
-          }
-          EOF
-          '';
-      }
+      mason-lspconfig-nvim
       nvim-lspconfig
       lsp-zero-nvim
       lspkind-nvim
