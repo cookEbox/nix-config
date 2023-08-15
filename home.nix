@@ -18,7 +18,7 @@
        thunderbird
        zoom-us
        exa
-       libreoffice-qt
+       # libreoffice-qt
        zathura
        onlyoffice-bin
        whatsapp-for-linux
