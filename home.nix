@@ -30,6 +30,7 @@
        ripgrep
        tldr
        nerdfonts
+       hydra-check
 
        nodejs_20
        rnix-lsp
