@@ -32,6 +32,7 @@
        nerdfonts
        hydra-check
 
+       stack
        nodejs_20
        rnix-lsp
        vscode-langservers-extracted
