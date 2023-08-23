@@ -32,13 +32,14 @@
        nerdfonts
        hydra-check
 
-       stack
+       ghc
+       haskellPackages.cabal2nix
+       haskellPackages.cabal-install
        nodejs_20
        rnix-lsp
        vscode-langservers-extracted
        elmPackages.elm-language-server
        haskellPackages.haskell-language-server
-       ghc
        luajitPackages.lua-lsp
        nodePackages.browser-sync
        nodePackages.typescript-language-server
