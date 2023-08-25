@@ -32,8 +32,8 @@
        nerdfonts
        hydra-check
 
-       ghc
-       haskellPackages.cabal2nix
+       haskellPackages.stack
+       # haskellPackages.cabal2nix
        haskellPackages.cabal-install
        nodejs_20
        rnix-lsp
