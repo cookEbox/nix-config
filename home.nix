@@ -32,7 +32,7 @@
        nerdfonts
        hydra-check
        mpv
-       adb
+       android-tools
 
        haskellPackages.stack
        haskellPackages.cabal-install
