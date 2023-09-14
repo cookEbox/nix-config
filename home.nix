@@ -31,10 +31,11 @@
        tldr
        nerdfonts
        hydra-check
+       mpv
 
        haskellPackages.stack
        haskellPackages.cabal-install
-       nix-direnv
+       direnv
        nodejs_20
        rnix-lsp
        vscode-langservers-extracted
