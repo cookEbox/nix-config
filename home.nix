@@ -17,7 +17,7 @@
        gnupg
        thunderbird
        zoom-us
-       exa
+       eza
        # libreoffice-qt
        zathura
        onlyoffice-bin
