@@ -54,6 +54,7 @@
       bind-key ] split-window -v
       bind-key . split-window -v -p 20
 
+      unbind 'C-y'
       bind-key -n 'C-c' copy-mode
       bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
       bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
