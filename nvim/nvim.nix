@@ -45,6 +45,7 @@
       }
       harpoon
       telescope-nvim
+      telescope_hoogle
       telescope-fzf-native-nvim
       nvim-treesitter.withAllGrammars
       neodev-nvim
