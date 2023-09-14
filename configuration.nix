@@ -97,7 +97,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     initialPassword = "P@ssword01";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
   # packages = with pkgs; [
   #   thunderbird
   #   firefox
@@ -115,6 +115,13 @@
     htop
     neofetch
     pfetch
+    virt-manager
+    virt-viewer
+    spice spice-gtk
+    spice-protocol
+    win-virtio
+    win-spice
+    gnome.adwaita-icon-theme
   ];
 
   programs.steam = {
@@ -122,6 +129,25 @@
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
+
+  # Enable dconf (System Management Tool)
+  programs.dconf.enable = true;
+
+  # virtualisation services
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+  services.spice-vdagentd.enable = true;
+
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
