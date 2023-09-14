@@ -33,8 +33,8 @@
        hydra-check
 
        haskellPackages.stack
-       # haskellPackages.cabal2nix
        haskellPackages.cabal-install
+       nix-direnv
        nodejs_20
        rnix-lsp
        vscode-langservers-extracted
