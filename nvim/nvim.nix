@@ -18,6 +18,7 @@
       EOF
     '';
     plugins = with pkgs.vimPlugins; [
+      LanguageClient-neovim
       vim-tmux-navigator
       vim-nix
       plenary-nvim

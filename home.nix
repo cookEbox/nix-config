@@ -33,6 +33,7 @@
        hydra-check
        mpv
        android-tools
+       krita
 
        haskellPackages.stack
        haskellPackages.cabal-install
