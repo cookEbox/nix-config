@@ -110,7 +110,7 @@ vim.keymap.set("n", "<leader>ng", "<cmd>silent !/home/nick/Documents/MyBash/newG
 vim.keymap.set("n", "<leader>nt", "<cmd>silent !alacritty &<CR>")
 
 -- reformat Haskell and elm
-vim.keymap.set("n", "<leader>fh", "<cmd>silent %!stylish-haskell<CR>")
+vim.keymap.set("n", "<leader>fh", "<cmd>silent fourmolu -i . --indentation=2 --function-arrows=leading --indent-wheres=true --column-limit=80 --import-export-style=leading --in-style=left-align | %!stylish-haskell<CR>")
 vim.keymap.set("n", "<leader>fe", "<cmd>silent %!elm-format --yes %<CR>")
 
 -- quick fix navigation
