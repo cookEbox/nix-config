@@ -7,6 +7,7 @@
      shellAliases = {
        cat = "bat";
        n = "nvim .";
+       h = "nix develop --command nvim .";
        c = "clear";
        v = "nvim";
        sl = "eza";
