@@ -55,7 +55,7 @@
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-
+  services.fwupd.enable = true;
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
