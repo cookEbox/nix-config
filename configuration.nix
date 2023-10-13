@@ -127,6 +127,7 @@
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
+    virglrenderer
   ];
 
   programs.steam = {

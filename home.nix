@@ -34,7 +34,9 @@
        mpv
        android-tools
        krita
+       feh
 
+       jre8
        haskellPackages.stack
        haskellPackages.cabal-install
        direnv
