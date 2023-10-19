@@ -22,6 +22,7 @@
        zathura
        onlyoffice-bin
        whatsapp-for-linux
+       teams-for-linux
        unzip
        cmus
        xclip
