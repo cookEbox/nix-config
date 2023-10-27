@@ -10,12 +10,12 @@
        h = "nix develop --command nvim .";
        c = "clear";
        v = "nvim";
-       sl = "eza";
-       ls = "eza";
-       l = "eza -l";
-       la = "eza -la";
-       ll = "eza -lah";
-       lt = "eza --tree";
+       sl = "exa";
+       ls = "exa";
+       l = "exa -l";
+       la = "exa -la";
+       ll = "exa -lah";
+       lt = "exa --tree";
        ip = "ip --color=auto";
        upgrade = "cd ~/.config/nix-config/; nix flake update; cd -";
        update = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure; cd -; source ~/.zshrc";

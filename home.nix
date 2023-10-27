@@ -17,7 +17,7 @@
        gnupg
        thunderbird
        zoom-us
-       eza
+       exa
        # libreoffice-qt
        zathura
        onlyoffice-bin
@@ -44,7 +44,7 @@
        direnv
        nodejs_20
        rnix-lsp
-       vscode-langservers-extracted
+       # vscode-langservers-extracted
        elmPackages.elm-language-server
        haskellPackages.haskell-language-server
        lua-language-server
