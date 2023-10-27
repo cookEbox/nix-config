@@ -40,13 +40,14 @@
        jre8
        haskellPackages.stack
        haskellPackages.cabal-install
+       llvmPackages_9.clang-unwrapped
        direnv
        nodejs_20
        rnix-lsp
        vscode-langservers-extracted
        elmPackages.elm-language-server
        haskellPackages.haskell-language-server
-       luajitPackages.lua-lsp
+       lua-language-server
        nodePackages.browser-sync
        nodePackages.typescript-language-server
        nodePackages.bash-language-server

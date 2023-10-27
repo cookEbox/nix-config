@@ -14,29 +14,22 @@ lsp.ensure_installed({
   'bashls',
   'elmls',
   'dockerls',
-  'clangd',
   'sqlls',
   'lemminx',
 })
 
--- Fix Undefined global 'vim'
+-- Use system installed lsps
 lsp.configure('lua_ls', {
-    settings = {
-        Lua = {
-            runtime = {
-              version = 'LuaJIT'
-            },
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
+  force_setup = true,
 })
 
 lsp.configure('hls', {
   force_setup = true
 })
 
+lsp.configure('clangd', {
+  force_setup = true
+})
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -64,6 +57,7 @@ lsp.set_preferences({
     }
 })
 
+-- look at the primagens setup
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
