@@ -12,6 +12,7 @@
       [
         gruvbox
         vim-tmux-navigator
+        fzf-tmux-url
         {
           plugin = resurrect;
           extraConfig = ''
@@ -65,7 +66,7 @@
       bind -r l resize-pane -R 5
       bind -r h resize-pane -L 5
       bind -r m resize-pane -Z
-       
+
       '';
   };
 }
