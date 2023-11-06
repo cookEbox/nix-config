@@ -9,6 +9,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       brave
        kde-gruvbox
        bat
        btop
@@ -17,6 +18,7 @@
        gnupg
        thunderbird
        zoom-us
+       discord
        exa
        # libreoffice-qt
        zathura
