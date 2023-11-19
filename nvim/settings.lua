@@ -22,18 +22,18 @@ vim.cmd([[command! -nargs=0 Wb lua RunWb()]])
 function RunWb()
   vim.cmd('wa')
   _G.runScript()
-  vim.cmd('redraw!')
+  vim.cmd('mode')
 end
 
 function _G.runScript()
     local script_path = './bsync.sh'
     local cmd = 'sh ' .. script_path
-    local success, exit_code, _ = os.execute(cmd)
-    if not success or exit_code ~= 0 then
-        vim.api.nvim_err_writeln('Error running script: ' .. script_path)
-    else
-        vim.api.nvim_out_write('Script executed successfully\n')
-    end
+    os.execute(cmd)
+    -- if not success or exit_code ~= 0 then
+    --     vim.api.nvim_err_writeln('Error running script: ' .. script_path)
+    -- else
+    --     vim.api.nvim_out_write('Script executed successfully\n')
+    -- end
 end
 
 -- [[ Setting options ]]
