@@ -17,7 +17,13 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 
 vim.cmd([[command! -nargs=0 W writeall ]])
-vim.cmd([[command! -nargs=0 Wb wa | lua _G.runScript() | redraw!]])
+vim.cmd([[command! -nargs=0 Wb lua RunWb()]])
+
+function RunWb()
+  vim.cmd('wa')
+  _G.runScript()
+  vim.cmd('redraw!')
+end
 
 function _G.runScript()
     local script_path = './bsync.sh'
