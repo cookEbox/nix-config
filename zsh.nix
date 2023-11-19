@@ -17,6 +17,7 @@
        ll = "exa -lah";
        lt = "exa --tree";
        ip = "ip --color=auto";
+       setup = "~/.config/nix-config/setup.sh";
        upgrade = "cd ~/.config/nix-config/; sudo nix flake update; cd -";
        update = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure; cd -; source ~/.zshrc";
        clean = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure --upgrade; nix-collect-garbage -d; nix-store --optimise -vv; cd -";
