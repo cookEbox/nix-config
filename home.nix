@@ -48,7 +48,7 @@
        rnix-lsp
        # vscode-langservers-extracted
        elmPackages.elm-language-server
-       haskellPackages.haskell-language-server
+       # haskellPackages.haskell-language-server
        lua-language-server
        nodePackages.browser-sync
        nodePackages.typescript-language-server

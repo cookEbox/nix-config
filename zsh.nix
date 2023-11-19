@@ -17,7 +17,7 @@
        ll = "exa -lah";
        lt = "exa --tree";
        ip = "ip --color=auto";
-       upgrade = "cd ~/.config/nix-config/; nix flake update; cd -";
+       upgrade = "cd ~/.config/nix-config/; sudo nix flake update; cd -";
        update = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure; cd -; source ~/.zshrc";
        clean = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure --upgrade; nix-collect-garbage -d; nix-store --optimise -vv; cd -";
        lockup = "cd ~/.config/nix-config/; nix build --recreate-lock-file; sudo nixos-rebuild switch --flake '.#' --impure --upgrade; nix-store --gc; nix-store --optimise -vv; cd -";
