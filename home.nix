@@ -41,6 +41,7 @@
        lsof
        xdotool
        wmctrl
+       virtiofsd
 
        jre8
        llvmPackages_9.clang-unwrapped
