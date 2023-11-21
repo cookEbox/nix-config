@@ -39,6 +39,7 @@
        krita
        feh
        lsof
+       wmctrl
 
        jre8
        llvmPackages_9.clang-unwrapped
