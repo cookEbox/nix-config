@@ -39,6 +39,7 @@
        krita
        feh
        lsof
+       xdotool
        wmctrl
 
        jre8
