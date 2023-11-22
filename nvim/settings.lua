@@ -16,7 +16,7 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 ]]
 
 
-vim.cmd([[command! -nargs=0 W writeall ]])
+vim.cmd([[command! -nargs=0 W wa ]])
 vim.cmd([[command! -nargs=0 Wb lua RunWb()]])
 
 function RunWb()

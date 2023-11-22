@@ -20,7 +20,6 @@
        zoom-us
        discord
        exa
-       # libreoffice-qt
        zathura
        onlyoffice-bin
        whatsapp-for-linux
@@ -40,7 +39,6 @@
        feh
        lsof
        xdotool
-       wmctrl
        virtiofsd
 
        jre8
