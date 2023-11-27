@@ -41,6 +41,8 @@
        xdotool
        virtiofsd
        libsForQt5.kdenlive
+       mediainfo
+       glaxnimate
 
        jre8
        llvmPackages_9.clang-unwrapped
