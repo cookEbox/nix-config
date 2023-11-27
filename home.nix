@@ -40,6 +40,7 @@
        lsof
        xdotool
        virtiofsd
+       libsForQt5.kdenlive
 
        jre8
        llvmPackages_9.clang-unwrapped
