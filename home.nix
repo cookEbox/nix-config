@@ -44,6 +44,7 @@
        mediainfo
        glaxnimate
        libsForQt5.korganizer
+       libsForQt5.akonadi
 
        jre8
        llvmPackages_9.clang-unwrapped
