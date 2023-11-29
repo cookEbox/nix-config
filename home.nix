@@ -43,6 +43,7 @@
        libsForQt5.kdenlive
        mediainfo
        glaxnimate
+       audacity
        libsForQt5.korganizer
        libsForQt5.akonadi
        libsForQt5.kdepim-runtime
