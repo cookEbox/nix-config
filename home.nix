@@ -45,6 +45,7 @@
        glaxnimate
        libsForQt5.korganizer
        libsForQt5.akonadi
+       libsForQt5.kdepim-runtime
        gimp
 
        jre8
