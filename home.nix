@@ -45,6 +45,7 @@
        glaxnimate
        libsForQt5.korganizer
        libsForQt5.akonadi
+       gimp
 
        jre8
        llvmPackages_9.clang-unwrapped
