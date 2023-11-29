@@ -46,6 +46,7 @@
        libsForQt5.korganizer
        libsForQt5.akonadi
        libsForQt5.kdepim-runtime
+       libsForQt5.akonadi-mime
        gimp
 
        jre8
