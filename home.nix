@@ -51,6 +51,7 @@
        libsForQt5.akonadi-calendar
        gimp
 
+       zig
        jre8
        llvmPackages_9.clang-unwrapped
        direnv
