@@ -19,7 +19,7 @@
        thunderbird
        zoom-us
        discord
-       exa
+       eza
        zathura
        onlyoffice-bin
        whatsapp-for-linux
@@ -50,6 +50,7 @@
        libsForQt5.akonadi-mime
        libsForQt5.akonadi-calendar
        gimp
+       weechat
 
        zig
        jre8
