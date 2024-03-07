@@ -2,6 +2,15 @@
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    layout_strategy = 'horizontal',
+    layout_config = {
+      horizontal = {
+        mirror = false,
+        preview_width = 0.6,
+        width = 0.75,
+        height = 0.85,
+      },
+    },
     mappings = {
       i = {
         ['<C-u>'] = false,
