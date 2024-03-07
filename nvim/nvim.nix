@@ -3,14 +3,20 @@
     enable = true;
     vimAlias = true;
     extraConfig = ''
+      let g:lsp_zero_extend_lspconfig = 0
       luafile ~/.config/nix-config/nvim/settings.lua
       luafile ~/.config/nix-config/nvim/cmp.lua
 
       lua << EOF
+      vim.g.lsp_zero_extend_lspconfig = 0
+      vim.defer_fn(function()
+        vim.cmd [[
+          luafile ~/.config/nix-config/nvim/lsp.lua
+        ]]
+      end, 1000)
       vim.defer_fn(function()
         vim.cmd [[
           luafile ~/.config/nix-config/nvim/lsp-zero.lua
-          luafile ~/.config/nix-config/nvim/compe.lua
           luafile ~/.config/nix-config/nvim/telescope.lua
           luafile ~/.config/nix-config/nvim/harpoon.lua
         ]]
@@ -58,9 +64,9 @@
         plugin = mason-nvim;
         config = "lua require('mason').setup()";
       }
+      lsp-zero-nvim
       mason-lspconfig-nvim
       nvim-lspconfig
-      lsp-zero-nvim
       lspkind-nvim
       nvim-cmp
       {
@@ -89,7 +95,6 @@
       #   plugin = friendly-snippets;
       #   config = "lua require('friendly-snippets').setup()"
       # }
-      nvim-compe
     ];
 
   };
