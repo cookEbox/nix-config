@@ -16,7 +16,6 @@ vim.g.maplocalleader = ' '
 -- set completeopt=menu,menuone,noselect
 -- ]]
 
-
 vim.cmd([[command! -nargs=0 W wa ]])
 vim.cmd([[command! -nargs=0 Wb lua RunWb()]])
 

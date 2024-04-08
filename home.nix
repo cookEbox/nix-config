@@ -51,6 +51,7 @@
        libsForQt5.akonadi-calendar
        gimp
        weechat
+       obs-studio
 
        zig
        jre8
