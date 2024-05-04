@@ -1,0 +1,19 @@
+
+  boot = {
+    kernelModules = ["vfio-pci"];
+    blacklistedKernelModules = ["nouveau"];
+    kernelParams = ["amd_iommu=on"];
+    loader = { 
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 10;
+      };
+    efi.canTouchEfiVariables = true;
+    };
+  };
+
+  networking = {
+    hostName = "nixBox";
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" ];
+  };

@@ -5,6 +5,8 @@
      enableAutosuggestions = true;
      enableCompletion = true;
      shellAliases = {
+       ".." = "cd ..";
+       "..." = "cd ../..";
        cat = "bat";
        n = "nvim .";
        h = "nix develop --command nvim .";

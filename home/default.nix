@@ -5,6 +5,7 @@
                 ./zsh
                 ./tmux
                 ./nvim
+                ./calc.nix
 	 ];
    home = { 
      stateVersion = "23.05";
