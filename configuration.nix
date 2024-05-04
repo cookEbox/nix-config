@@ -41,10 +41,11 @@
     };
   };
 
-  networking.hostName = "nixBox"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "nixBox"; # Define your hostname.
+    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    nameservers = [ "1.1.1.1" ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/London";
