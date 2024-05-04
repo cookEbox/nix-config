@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
 
   nix = {
     package = pkgs.nixFlakes;
@@ -26,6 +22,11 @@
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
 
+  networking = {
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" ];
+  };
+
   services = {
     fwupd.enable = true;
     xserver = {
@@ -43,7 +44,6 @@
       nssmdns = true;
       openFirewall = true;
     };
-    spice-vdagentd.enable = true;
     openssh.enable = true; 
   };
 
@@ -71,14 +71,7 @@
     htop
     neofetch
     pfetch
-    virt-manager
-    virt-viewer
-    spice spice-gtk
-    spice-protocol
-    win-virtio
-    win-spice
     gnome.adwaita-icon-theme
-    virglrenderer
   ];
 
   programs = {
@@ -91,18 +84,6 @@
     dconf.enable = true; # Enable dconf (System Management Tool)
   };
 
-  # virtualisation services
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu = {
-        swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
-      };
-    };
-    spiceUSBRedirection.enable = true;
-  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you

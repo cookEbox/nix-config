@@ -5,11 +5,11 @@
                 ./zsh
                 ./tmux
                 ./nvim
-                ./calc.nix
 	 ];
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       calc
        brave
        kde-gruvbox
        bat
