@@ -2,9 +2,9 @@
 
 {
    imports = [ 
-                ./zsh.nix 
-                ./tmux.nix 
-                ./nvim/nvim.nix
+                ./zsh
+                ./tmux
+                ./nvim
 	 ];
    home = { 
      stateVersion = "23.05";
