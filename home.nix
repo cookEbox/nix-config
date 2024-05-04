@@ -58,7 +58,7 @@
        llvmPackages_9.clang-unwrapped
        direnv
        nodejs_20
-       rnix-lsp
+       nil
        elmPackages.elm-language-server
        lua-language-server
        nodePackages.browser-sync

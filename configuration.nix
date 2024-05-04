@@ -23,8 +23,9 @@
     };
   };
 
-  # Enable unfree packages
-  nixpkgs.config.allowUnfree = true; 
+  nixpkgs.config = { 
+    allowUnfree = true; 
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {

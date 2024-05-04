@@ -12,6 +12,10 @@ lsp.configure('hls', {
   force_setup = true
 })
 
+lsp.configure('nil_ls', {
+  force_setup = true
+})
+
 lsp.configure('clangd', {
   force_setup = true
 })
