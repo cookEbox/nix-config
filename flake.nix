@@ -28,7 +28,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.nick = {
-                imports = [ ./home/home.nix ];
+                imports = [ ./home ];
 	      };
 	    }
 	  ];
