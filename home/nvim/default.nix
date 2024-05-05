@@ -3,16 +3,16 @@
     enable = true;
     vimAlias = true;
     extraConfig = ''
-      luafile ~/.config/nix-config/nvim/settings.lua
-      luafile ~/.config/nix-config/nvim/cmp.lua
+      luafile ~/.config/nix-config/home/nvim/settings.lua
+      luafile ~/.config/nix-config/home/nvim/cmp.lua
 
       lua << EOF
       vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
         vim.cmd [[
-          luafile ~/.config/nix-config/nvim/lsp-zero.lua
-          luafile ~/.config/nix-config/nvim/telescope.lua
-          luafile ~/.config/nix-config/nvim/harpoon.lua
+          luafile ~/.config/nix-config/home/nvim/lsp-zero.lua
+          luafile ~/.config/nix-config/home/nvim/telescope.lua
+          luafile ~/.config/nix-config/home/nvim/harpoon.lua
         ]]
       end, 70)
       EOF
