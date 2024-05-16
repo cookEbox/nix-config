@@ -10,6 +10,7 @@
      stateVersion = "23.05";
      packages = with pkgs; [ 
        calc
+       aws-workspaces
        brave
        kde-gruvbox
        bat
