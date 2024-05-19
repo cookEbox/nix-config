@@ -79,6 +79,10 @@
     gnome.adwaita-icon-theme
   ];
 
+  programs = {
+    zsh.enable = true;
+    dconf.enable = true; # Enable dconf (System Management Tool)
+  };
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
