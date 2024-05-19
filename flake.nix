@@ -39,6 +39,19 @@
             }
           ];
         };
+        nixVM = lib.nixosSystem {
+          inherit system;
+          modules = [ 
+            ./hosts/vm
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.nick = {
+                imports = [ ./home ];
+              };
+            }
+          ];
+        };
       };
     };
 }
