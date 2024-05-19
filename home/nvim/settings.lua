@@ -133,7 +133,7 @@ vim.keymap.set("n", "<leader>nt", "<cmd>silent !tmux split-window -l 20<CR>")
 
 -- reformat Haskell and elm
 vim.keymap.set("n", "<leader>fh", "<cmd>silent %!stylish-haskell<CR>")
-vim.keymap.set("n", "<leader>ff", "<cmd>silent %!fourmolu -i . --indentation=2 --function-arrows=leading --indent-wheres=true --import-export-style=leading &%<CR>")
+-- vim.keymap.set("n", "<leader>ff", "<cmd>silent %!fourmolu -i . --indentation=2 --function-arrows=leading --indent-wheres=true --import-export-style=leading &%<CR>")
 vim.keymap.set("n", "<leader>fe", "<cmd>silent %!elm-format --yes %<CR>")
 
 -- quick fix navigation
