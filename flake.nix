@@ -21,7 +21,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.nick = {
-                imports = [ ./home ];
+                imports = [ ./hosts/desktop/home ];
               };
             }
           ];
@@ -34,7 +34,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.nick = {
-                imports = [ ./home ];
+                imports = [ ./hosts/laptop/home ];
               };
             }
           ];
@@ -47,7 +47,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.nick = {
-                imports = [ ./home ];
+                imports = [ ./hosts/vm/home ];
               };
             }
           ];
