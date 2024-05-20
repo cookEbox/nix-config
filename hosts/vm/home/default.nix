@@ -2,7 +2,7 @@
 
 {
    imports = [ 
-                ../../home/default
+                ../../home/default.nix
 	 ];
    home = { 
      stateVersion = "23.05";
