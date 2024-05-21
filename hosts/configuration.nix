@@ -59,6 +59,11 @@
     gnome.adwaita-icon-theme
   ];
 
+  programs = {
+    zsh.enable = true;
+    dconf.enable = true; 
+  };
+
   system.copySystemConfiguration = false;
   system.stateVersion = "22.11"; 
 }
