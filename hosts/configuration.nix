@@ -30,7 +30,7 @@
     fwupd.enable = true;
     xserver = {
       enable = true;
-      displayManager.gdm.enable = true;
+      displayManager.lightdm.greeters.gtk.enable = true;
       desktopManager.mate.enable = true;
       layout = "gb";
       xkbOptions = "altwin:menu_win";
