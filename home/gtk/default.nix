@@ -16,4 +16,5 @@
       package = pkgs.gruvbox-dark-icons-gtk;
     };
   };
+  programs.direnv.enable = true;
 }
