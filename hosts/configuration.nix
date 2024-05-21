@@ -31,7 +31,7 @@
     xserver = {
       enable = true;
       displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
+      desktopManager.mate.enable = true;
       layout = "gb";
       xkbOptions = "altwin:menu_win";
     }; 
