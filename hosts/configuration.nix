@@ -30,7 +30,7 @@
     fwupd.enable = true;
     xserver = {
       enable = true;
-      displayManager.lightdm.greeters.gtk.enable = true;
+      # displayManager.lightdm.greeters.gtk.enable = true;
       displayManager.lightdm.greeters.gtk.theme.name = "gruvbox-dark-gtk";
       desktopManager.cinnamon.enable = true;
       layout = "gb";
