@@ -10,6 +10,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       mate.mate-tweak
        calc
        bat
        btop
