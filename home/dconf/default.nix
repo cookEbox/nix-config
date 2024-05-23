@@ -5,8 +5,47 @@ with lib.hm.gvariant;
 
 {
   dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      cursor-theme = "gruvbox-dark-icons-gtk";
+      gtk-theme = "gruvbox-dark-gtk";
+      icon-theme = "gruvbox-dark-icons-gtk";
+    };
+
+    "org/mate/desktop/accessibility/keyboard" = {
+      bouncekeys-beep-reject = true;
+      bouncekeys-delay = 300;
+      bouncekeys-enable = false;
+      enable = false;
+      feature-state-change-beep = false;
+      mousekeys-accel-time = 1200;
+      mousekeys-enable = false;
+      mousekeys-init-delay = 160;
+      mousekeys-max-speed = 750;
+      slowkeys-beep-accept = true;
+      slowkeys-beep-press = true;
+      slowkeys-beep-reject = false;
+      slowkeys-delay = 300;
+      slowkeys-enable = false;
+      stickykeys-enable = false;
+      stickykeys-latch-to-lock = true;
+      stickykeys-modifier-beep = true;
+      stickykeys-two-key-off = true;
+      timeout = 120;
+      timeout-enable = false;
+      togglekeys-enable = false;
+    };
+
     "org/mate/desktop/applications/terminal" = {
       exec = "alacritty";
+    };
+
+    "org/mate/desktop/background" = {
+      color-shading-type = "vertical-gradient";
+      picture-filename = "/nix/store/v48ywzz713gnh9ggas4hv3xafc1r7045-mate-screensaver-1.26.2/share/backgrounds/cosmos/background-1.xml";
+      picture-options = "zoom";
+      primary-color = "rgb(88,145,188)";
+      secondary-color = "rgb(60,143,37)";
+      show-desktop-icons = false;
     };
 
     "org/mate/desktop/interface" = {
@@ -22,7 +61,7 @@ with lib.hm.gvariant;
 
     "org/mate/desktop/session" = {
       auto-save-session = true;
-      session-start = 1716461663;
+      session-start = 1716485250;
     };
 
     "org/mate/desktop/sound" = {
@@ -141,5 +180,14 @@ with lib.hm.gvariant;
       y = 0;
       y-bottom = -1;
     };
+
+    "org/mate/terminal/profiles/default" = {
+      background-color = "#FFFFFFFFDDDD";
+      bold-color = "#000000000000";
+      foreground-color = "#000000000000";
+      palette = "#2E2E34343636:#CCCC00000000:#4E4E9A9A0606:#C4C4A0A00000:#34346565A4A4:#757550507B7B:#060698209A9A:#D3D3D7D7CFCF:#555557575353:#EFEF29292929:#8A8AE2E23434:#FCFCE9E94F4F:#72729F9FCFCF:#ADAD7F7FA8A8:#3434E2E2E2E2:#EEEEEEEEECEC";
+      visible-name = "Default";
+    };
+
   };
 }
