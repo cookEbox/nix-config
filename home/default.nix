@@ -6,6 +6,7 @@
                 ./tmux
                 ./nvim
                 ./gtk
+                ./dconf
 	 ];
    home = { 
      stateVersion = "23.05";
