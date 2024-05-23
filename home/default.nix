@@ -11,8 +11,7 @@
      stateVersion = "23.05";
      packages = with pkgs; [ 
        mate.mate-tweak
-       mate.mate-applets
-       calc
+       dconf2nix
        bat
        btop
        git

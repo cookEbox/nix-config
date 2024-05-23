@@ -50,6 +50,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    audacity
     alacritty
     neovim 
     wget
