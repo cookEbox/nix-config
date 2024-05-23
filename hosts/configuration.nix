@@ -30,8 +30,7 @@
     fwupd.enable = true;
     xserver = {
       enable = true;
-      # displayManager.lightdm.greeters.slick.enable = true;
-      # displayManager.lightdm.greeters.slick.theme.name = "gruvbox-dark-gtk";
+      displayManager.lightdm.greeters.slick.enable = true;
       desktopManager.mate.enable = true;
       layout = "gb";
       xkbOptions = "altwin:menu_win";
