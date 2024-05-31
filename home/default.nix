@@ -11,6 +11,8 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       networkmanagerapplet
+       ulauncher
        mate.mate-tweak
        dconf2nix
        bat
