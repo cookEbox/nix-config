@@ -1,12 +1,6 @@
-
-{ config, pkgs, ... }:
-
 {
 
   services = {
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-    }; 
     # Enable CUPS to print documents for a WiFi printer
     printing.enable = true;
     avahi = {

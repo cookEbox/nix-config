@@ -32,7 +32,12 @@
     virglrenderer
   ];
 
-  services.spice-vdagentd.enable = true;
+  services = { 
+    spice-vdagentd.enable = true;
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+    }; 
+  };
 
   # virtualisation services
   virtualisation = {
