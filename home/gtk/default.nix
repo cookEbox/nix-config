@@ -17,4 +17,5 @@
     };
   };
   programs.direnv.enable = true;
+  home.sessionVariables.GTK_THEME = "gruvbox-dark-gtk";
 }

@@ -7,10 +7,18 @@
       enable = true;
       nssmdns = true;
       openFirewall = true;
+      publish ={
+        enable = true;
+        addresses = true;
+        userServices = true;
+      };
     };
   };
 
-  hardware.opengl.enable = true;
+  hardware = { 
+    opengl.enable = true;
+    sane.enable = true;
+  };
 
   programs = {
     steam = {

@@ -32,6 +32,10 @@
       enable = true;
       displayManager.lightdm.greeters.slick.enable = true;
       desktopManager.mate.enable = true;
+      windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+      };
       layout = "gb";
       xkbOptions = "altwin:menu_win";
     }; 
@@ -45,7 +49,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     initialPassword = "P@ssword01";
-    extraGroups = [ "wheel" "libvirtd" ]; 
+    extraGroups = [ "wheel" "libvirtd" "lp" "scanner" ]; 
   };
 
   environment.systemPackages = with pkgs; [

@@ -3,6 +3,7 @@
 {
    imports = [ 
                 ./zsh
+                ./rofi
                 ./tmux
                 ./nvim
                 ./gtk
@@ -15,6 +16,8 @@
        ulauncher
        mate.mate-tweak
        dconf2nix
+       sane-frontends
+       gnome.simple-scan
        bat
        btop
        git
