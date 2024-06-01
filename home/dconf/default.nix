@@ -1,14 +1,14 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 with lib.hm.gvariant;
 
 {
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      cursor-theme = "gruvbox-dark-icons-gtk";
-      gtk-theme = "gruvbox-dark-gtk";
-      icon-theme = "gruvbox-dark-icons-gtk";
+      cursor-theme = "oomox-gruvbox-dark";
+      gtk-theme = "gruvbox-dark";
+      icon-theme = "oomox-gruvbox-dark";
     };
 
     "org/mate/desktop/accessibility/keyboard" = {

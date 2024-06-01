@@ -4,15 +4,15 @@
   gtk = { 
     enable = true;
     theme = {
-      name = "gruvbox-dark-gtk";
+      name = "gruvbox-dark";
       package = pkgs.gruvbox-dark-gtk;
     };
     iconTheme = {
-      name = "gruvbox-dark-icons-gtk";
+      name = "oomox-gruvbox-dark";
       package = pkgs.gruvbox-dark-icons-gtk;
     };
     cursorTheme = {
-      name = "gruvbox-dark-icons-gtk";
+      name = "oomox-gruvbox-dark";
       package = pkgs.gruvbox-dark-icons-gtk;
     };
   };

@@ -13,10 +13,8 @@
      stateVersion = "23.05";
      packages = with pkgs; [ 
        networkmanagerapplet
-       ulauncher
        mate.mate-tweak
        dconf2nix
-       sane-frontends
        gnome.simple-scan
        bat
        btop
