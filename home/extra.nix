@@ -21,7 +21,7 @@
        cargo
        zig
        jre8
-       llvmPackages_9.clang-unwrapped
+       llvmPackages_latest.clang-unwrapped
        direnv
        nodejs_20
        nil

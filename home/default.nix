@@ -8,6 +8,7 @@
                 ./nvim
                 ./gtk
                 ./dconf
+                ./alacritty
 	 ];
    home = { 
      stateVersion = "23.05";

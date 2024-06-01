@@ -36,8 +36,10 @@
         enable = true;
         enableContribAndExtras = true;
       };
-      layout = "gb";
-      xkbOptions = "altwin:menu_win";
+      xkb = {
+        layout = "gb";
+        options = "altwin:menu_win";
+      };
     }; 
     openssh.enable = true; 
   };
