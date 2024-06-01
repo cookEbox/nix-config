@@ -4,6 +4,6 @@
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.alacritty}/bin/alacritty";
-    theme = "gruvbox";
+    # theme = "~/.config/rofi/themes/gruvbox-dark-soft.rasi";
   };
 }
