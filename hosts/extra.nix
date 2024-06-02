@@ -2,6 +2,7 @@
 
   services = {
     # Enable CUPS to print documents for a WiFi printer
+    blueman.enable = true;
     printing.enable = true;
     avahi = {
       enable = true;
@@ -18,6 +19,10 @@
   hardware = { 
     opengl.enable = true;
     sane.enable = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
   };
 
   programs = {
