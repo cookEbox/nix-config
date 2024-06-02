@@ -5,11 +5,6 @@ with lib.hm.gvariant;
 
 {
   dconf.settings = {
-
-    "org/blueman/general" = {
-      window-properties = [ 534 350 696 414 ];
-    };
-
     "org/gnome/desktop/interface" = {
       color-scheme = "default";
       cursor-theme = "oomox-gruvbox-dark";
@@ -27,21 +22,6 @@ with lib.hm.gvariant;
       document-type = "photo";
       paper-height = 0;
       paper-width = 0;
-    };
-
-    "org/gtk/settings/file-chooser" = {
-      date-format = "regular";
-      location-mode = "path-bar";
-      show-hidden = false;
-      show-size-column = true;
-      show-type-column = true;
-      sidebar-width = 150;
-      sort-column = "name";
-      sort-directories-first = false;
-      sort-order = "ascending";
-      type-format = "category";
-      window-position = mkTuple [ 410 128 ];
-      window-size = mkTuple [ 1099 824 ];
     };
 
     "org/mate/caja/window-state" = {
@@ -106,7 +86,7 @@ with lib.hm.gvariant;
 
     "org/mate/desktop/session" = {
       auto-save-session = true;
-      session-start = 1717321136;
+      session-start = 1717369584;
     };
 
     "org/mate/desktop/sound" = {
@@ -170,7 +150,7 @@ with lib.hm.gvariant;
 
     "org/mate/panel/general" = {
       default-layout = "default";
-      object-id-list = [ "object-9" "object-10" "object-11" "object-12" "object-13" "object-15" "object-26" "object-14" "object-27" ];
+      object-id-list = [ "object-9" "object-10" "object-11" "object-12" "object-15" "object-13" ];
       toplevel-id-list = [ "toplevel-0" ];
     };
 
@@ -229,18 +209,10 @@ with lib.hm.gvariant;
     };
 
     "org/mate/panel/objects/object-13" = {
-      applet-iid = "GvcAppletFactory::GvcApplet";
+      applet-iid = "NotificationAreaAppletFactory::NotificationArea";
       object-type = "applet";
       panel-right-stick = false;
-      position = 1716;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-14" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1632;
+      position = 1709;
       toplevel-id = "toplevel-0";
     };
 
@@ -351,19 +323,11 @@ with lib.hm.gvariant;
       toplevel-id = "toplevel-0";
     };
 
-    "org/mate/panel/objects/object-26" = {
-      launcher-location = "blueman-manager.desktop";
-      object-type = "launcher";
+    "org/mate/panel/objects/object-28" = {
+      applet-iid = "NotificationAreaAppletFactory::NotificationArea";
+      object-type = "applet";
       panel-right-stick = false;
-      position = 1660;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-27" = {
-      launcher-location = "nm-connection-editor.desktop";
-      object-type = "launcher";
-      panel-right-stick = false;
-      position = 1690;
+      position = 1540;
       toplevel-id = "toplevel-0";
     };
 
@@ -428,6 +392,13 @@ with lib.hm.gvariant;
       screen = 0;
       y = 0;
       y-bottom = -1;
+    };
+
+    "org/mate/power-manager" = {
+      button-lid-ac = "suspend";
+      button-lid-battery = "suspend";
+      button-power = "interactive";
+      button-suspend = "suspend";
     };
 
     "org/mate/search-tool" = {
