@@ -17,13 +17,13 @@
        mate.mate-tweak
        dconf2nix
        gnome.simple-scan
+       lsd
        bat
        btop
        git
        git-crypt
        gnupg
        thunderbird
-       eza
        zathura
        onlyoffice-bin
        whatsapp-for-linux

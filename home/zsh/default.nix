@@ -12,12 +12,12 @@
        h = "nix develop --command nvim .";
        c = "clear";
        v = "nvim";
-       sl = "eza";
-       ls = "eza";
-       l = "eza -l";
-       la = "eza -la";
-       ll = "eza -lah";
-       lt = "eza --tree";
+       sl = "lsd";
+       ls = "lsd";
+       l = "lsd -l";
+       la = "lsd -lA";
+       ll = "lsd -lAh";
+       lt = "lsd --tree";
        ip = "ip --color=auto";
        # setup = "~/.config/nix-config/setup.sh";
        upgrade = "cd ~/.config/nix-config/; sudo nix flake update; cd -";
