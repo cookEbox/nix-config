@@ -13,11 +13,6 @@ with lib.hm.gvariant;
       toolkit-accessibility = false;
     };
 
-    "org/gnome/nm-applet/eap/3fcdd7f9-274d-4b8b-af23-3f8b86c41f39" = {
-      ignore-ca-cert = false;
-      ignore-phase2-ca-cert = false;
-    };
-
     "org/gnome/simple-scan" = {
       document-type = "photo";
       paper-height = 0;
@@ -74,6 +69,12 @@ with lib.hm.gvariant;
       action = "firefox";
       binding = "<Mod4>b";
       name = "Browser";
+    };
+
+    "org/mate/desktop/keybindings/custom4" = {
+      action = "thunderbird";
+      binding = "<Mod4>e";
+      name = "Email";
     };
 
     "org/mate/desktop/peripherals/keyboard" = {
@@ -159,22 +160,6 @@ with lib.hm.gvariant;
       show-places = false;
     };
 
-    "org/mate/panel/objects/object-0" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1479;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-1" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1595;
-      toplevel-id = "toplevel-0";
-    };
-
     "org/mate/panel/objects/object-10" = {
       applet-iid = "ClockAppletFactory::ClockApplet";
       object-type = "applet";
@@ -186,13 +171,6 @@ with lib.hm.gvariant;
     "org/mate/panel/objects/object-10/prefs" = {
       custom-format = "";
       format = "24-hour";
-    };
-
-    "org/mate/panel/objects/object-11" = {
-      object-type = "separator";
-      panel-right-stick = false;
-      position = 1230;
-      toplevel-id = "toplevel-0";
     };
 
     "org/mate/panel/objects/object-12" = {
@@ -235,149 +213,6 @@ with lib.hm.gvariant;
       temperature-unit = "Centigrade";
     };
 
-    "org/mate/panel/objects/object-16" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = true;
-      position = 59;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-17" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1659;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-18" = {
-      applet-iid = "NetspeedAppletFactory::NetspeedApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1453;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-19" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1471;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-2" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1595;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-20" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1496;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-21" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1496;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-22" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1485;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-23" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1485;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-24" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1411;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-25" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1411;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-28" = {
-      applet-iid = "NotificationAreaAppletFactory::NotificationArea";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1540;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-3" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = true;
-      position = 60;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-4" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = true;
-      position = 61;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-5" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1447;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-6" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = true;
-      position = 55;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-7" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = true;
-      position = 56;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-8" = {
-      applet-iid = "BattstatAppletFactory::BattstatApplet";
-      object-type = "applet";
-      panel-right-stick = true;
-      position = 57;
-      toplevel-id = "toplevel-0";
-    };
 
     "org/mate/panel/objects/object-9" = {
       object-type = "menu-bar";
@@ -413,7 +248,6 @@ with lib.hm.gvariant;
     };
 
     "org/mate/settings-daemon/plugins/media-keys" = {
-      email = "<Mod4>e";
       home = "<Mod4>f";
       power = "<Mod4>q";
       search = "disabled";
