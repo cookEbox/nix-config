@@ -128,7 +128,7 @@ with lib.hm.gvariant;
       move-to-workspace-3 = "<Shift><Mod4>sterling";
       move-to-workspace-4 = "<Shift><Mod4>dollar";
       move-to-workspace-5 = "<Shift><Mod4>percent";
-      move-to-workspace-6 = "<Shift><Mod4>percent";
+      move-to-workspace-6 = "<Shift><Mod4>asciicircum";
       move-to-workspace-down = "disabled";
       move-to-workspace-left = "disabled";
       move-to-workspace-right = "disabled";
