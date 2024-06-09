@@ -4,7 +4,6 @@
    imports = [ 
                 ../../../home/default.nix
                 ../../../home/extra.nix
-                ../../../home/dconf/default.nix
                 ../../../home/dconf/desktop.nix
 	 ];
    home = { 

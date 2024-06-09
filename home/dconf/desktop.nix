@@ -2,7 +2,12 @@
 { lib, ... }:
 
 with lib.hm.gvariant;
+
 {
+  imports = [ ./default.nix ];
+
+
+  dconf.settings = {
     "org/mate/panel/general" = {
       default-layout = "default";
       object-id-list = [ "object-9" "object-10" "object-12" "object-15" "object-13" ];
@@ -95,4 +100,5 @@ with lib.hm.gvariant;
       y = 0;
       y-bottom = -1;
     };
+  };
 }
