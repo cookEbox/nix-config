@@ -18,7 +18,6 @@
        dconf2nix
        gnome.simple-scan
        lsd
-       xxd
        bat
        btop
        git
