@@ -6,6 +6,16 @@ with lib.hm.gvariant;
   imports = [ ./default.nix ];
 
   dconf.settings = {
+
+    "org/mate/desktop/background" = {
+      color-shading-type = "vertical-gradient";
+      picture-filename = "/nix/store/v48ywzz713gnh9ggas4hv3xafc1r7045-mate-screensaver-1.26.2/share/backgrounds/cosmos/background-1.xml";
+      picture-options = "zoom";
+      primary-color = "rgb(88,145,188)";
+      secondary-color = "rgb(60,143,37)";
+      show-desktop-icons = false;
+    };
+
     "org/mate/panel/general" = {
       default-layout = "default";
       object-id-list = [ "object-9" "object-10" "object-11" "object-12" "object-15" "object-13" ];
