@@ -18,6 +18,7 @@
        dconf2nix
        gnome.simple-scan
        lsd
+       xxd
        bat
        btop
        git
@@ -32,6 +33,7 @@
        xclip
        gccgo13
        ripgrep
+       go
        tldr
        nerdfonts
        hydra-check
