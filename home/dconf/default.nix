@@ -38,15 +38,6 @@ with lib.hm.gvariant;
       exec = "alacritty";
     };
 
-    "org/mate/desktop/background" = {
-      color-shading-type = "vertical-gradient";
-      picture-filename = "/home/nick/Pictures/wallpapers/0016.jpg";
-      picture-options = "zoom";
-      primary-color = "rgb(88,145,188)";
-      secondary-color = "rgb(60,143,37)";
-      show-desktop-icons = false;
-    };
-
     "org/mate/desktop/interface" = {
       gtk-decoration-layout = ":minimize,maximize,close";
       gtk-theme = "gruvbox-dark";
