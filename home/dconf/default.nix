@@ -7,9 +7,15 @@ with lib.hm.gvariant;
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "default";
+      cursor-size = 24;
       cursor-theme = "oomox-gruvbox-dark";
+      enable-animations = true;
+      font-name = "Noto Sans,  10";
       gtk-theme = "gruvbox-dark";
       icon-theme = "oomox-gruvbox-dark";
+      scaling-factor = mkUint32 1;
+      text-scaling-factor = 1.0;
+      toolbar-style = "text";
       toolkit-accessibility = false;
     };
 
@@ -21,6 +27,7 @@ with lib.hm.gvariant;
 
     "org/mate/caja/window-state" = {
       geometry = "800x550+559+264";
+      icon-theme = "oomox-gruvbox-dark";
       maximized = false;
       start-with-sidebar = true;
       start-with-status-bar = true;
@@ -33,7 +40,7 @@ with lib.hm.gvariant;
 
     "org/mate/desktop/background" = {
       color-shading-type = "vertical-gradient";
-      picture-filename = "/nix/store/v48ywzz713gnh9ggas4hv3xafc1r7045-mate-screensaver-1.26.2/share/backgrounds/cosmos/background-1.xml";
+      picture-filename = "/home/nick/Pictures/wallpapers/0016.jpg";
       picture-options = "zoom";
       primary-color = "rgb(88,145,188)";
       secondary-color = "rgb(60,143,37)";
@@ -53,14 +60,8 @@ with lib.hm.gvariant;
       name = "WhatsApp for Linux";
     };
 
-    "org/mate/desktop/keybindings/custom1" = {
-      action = "/nix/store/l9c6lb4566p732rd8csy4v7cwyl0s62f-caja-1.26.3/bin/caja-autorun-software";
-      binding = "<Alt>Tab";
-      name = "Autorun Prompt";
-    };
-
     "org/mate/desktop/keybindings/custom2" = {
-      action = "rofi -show run";
+      action = "rofi -show drun";
       binding = "<Mod4>space";
       name = "Rofi";
     };
@@ -74,7 +75,7 @@ with lib.hm.gvariant;
     "org/mate/desktop/keybindings/custom4" = {
       action = "thunderbird";
       binding = "<Mod4>e";
-      name = "Email";
+      name = "Thunderbird";
     };
 
     "org/mate/desktop/peripherals/keyboard" = {
@@ -87,7 +88,7 @@ with lib.hm.gvariant;
 
     "org/mate/desktop/session" = {
       auto-save-session = true;
-      session-start = 1717369584;
+      session-start = 1717662849;
     };
 
     "org/mate/desktop/sound" = {
@@ -136,7 +137,7 @@ with lib.hm.gvariant;
       tile-to-side-e = "<Mod4>Right";
       tile-to-side-w = "<Mod4>Left";
       toggle-maximized = "<Mod4>Up";
-      unmaximize = "<Shift><Mod4>Up";
+      unmaximize = "<Mod4>Down";
     };
 
     "org/mate/marco/workspace-names" = {
@@ -149,85 +150,6 @@ with lib.hm.gvariant;
       name-7 = "vm";
     };
 
-    "org/mate/panel/general" = {
-      default-layout = "default";
-      object-id-list = [ "object-9" "object-10" "object-11" "object-12" "object-15" "object-13" ];
-      toplevel-id-list = [ "toplevel-0" ];
-    };
-
-    "org/mate/panel/menubar" = {
-      show-desktop = true;
-      show-places = false;
-    };
-
-    "org/mate/panel/objects/object-10" = {
-      applet-iid = "ClockAppletFactory::ClockApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1744;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-10/prefs" = {
-      custom-format = "";
-      format = "24-hour";
-    };
-
-    "org/mate/panel/objects/object-12" = {
-      applet-iid = "WnckletFactory::WorkspaceSwitcherApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 202;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-12/prefs" = {
-      display-workspace-names = true;
-      wrap-workspaces = false;
-    };
-
-    "org/mate/panel/objects/object-13" = {
-      applet-iid = "NotificationAreaAppletFactory::NotificationArea";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1709;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-15" = {
-      applet-iid = "MateWeatherAppletFactory::MateWeatherApplet";
-      object-type = "applet";
-      panel-right-stick = false;
-      position = 1973;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/objects/object-15/prefs" = {
-      coordinates = "52-27-00N 001-43-59W";
-      distance-unit = "km";
-      location1 = "EGBB";
-      location2 = ":wm";
-      location3 = "---";
-      location4 = "Birmingham";
-      speed-unit = "km/h";
-      temperature-unit = "Centigrade";
-    };
-
-
-    "org/mate/panel/objects/object-9" = {
-      object-type = "menu-bar";
-      panel-right-stick = false;
-      position = 0;
-      toplevel-id = "toplevel-0";
-    };
-
-    "org/mate/panel/toplevels/toplevel-0" = {
-      monitor = 0;
-      orientation = "top";
-      screen = 0;
-      y = 0;
-      y-bottom = -1;
-    };
 
     "org/mate/power-manager" = {
       button-lid-ac = "suspend";
@@ -248,6 +170,7 @@ with lib.hm.gvariant;
     };
 
     "org/mate/settings-daemon/plugins/media-keys" = {
+      email = "<Mod4>e";
       home = "<Mod4>f";
       power = "<Mod4>q";
       search = "disabled";
@@ -260,6 +183,24 @@ with lib.hm.gvariant;
       foreground-color = "#000000000000";
       palette = "#2E2E34343636:#CCCC00000000:#4E4E9A9A0606:#C4C4A0A00000:#34346565A4A4:#757550507B7B:#060698209A9A:#D3D3D7D7CFCF:#555557575353:#EFEF29292929:#8A8AE2E23434:#FCFCE9E94F4F:#72729F9FCFCF:#ADAD7F7FA8A8:#3434E2E2E2E2:#EEEEEEEEECEC";
       visible-name = "Default";
+    };
+
+    "org/virt-manager/virt-manager" = {
+      manager-window-height = 550;
+      manager-window-width = 550;
+      xmleditor-enabled = true;
+    };
+
+    "org/virt-manager/virt-manager/confirm" = {
+      delete-storage = false;
+      forcepoweroff = false;
+      removedev = true;
+      unapplied-dev = true;
+    };
+
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
     };
 
     "org/x/warpinator/preferences" = {

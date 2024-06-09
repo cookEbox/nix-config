@@ -7,7 +7,6 @@
                 ./tmux
                 ./nvim
                 ./gtk
-                ./dconf
                 ./alacritty
 	 ];
    home = { 
