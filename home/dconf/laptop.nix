@@ -9,7 +9,8 @@ with lib.hm.gvariant;
 
     "org/mate/desktop/background" = {
       color-shading-type = "vertical-gradient";
-      picture-filename = "/nix/store/v48ywzz713gnh9ggas4hv3xafc1r7045-mate-screensaver-1.26.2/share/backgrounds/cosmos/background-1.xml";
+      picture-filename = "/nix/store/qm1pdksgsmwhgj2qazhxf9p78zfbqz7w-mate-screensaver-1.28.0/share/backgrounds/cosmos/background-1.xml";
+
       picture-options = "zoom";
       primary-color = "rgb(88,145,188)";
       secondary-color = "rgb(60,143,37)";
