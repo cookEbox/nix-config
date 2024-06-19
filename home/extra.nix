@@ -19,6 +19,8 @@
        obs-studio
 
        cargo
+       nasm
+       asm-lsp
        zig
        jre8
        llvmPackages_latest.clang-unwrapped

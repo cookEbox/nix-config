@@ -20,6 +20,10 @@ lsp.configure('clangd', {
   force_setup = true
 })
 
+lsp.configure('asm_lsp', {
+  force_setup = true
+})
+
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 cmp.setup({
