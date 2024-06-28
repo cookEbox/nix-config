@@ -95,6 +95,11 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 -- My new ones
+
+
+vim.keymap.set("v", "ga", ":EasyAlign ")
+vim.keymap.set("n", "ga", ":EasyAlign ")
+
 vim.keymap.set("i", "<C-f>", "<esc>la")
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)

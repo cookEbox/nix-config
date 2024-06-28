@@ -85,6 +85,7 @@
         plugin = snippets-nvim;
         config = "lua require('snippets').use_suggested_mappings()";
       }
+      vim-easy-align
       # {
       #   plugin = friendly-snippets;
       #   config = "lua require('friendly-snippets').setup()"
