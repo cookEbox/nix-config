@@ -17,6 +17,7 @@
        dconf2nix
        gnome.simple-scan
        lsd
+       android-file-transfer
        bat
        btop
        git
