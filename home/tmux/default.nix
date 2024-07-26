@@ -35,10 +35,10 @@
       bind C-s last-window
 
       set-option -g status-position top
-      bind -n M-Left select-pane -L
-      bind -n M-Right select-pane -R
-      bind -n M-Up select-pane -U
-      bind -n M-Down select-pane -D
+      bind -n C-l select-pane -L
+      bind -n C-; select-pane -R
+      bind -n C-j select-pane -U
+      bind -n C-k select-pane -D
        
       bind -n S-Left previous-window
       bind -n S-Right next-window
