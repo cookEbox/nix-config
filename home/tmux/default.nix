@@ -27,21 +27,22 @@
         }
       ];
 
+      # set-option -g status-position top
     extraConfig = ''
       unbind C-q
       unbind q
       set-option -g prefix C-s
       bind s send-prefix
       bind C-s last-window
+      set -g status off 
 
-      set-option -g status-position top
       bind -n C-l select-pane -L
       bind -n C-; select-pane -R
       bind -n C-j select-pane -U
       bind -n C-k select-pane -D
        
-      bind -n S-Left previous-window
-      bind -n S-Right next-window
+      bind -n C-S-l previous-window
+      bind -n C-S-r next-window
 
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf
