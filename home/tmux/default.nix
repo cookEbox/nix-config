@@ -41,8 +41,8 @@
       bind -n C-j select-pane -U
       bind -n C-k select-pane -D
        
-      bind -n C-S-l previous-window
-      bind -n C-S-r next-window
+      bind -n C-J previous-window
+      bind -n C-K next-window
 
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf

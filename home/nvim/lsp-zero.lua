@@ -8,6 +8,10 @@ lsp.configure('lua_ls', {
   force_setup = true,
 })
 
+lsp.configure('pylsp', {
+  force_setup = true,
+})
+
 lsp.configure('hls', {
   force_setup = true
 })
