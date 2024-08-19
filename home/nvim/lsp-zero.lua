@@ -2,7 +2,7 @@ require('lsp-zero').setup{}
 
 local lsp = require("lsp-zero")
 lsp.preset("recommended")
-
+local lspconfig = require('lspconfig')
 -- Use system installed lsps
 lsp.configure('lua_ls', {
   force_setup = true,
@@ -13,7 +13,15 @@ lsp.configure('pylsp', {
 })
 
 lsp.configure('hls', {
-  force_setup = true
+  force_setup = true,
+  root_dir = function(fname)
+    return lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()  -- Example: fall back to current working directory
+  end,
+  settings = {
+    haskell = {
+      formattingProvider = 'ormolu'
+    }
+  }
 })
 
 lsp.configure('nil_ls', {
