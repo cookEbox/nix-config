@@ -15,7 +15,16 @@ lsp.configure('pylsp', {
 lsp.configure('hls', {
   force_setup = true,
   root_dir = function(fname)
-    return lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()  -- Example: fall back to current working directory
+    -- First, search for a .cabal file in the current or parent directories
+    local cabal_root = lspconfig.util.root_pattern('*.cabal')(fname)
+
+    -- If a .cabal file is found, use that as the root
+    if cabal_root then
+      return cabal_root
+    end
+
+    -- Otherwise, fall back to searching for a cabal.project or .git directory
+    return lspconfig.util.root_pattern('cabal.project', '.git')(fname)
   end,
   settings = {
     haskell = {
@@ -85,8 +94,8 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
-lsp.setup()
 lsp.extend_lspconfig()
+lsp.setup()
 vim.g.lsp_zero_extend_lspconfig = 0
 
 vim.diagnostic.config({

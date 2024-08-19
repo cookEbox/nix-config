@@ -46,7 +46,7 @@ vim.o.incsearch = true
 -- Make line numbers default
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.o.colorcolumn = "80"
+-- vim.o.colorcolumn = "80"
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
