@@ -12,6 +12,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       zed-editor
        qutebrowser
        nix-direnv
        nix-prefetch-git
