@@ -12,7 +12,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
-       nic-direnv
+       nix-direnv
        nix-prefetch-git
        networkmanagerapplet
        mate.mate-tweak
