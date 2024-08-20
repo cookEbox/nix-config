@@ -24,6 +24,7 @@
       plenary-nvim
       indentLine   
       undotree
+      zen-mode-nvim
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";
