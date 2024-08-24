@@ -2,7 +2,9 @@ require('lsp-zero').setup{}
 
 local lsp = require("lsp-zero")
 lsp.preset("recommended")
+
 local lspconfig = require('lspconfig')
+
 -- Use system installed lsps
 lsp.configure('lua_ls', {
   force_setup = true,
@@ -14,17 +16,10 @@ lsp.configure('pylsp', {
 
 lsp.configure('hls', {
   force_setup = true,
+  cmd = { 'haskell-language-server-wrapper', '--lsp' },
+  filetypes = { 'haskell', 'lhaskell' },
   root_dir = function(fname)
-    -- First, search for a .cabal file in the current or parent directories
-    local cabal_root = lspconfig.util.root_pattern('*.cabal')(fname)
-
-    -- If a .cabal file is found, use that as the root
-    if cabal_root then
-      return cabal_root
-    end
-
-    -- Otherwise, fall back to searching for a cabal.project or .git directory
-    return lspconfig.util.root_pattern('cabal.project', '.git')(fname)
+    return lsp.util.root_pattern('flake.nix', '*.cabal', 'stack.yaml', 'package.yaml', '.git')(fname) or vim.fn.getcwd()
   end,
   settings = {
     haskell = {
@@ -94,8 +89,8 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
-lsp.extend_lspconfig()
 lsp.setup()
+lsp.extend_lspconfig()
 vim.g.lsp_zero_extend_lspconfig = 0
 
 vim.diagnostic.config({
