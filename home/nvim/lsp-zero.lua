@@ -1,9 +1,9 @@
 require('lsp-zero').setup{}
 
 local lsp = require("lsp-zero")
+local lspconfig = require('lspconfig')
 lsp.preset("recommended")
 
-local lspconfig = require('lspconfig')
 
 -- Use system installed lsps
 lsp.configure('lua_ls', {
@@ -19,7 +19,7 @@ lsp.configure('hls', {
   cmd = { 'haskell-language-server-wrapper', '--lsp' },
   filetypes = { 'haskell', 'lhaskell' },
   root_dir = function(fname)
-    return lsp.util.root_pattern('flake.nix', '*.cabal', 'stack.yaml', 'package.yaml', '.git')(fname) or vim.fn.getcwd()
+    return lspconfig.util.root_pattern('flake.nix', '*.cabal', 'stack.yaml', 'package.yaml', '.git')(fname) or vim.fn.getcwd()
   end,
   settings = {
     haskell = {
