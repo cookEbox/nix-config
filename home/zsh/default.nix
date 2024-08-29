@@ -30,6 +30,7 @@
        push = "cd ~/.config/nix-config/; git push -u origin main; cd - ";
        server = "ssh root@192.168.1.140";
        fware = "fwupdmgr";
+       blank = "clear; cat >/dev/null";
        };
      history = {
        size = 10000;

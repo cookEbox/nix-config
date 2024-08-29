@@ -19,8 +19,11 @@ lsp.configure('hls', {
   cmd = { 'haskell-language-server-wrapper', '--lsp' },
   filetypes = { 'haskell', 'lhaskell' },
   root_dir = function(fname)
-    return lspconfig.util.root_pattern('flake.nix', '*.cabal', 'stack.yaml', 'package.yaml', '.git')(fname) or vim.fn.getcwd()
-  end,
+        -- Try to detect root using root_pattern
+        local root = lspconfig.util.root_pattern('flake.nix', 'cabal.project', 'stack.yaml', '.git')(fname)
+        -- Fallback to current working directory if no root is found
+        return root or lspconfig.util.path.dirname(fname)
+    end,
   settings = {
     haskell = {
       formattingProvider = 'ormolu'
