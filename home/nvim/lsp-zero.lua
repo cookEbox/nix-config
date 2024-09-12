@@ -1,9 +1,7 @@
 require('lsp-zero').setup{}
 
 local lsp = require("lsp-zero")
-local lspconfig = require('lspconfig')
 lsp.preset("recommended")
-
 
 -- Use system installed lsps
 lsp.configure('lua_ls', {
@@ -15,20 +13,7 @@ lsp.configure('pylsp', {
 })
 
 lsp.configure('hls', {
-  force_setup = true,
-  cmd = { 'haskell-language-server-wrapper', '--lsp' },
-  filetypes = { 'haskell', 'lhaskell' },
-  root_dir = function(fname)
-        -- Try to detect root using root_pattern
-        local root = lspconfig.util.root_pattern('flake.nix', 'cabal.project', 'stack.yaml', '.git')(fname)
-        -- Fallback to current working directory if no root is found
-        return root or lspconfig.util.path.dirname(fname)
-    end,
-  settings = {
-    haskell = {
-      formattingProvider = 'ormolu'
-    }
-  }
+  force_setup = true
 })
 
 lsp.configure('nil_ls', {

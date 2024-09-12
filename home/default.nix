@@ -8,6 +8,7 @@
                 ./nvim
                 ./gtk
                 ./alacritty
+                ./starship
 	 ];
    home = { 
      stateVersion = "23.05";
