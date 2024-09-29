@@ -19,6 +19,7 @@
        ll = "lsd -lAh";
        lt = "lsd --tree";
        ip = "ip --color=auto";
+       sb = "sbt -Duser.dir=/home/nick/Dev/Java/Scala/myFirstScala/";
        # setup = "~/.config/nix-config/setup.sh";
        upgrade = "cd ~/.config/nix-config/; sudo nix flake update; cd -";
        update = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure; cd -; source ~/.zshrc";
@@ -31,6 +32,7 @@
        server = "ssh root@192.168.1.140";
        fware = "fwupdmgr";
        blank = "clear; cat >/dev/null";
+       sql = "rlwrap sqlite3";
        };
      history = {
        size = 10000;

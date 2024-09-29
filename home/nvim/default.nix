@@ -30,6 +30,10 @@
         config = "colorscheme gruvbox";
       }
       {
+        plugin = which-key-nvim;
+        config = "lua require('lualine').setup()";
+      }
+      {
         plugin = lualine-nvim;
         config = "lua require('lualine').setup()";
       }

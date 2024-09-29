@@ -56,17 +56,22 @@
     extraGroups = [ "wheel" "libvirtd" "lp" "scanner" ]; 
   };
 
-  environment.systemPackages = with pkgs; [
-    audacity
-    alacritty
-    neovim 
-    wget
-    firefox
-    htop
-    neofetch
-    pfetch
-    gnome.adwaita-icon-theme
-  ];
+  environment = { 
+    sessionVariables = {
+      DIRENV_LOG_FORMAT = "\"\"";
+      };
+    systemPackages = with pkgs; [
+      audacity
+      alacritty
+      neovim 
+      wget
+      firefox
+      htop
+      neofetch
+      pfetch
+      gnome.adwaita-icon-theme
+    ];
+  };
 
   programs = {
     zsh.enable = true;

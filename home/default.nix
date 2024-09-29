@@ -13,6 +13,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       redshift
        gitui
        tty-clock
        zed-editor

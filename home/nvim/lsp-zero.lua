@@ -1,7 +1,9 @@
-require('lsp-zero').setup{}
+-- require('lsp-zero').setup{}
 
 local lsp = require("lsp-zero")
 lsp.preset("recommended")
+
+lsp.extend_lspconfig()
 
 -- Use system installed lsps
 lsp.configure('lua_ls', {
@@ -49,8 +51,6 @@ cmp.setup({
   })
 })
 
--- :help lsp-zero-guide:fix-extend-lspconfig
-
 -- lsp.setup_nvim_cmp({
 --   mapping = cmp_mappings
 -- })
@@ -82,8 +82,6 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 lsp.setup()
-lsp.extend_lspconfig()
-vim.g.lsp_zero_extend_lspconfig = 0
 
 vim.diagnostic.config({
     virtual_text = true
