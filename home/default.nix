@@ -9,6 +9,7 @@
                 ./gtk
                 ./alacritty
                 ./starship
+                ./emacs
 	 ];
    home = { 
      stateVersion = "23.05";
