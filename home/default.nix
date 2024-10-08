@@ -14,10 +14,10 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       ranger
        redshift
        gitui
        tty-clock
-       zed-editor
        qutebrowser
        nix-direnv
        nix-prefetch-git
