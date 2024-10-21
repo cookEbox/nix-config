@@ -11,6 +11,7 @@
       vim.defer_fn(function()
         vim.cmd [[
           luafile ~/.config/nix-config/home/nvim/lsp-zero.lua
+          luafile ~/.config/nix-config/home/nvim/dap.lua
           luafile ~/.config/nix-config/home/nvim/telescope.lua
           luafile ~/.config/nix-config/home/nvim/harpoon.lua
         ]]
@@ -25,6 +26,9 @@
       indentLine   
       undotree
       zen-mode-nvim
+      nvim-metals
+      nvim-dap-ui
+      telescope-dap-nvim
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";

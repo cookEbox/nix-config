@@ -31,41 +31,37 @@ lsp.configure('asm_lsp', {
 })
 
 lsp.configure('metals', {
-  force_setup = true
-})
-
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-cmp.setup({
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+  force_setup = true,
+  settings = {
+    showImplicitArguments = true,
+    superMethodLensesEnabled = true,
+    showInferredType = true,
+    excludedPackages = {},
   },
-  mappings = lsp.defaults.cmp_mappings({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-z>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<Tab>'] = nil,
-    ['<S-Tab>'] = nil,
-  })
+  init_options = {
+    statusBarProvider = "on",
+    inpurBoxProvider = "on",
+  },
+  on_attach = function(client, bufnr)
+    require("metals").setup_dap() -- Ensure DAP setup for Scala debugging
+    require("dapui").setup() -- Optional, if you use dap-ui
+  end,
 })
 
--- lsp.setup_nvim_cmp({
---   mapping = cmp_mappings
--- })
+lsp.set_sign_icons({
+  error = '✘',
+  warn  = '▲',
+  hint  = '⚑',
+  info  = '»'
+})
 
-lsp.set_preferences({
-    suggest_lsp_servers = false,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+        underline = false
     }
-})
+)
 
--- look at the primagens setup
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
@@ -75,10 +71,18 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float(nil, { focusable = true }) end, opts)
   vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", '<leader>dd', '<cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
   vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+  vim.keymap.set("n", "<leader>dc", function() require'dap'.continue() end, opts)
+  vim.keymap.set("n", "<leader>db", function() require'dap'.toggle_breakpoint() end, opts)
+  vim.keymap.set("n", "<leader>ds", function() require'dap'.step_over() end, opts)
+  vim.keymap.set("n", "<leader>di", function() require'dap'.step_into() end, opts)
+  vim.keymap.set("n", "<leader>do", function() require'dap'.step_out() end, opts)
+  vim.keymap.set("n", "<leader>uo", function() require'dapui'.open() end, opts)
+  vim.keymap.set("n", "<leader>uc", function() require'dapui'.close() end, opts)
 end)
 
 lsp.setup()
