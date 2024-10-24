@@ -36,6 +36,11 @@
     spice-vdagentd.enable = true;
     xserver = {
       videoDrivers = [ "nvidia" ];
+      screenSection = ''
+        Option         "metamodes" "DP-3: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}, DP-0: nvidia-auto-select +1920+0 {ForceFullCompositionPipeline=On}"
+        Option         "AllowIndirectGLXProtocol" "off"
+        Option         "TripleBuffer" "on"
+    '';
     }; 
   };
 
