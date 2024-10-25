@@ -29,7 +29,7 @@
        config = "nvim ~/.config/nix-config/";
        add = "~/.config/nix-config/gitaddcommit.sh";
        push = "cd ~/.config/nix-config/; git push -u origin main; cd - ";
-       server = "ssh root@192.168.1.140";
+       server = "ssh nick@192.168.1.140";
        fware = "fwupdmgr";
        blank = "clear; cat >/dev/null";
        sql = "rlwrap sqlite3";
