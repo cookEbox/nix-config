@@ -103,7 +103,7 @@ vim.keymap.set("n", "ga", ":EasyAlign ")
 
 vim.keymap.set("i", "<C-f>", "<esc>la")
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
 
 -- moves highlighted lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

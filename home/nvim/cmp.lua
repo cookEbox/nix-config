@@ -25,8 +25,8 @@ cmp.setup({
         -- Use <CR>(Enter) to confirm selection
         -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-z>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
+        -- ['<C-Space>'] = cmp.mapping.complete(),
 
         -- A super tab
         -- sourc: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
