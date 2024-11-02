@@ -33,7 +33,7 @@
        fware = "fwupdmgr";
        blank = "clear; cat >/dev/null";
        sql = "rlwrap sqlite3";
-       hsync= "clear && ghcid -c 'cabal repl wa --repl-options=-fobject-code' -T ':main' --no-height-limit";
+       hsync= "echo \"clear && ghcid -c 'cabal repl {PROJECT NAME} --repl-options=-fobject-code' -T ':main' --no-height-limit\"";
        };
      history = {
        size = 10000;
