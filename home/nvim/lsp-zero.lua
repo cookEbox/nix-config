@@ -10,6 +10,10 @@ lsp.configure('lua_ls', {
   force_setup = true,
 })
 
+lsp.configure('ts_ls', {
+  force_setup = true,
+})
+
 lsp.configure('pylsp', {
   force_setup = true,
 })

@@ -14,6 +14,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       pcmanfm
        deja-dup
        ranger
        redshift
