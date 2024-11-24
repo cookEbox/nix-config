@@ -14,6 +14,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       rclone
        deja-dup
        ranger
        redshift
