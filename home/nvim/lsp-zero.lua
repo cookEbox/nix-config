@@ -10,7 +10,7 @@ lsp.configure('lua_ls', {
   force_setup = true,
 })
 
-lsp.configure('ts_ls', {
+lsp.configure('tsserver', {
   force_setup = true,
 })
 
