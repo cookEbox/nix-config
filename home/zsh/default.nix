@@ -34,6 +34,8 @@
        blank = "clear; cat >/dev/null";
        sql = "rlwrap sqlite3";
        hsync= "echo \"clear && ghcid -c 'cabal repl {PROJECT NAME} --repl-options=-fobject-code' -T ':main' --no-height-limit\"";
+       syncup = "rclone copy /home/nick/Documents/Remote/Drive/ Drive:";
+       syncdwn = "rclone copy Drive: /home/nick/Documents/Remote/Drive/";
        };
      history = {
        size = 10000;
