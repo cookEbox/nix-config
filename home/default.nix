@@ -14,6 +14,7 @@
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
+       jitsi
        rclone
        deja-dup
        ranger
