@@ -36,6 +36,7 @@
        hsync= "echo \"clear && ghcid -c 'cabal repl {PROJECT NAME} --repl-options=-fobject-code' -T ':main' --no-height-limit\"";
        syncup = "rclone copy /home/nick/Documents/Remote/Drive/ Drive:";
        syncdwn = "rclone copy Drive: /home/nick/Documents/Remote/Drive/";
+       rpass = "< /dev/urandom tr -dc _A-Z-a-z-0-9'!\"#$%&()*+,-./:;<=>?@[\\]^_`{|}~' | head -c${1:-32};echo;";
        };
      history = {
        size = 10000;
