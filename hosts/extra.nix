@@ -17,7 +17,7 @@
   };
 
   hardware = { 
-    opengl.enable = true;
+    graphics.enable = true;
     sane.enable = true;
     bluetooth = {
       enable = true;

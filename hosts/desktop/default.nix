@@ -44,6 +44,8 @@
     }; 
   };
 
+  hardware.nvidia.open = false;
+
   # virtualisation services
   virtualisation = {
     libvirtd = {

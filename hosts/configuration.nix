@@ -2,7 +2,7 @@
 
 {
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     settings = {
       # substituters = [ "https://nixcache.reflex-frp.org" ];
       # trusted-public-keys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
@@ -46,8 +46,7 @@
     openssh.enable = true; 
   };
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
 
   users.users.nick = {
     shell = pkgs.zsh;
@@ -69,7 +68,7 @@
       htop
       neofetch
       pfetch
-      gnome.adwaita-icon-theme
+      adwaita-icon-theme
       haskellPackages.xmonad-contrib
       haskellPackages.xmonad-extras
     ];

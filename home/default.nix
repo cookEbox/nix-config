@@ -26,7 +26,7 @@
        networkmanagerapplet
        mate.mate-tweak
        dconf2nix
-       gnome.simple-scan
+       simple-scan
        lsd
        android-file-transfer
        bat
