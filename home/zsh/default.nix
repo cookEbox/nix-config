@@ -7,9 +7,9 @@
      shellAliases = {
        ".." = "cd ..";
        "..." = "cd ../..";
+       "...." = "cd ../../..";
        cat = "bat";
        n = "nvim .";
-       h = "nix develop --command nvim .";
        c = "clear";
        v = "nvim";
        sl = "lsd";
@@ -19,11 +19,8 @@
        ll = "lsd -lAh";
        lt = "lsd --tree";
        ip = "ip --color=auto";
-       sb = "sbt -Duser.dir=/home/nick/Dev/Java/Scala/myFirstScala/";
-       # setup = "~/.config/nix-config/setup.sh";
        upgrade = "cd ~/.config/nix-config/; sudo nix flake update; cd -";
        update = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure; cd -; source ~/.zshrc";
-       newversion = "cd ~/.config/nix-config/; sudo nixos-rebuild --upgrade --flake '.#' --impure; cd -; source ~/.zshrc";
        clean = "cd ~/.config/nix-config/; sudo nixos-rebuild switch --flake '.#' --impure --upgrade; nix-collect-garbage -d; nix-store --optimise -vv; cd -";
        lockup = "cd ~/.config/nix-config/; nix build --recreate-lock-file; sudo nixos-rebuild switch --flake '.#' --impure --upgrade; nix-store --gc; nix-store --optimise -vv; cd -";
        config = "nvim ~/.config/nix-config/";
@@ -33,7 +30,6 @@
        fware = "fwupdmgr";
        blank = "clear; cat >/dev/null";
        sql = "rlwrap sqlite3";
-       hsync= "echo \"clear && ghcid -c 'cabal repl {PROJECT NAME} --repl-options=-fobject-code' -T ':main' --no-height-limit\"";
        syncup = "rclone copy /home/nick/Documents/Remote/Drive/ Drive:";
        syncdwn = "rclone copy Drive: /home/nick/Documents/Remote/Drive/";
        rpass = "< /dev/urandom tr -dc _A-Z-a-z-0-9'!\"#$%&()*+,-./:;<=>?@[\\]^_`{|}~' | head -c\${1:-32};echo;";
@@ -43,16 +39,6 @@
        path = "/home/nick/.config/zsh/history";
      };
      plugins = with pkgs; [
-       # {
-       #   name = "agkozak-zsh-prompt";
-       #   src = fetchFromGitHub {
-       #     owner = "agkozak";
-       #     repo = "agkozak-zsh-prompt";
-       #     rev = "v3.7.0";
-       #     sha256 = "1iz4l8777i52gfynzpf6yybrmics8g4i3f1xs3rqsr40bb89igrs";
-       #   };
-       #   file = "agkozak-zsh-prompt.plugin.zsh";
-       # }
        {
          name = "formarks";
          src = fetchFromGitHub {
