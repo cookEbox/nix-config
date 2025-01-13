@@ -19,7 +19,8 @@ lsp.configure('pylsp', {
 })
 
 lsp.configure('hls', {
-  force_setup = true
+  force_setup = true,
+  root_dir = require('lspconfig.util').root_pattern('*.cabal', 'hie.yaml', '.git'),
 })
 
 lsp.configure('nil_ls', {
