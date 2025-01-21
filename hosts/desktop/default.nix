@@ -44,7 +44,11 @@
     }; 
   };
 
-  hardware.nvidia.open = false;
+  hardware.nvidia = { 
+    open = false;
+    modesetting.enable = true;
+    powerManagement.enable = false; # Disable experimental power management
+  };
 
   # virtualisation services
   virtualisation = {

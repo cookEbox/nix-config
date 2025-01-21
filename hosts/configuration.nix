@@ -2,10 +2,10 @@
 
 {
   nix = {
-    nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
-    nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
     package = pkgs.nixVersions.stable;
     settings = {
+      substituters = [ "https://nixcache.reflex-frp.org" ];
+      trusted-public-keys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
     };
