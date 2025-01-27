@@ -24,6 +24,7 @@
       vim-nix
       plenary-nvim
       indentLine   
+      context-vim
       undotree
       zen-mode-nvim
       nvim-metals
@@ -94,10 +95,7 @@
         config = "lua require('snippets').use_suggested_mappings()";
       }
       vim-easy-align
-      # {
-      #   plugin = friendly-snippets;
-      #   config = "lua require('friendly-snippets').setup()"
-      # }
+      friendly-snippets
     ];
 
   };

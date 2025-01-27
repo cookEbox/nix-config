@@ -28,6 +28,10 @@
       ];
 
       # set-option -g status-position top
+      # bind -n C-l select-pane -L
+      # bind -n C-; select-pane -R
+      # bind -n C-j select-pane -U
+      # bind -n C-k select-pane -D
     extraConfig = ''
       unbind C-q
       unbind q
@@ -36,10 +40,6 @@
       bind C-a last-window
       set -g status off 
 
-      bind -n C-l select-pane -L
-      bind -n C-; select-pane -R
-      bind -n C-j select-pane -U
-      bind -n C-k select-pane -D
        
       bind -n M-j previous-window
       bind -n M-k next-window
