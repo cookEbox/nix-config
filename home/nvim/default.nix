@@ -5,6 +5,7 @@
     extraConfig = ''
       luafile ~/.config/nix-config/home/nvim/settings.lua
       luafile ~/.config/nix-config/home/nvim/cmp.lua
+      luafile ~/.config/nix-config/home/nvim/snippets.lua
 
       lua << EOF
       vim.g.lsp_zero_extend_lspconfig = 0
