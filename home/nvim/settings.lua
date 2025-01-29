@@ -98,8 +98,8 @@ vim.o.termguicolors = true
 -- My new ones
 
 vim.keymap.set('t', '<C-n>', '<C-\\><C-n>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>ts', ':botright split | term')
-vim.keymap.set('n', '<leader>tv', ':botright vsplit | term')
+vim.keymap.set('n', '<leader>ts', ':botright split | term ')
+vim.keymap.set('n', '<leader>tv', ':botright vsplit | term ')
 
 vim.keymap.set("v", "ga", ":EasyAlign ")
 vim.keymap.set("n", "ga", ":EasyAlign ")
