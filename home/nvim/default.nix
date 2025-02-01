@@ -3,19 +3,16 @@
     enable = true;
     vimAlias = true;
     extraConfig = ''
-      luafile ~/.config/nix-config/home/nvim/settings.lua
-      luafile ~/.config/nix-config/home/nvim/cmp.lua
-      luafile ~/.config/nix-config/home/nvim/snippets.lua
-
       lua << EOF
+      require("settings")
+      require("cmp")
+      require("snippets")
       vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
-        vim.cmd [[
-          luafile ~/.config/nix-config/home/nvim/lsp-zero.lua
-          luafile ~/.config/nix-config/home/nvim/dap.lua
-          luafile ~/.config/nix-config/home/nvim/telescope.lua
-          luafile ~/.config/nix-config/home/nvim/harpoon.lua
-        ]]
+          require("lsp-zero")
+          require("dap")
+          require("telescope")
+          require("harpoon")
       end, 70)
       EOF
     '';
@@ -100,5 +97,30 @@
     ];
 
   };
+  home.file = { 
+    ".config/nvim/lua/settings.lua".source   = ./settings.lua;
+    ".config/nvim/lua/cmp.lua".source        = ./cmp.lua;
+    ".config/nvim/lua/snippets.lua".source   = ./snippets.lua;
+    ".config/nvim/lua/lsp-zero.lua".source   = ./lsp-zero.lua;
+    ".config/nvim/lua/dap.lua".source        = ./dap.lua;
+    ".config/nvim/lua/teslescope.lua".source = ./telescope.lua;
+    ".config/nvim/lua/harpoon.lua".source    = ./harpoon.lua;
+  };
 
 }
+
+      # luafile ~/.config/nix-config/home/nvim/settings.lua
+      # luafile ~/.config/nix-config/home/nvim/cmp.lua
+      # luafile ~/.config/nix-config/home/nvim/snippets.lua
+      #
+      # lua << EOF
+      # vim.g.lsp_zero_extend_lspconfig = 0
+      # vim.defer_fn(function()
+      #   vim.cmd [[
+      #     luafile ~/.config/nix-config/home/nvim/lsp-zero.lua
+      #     luafile ~/.config/nix-config/home/nvim/dap.lua
+      #     luafile ~/.config/nix-config/home/nvim/telescope.lua
+      #     luafile ~/.config/nix-config/home/nvim/harpoon.lua
+      #   ]]
+      # end, 70)
+      # EOF
