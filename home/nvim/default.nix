@@ -5,16 +5,14 @@
     extraConfig = ''
       lua << EOF
       require("settings")
-      require("cmp")
-      require("snippets")
+      require("cmp_config")
+      require("snippets_config")
       vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
-        vim.cmd [[
-          require("lsp_zero")
-          require("dap")
-          require("telescope")
-          require("harpoon")
-        ]]
+        require("lsp_zero")
+        require("dap_config")
+        require("telescope_config")
+        require("harpoon_config")
       end, 70)
       EOF
     '';
@@ -100,13 +98,13 @@
 
   };
   home.file = { 
-    ".config/nvim/lua/settings.lua".source   = ./settings.lua;
-    ".config/nvim/lua/cmp.lua".source        = ./cmp.lua;
-    ".config/nvim/lua/snippets.lua".source   = ./snippets.lua;
-    ".config/nvim/lua/lsp_zero.lua".source   = ./lsp_zero.lua;
-    ".config/nvim/lua/dap.lua".source        = ./dap.lua;
-    ".config/nvim/lua/teslescope.lua".source = ./telescope.lua;
-    ".config/nvim/lua/harpoon.lua".source    = ./harpoon.lua;
+    ".config/nvim/lua/settings.lua".source          = ./settings.lua;
+    ".config/nvim/lua/cmp_config.lua".source        = ./cmp_config.lua;
+    ".config/nvim/lua/snippets_config.lua".source   = ./snippets_config.lua;
+    ".config/nvim/lua/lsp_zero.lua".source          = ./lsp_zero.lua;
+    ".config/nvim/lua/dap_config.lua".source        = ./dap_config.lua;
+    ".config/nvim/lua/teslescope_config.lua".source = ./telescope_config.lua;
+    ".config/nvim/lua/harpoon_config.lua".source    = ./harpoon_config.lua;
   };
 
 }
