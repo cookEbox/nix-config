@@ -9,10 +9,12 @@
       require("snippets")
       vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
-          require("lsp-zero")
+        vim.cmd [[
+          require("lsp_zero")
           require("dap")
           require("telescope")
           require("harpoon")
+        ]]
       end, 70)
       EOF
     '';
@@ -101,7 +103,7 @@
     ".config/nvim/lua/settings.lua".source   = ./settings.lua;
     ".config/nvim/lua/cmp.lua".source        = ./cmp.lua;
     ".config/nvim/lua/snippets.lua".source   = ./snippets.lua;
-    ".config/nvim/lua/lsp-zero.lua".source   = ./lsp-zero.lua;
+    ".config/nvim/lua/lsp_zero.lua".source   = ./lsp_zero.lua;
     ".config/nvim/lua/dap.lua".source        = ./dap.lua;
     ".config/nvim/lua/teslescope.lua".source = ./telescope.lua;
     ".config/nvim/lua/harpoon.lua".source    = ./harpoon.lua;
