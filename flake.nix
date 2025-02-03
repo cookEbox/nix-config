@@ -59,8 +59,8 @@
       };
       homeConfigurations = {
         work = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.packages.${system};
           inherit system;
-          pkgs = import nixpkgs { inherit system; };
           modules = [
             ./hosts/work/home
           ];
