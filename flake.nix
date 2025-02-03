@@ -13,7 +13,6 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       unstable = import nixpkgs-unstable {inherit system;};
-      pkgs = import nixpkgs {inherit system;};
     in {
       nixosConfigurations = {
         nixBox = lib.nixosSystem {
@@ -59,7 +58,7 @@
         };
       };
       homeConfigurations = {
-        work = home-manager.lib.homeManagerConfiguration {
+        work = lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             ./hosts/work/home
