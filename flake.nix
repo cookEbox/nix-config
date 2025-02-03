@@ -65,8 +65,8 @@
             ./hosts/work/home
           ];
           # Optionally include these if desired in your work configuration:
-          # home-manager.useGlobalPkgs = true;
-          # home-manager.useUserPackages = true;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit unstable; };
         };
       };
