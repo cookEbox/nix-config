@@ -1,13 +1,27 @@
-{ config, lib, pkgs, nixpkgs, ... }:
+{ config, lib, pkgs, unstable, ... }:
 
 {
+   imports = [ 
+                ./gtk
+                ./emacs
+	 ];
    home = { 
      stateVersion = "23.05";
      packages = with pkgs; [ 
        brave
+       unstable.ladybird
        zoom-us
        discord
        teams-for-linux
+       rclone
+       android-file-transfer
+       thunderbird
+       onlyoffice-bin
+       whatsapp-for-linux
+       cmus
+       gccgo13
+       go
+       android-tools
        xclip
        gccgo13
        krita
@@ -19,14 +33,11 @@
        obs-studio
 
        cargo
-       nasm
-       asm-lsp
        zig
        jre8
        llvmPackages_latest.clang-unwrapped
        direnv
        nodejs_20
-       nil
        elmPackages.elm-language-server
        lua-language-server
        nodePackages.browser-sync
