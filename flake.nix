@@ -60,6 +60,7 @@
       homeConfigurations = {
         work = home-manager.lib.homeManagerConfiguration {
           inherit system;
+          pkgs = nixpkgs;
           modules = [
             ./hosts/work/home
           ];
