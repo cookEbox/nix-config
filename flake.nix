@@ -60,11 +60,11 @@
       };
       homeConfigurations = {
         work = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
           inherit system;
           modules = [
             ./hosts/work
           ];
+          inherit pkgs;
           # Optionally include these if desired in your work configuration:
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
