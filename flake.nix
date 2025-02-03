@@ -62,12 +62,12 @@
           pkgs = nixpkgs.packages.${system};
           inherit system;
           modules = [
-            ./hosts/work/home
+            # ./hosts/work/home
           ];
           # Optionally include these if desired in your work configuration:
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit unstable; };
+          # home-manager.useGlobalPkgs = true;
+          # home-manager.useUserPackages = true;
+          # home-manager.extraSpecialArgs = { inherit unstable; };
         };
       };
     };
