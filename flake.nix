@@ -64,7 +64,6 @@
           modules = [
             ./hosts/work/home
           ];
-          home-manager.extraSpecialArgs = { inherit unstable; };
         };
       };
     };
