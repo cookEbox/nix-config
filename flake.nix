@@ -13,6 +13,11 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       unstable = import nixpkgs-unstable {inherit system;};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      homeManagerLib = import home-manager {inherit pkgs;};
     in {
       nixosConfigurations = {
         nixBox = lib.nixosSystem {
@@ -58,11 +63,17 @@
         };
       };
       homeConfigurations = {
-        work = home-manager.lib.homeManagerConfiguration {
+        work = homeManagerLib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          homeDirectory = builtins.getEnv "HOME";
+          username = builtins.getEnv "USER";
           modules = [
             ./hosts/work/home
           ];
+          extraSpecialArgs = { 
+            inherit system; 
+            inherit unstable;
+          };
         };
       };
     };
