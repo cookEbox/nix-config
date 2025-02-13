@@ -13,7 +13,7 @@
                 ../../../home/starship
 	];
   home = { 
-    # stateVersion = "23.05";
+    stateVersion = "23.05";
     packages = with pkgs; [ 
       jq
       deja-dup
