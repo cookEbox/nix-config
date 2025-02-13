@@ -1,9 +1,9 @@
 {pkgs, ...}: 
 {
-  home.username = "nick";
-  home.homeDirectory = "/home/nick";
-  # home.stateVersion = "22.11"; # To figure this out you can comment out the line and see what version it expected.
-  programs.home-manager.enable = true;
+  # home.username = "nick";
+  # home.homeDirectory = "/home/nick";
+  # # home.stateVersion = "22.11"; # To figure this out you can comment out the line and see what version it expected.
+  # programs.home-manager.enable = true;
   imports = [ 
                 ../../../home/zsh
                 ../../../home/rofi
