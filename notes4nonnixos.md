@@ -1,3 +1,4 @@
+https://tech.aufomm.com/my-nix-journey-use-nix-with-ubuntu/#Enable-home-manager
 1. temp flake.nix
 2. temp home-manager/home.nix 
 3. ./home/nick/.nix-profile/etc/profile.d/nix.sh 
