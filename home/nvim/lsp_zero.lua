@@ -38,6 +38,7 @@ lsp.configure('asm_lsp', {
 lsp.configure('metals', {
   force_setup = true,
   settings = {
+    useBloop = true,
     showImplicitArguments = true,
     superMethodLensesEnabled = true,
     showInferredType = true,
