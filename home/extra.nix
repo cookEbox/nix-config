@@ -17,6 +17,20 @@
        android-file-transfer
        thunderbird
        onlyoffice-bin
+       deja-dup
+       redshift
+       networkmanagerapplet
+       simple-scan
+       mate.mate-tweak
+       dconf2nix
+       gnupg
+       xclip
+       hydra-check
+       xdotool
+       git-crypt
+       nix-prefetch-git
+       qutebrowser
+       mpv
        whatsapp-for-linux
        cmus
        gccgo13
