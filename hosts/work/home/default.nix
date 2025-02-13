@@ -1,6 +1,6 @@
 {pkgs, ...}: {
-    home.username = "your.username";
-    home.homeDirectory = "/home/your.username";
+    home.username = "nick";
+    home.homeDirectory = "/home/nick";
     # home.stateVersion = "22.11"; # To figure this out you can comment out the line and see what version it expected.
     programs.home-manager.enable = true;
 }
