@@ -10,8 +10,6 @@
     username = "COLUMBUS\\u.7863693"; 
     homeDirectory = "/home/u.7863693";
     packages = with pkgs; [ 
-      neovim
-      neofetch
     ];
   };
 }
