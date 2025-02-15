@@ -6,9 +6,12 @@
                ../../../home/default.nix
 	];
   home = { 
-    username = "nick"; 
-    homeDirectory = "/home/nick";
+    stateVersion = "24.11";
+    username = "COLUMBUS\\u.7863693"; 
+    homeDirectory = "/home/u.7863693";
     packages = with pkgs; [ 
+      neovim
+      neofetch
     ];
   };
 }
