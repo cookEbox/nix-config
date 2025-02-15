@@ -13,6 +13,7 @@
     packages = with pkgs; [ 
       neofetch
       jq
+      kitty
       ranger
       gitui
       tty-clock
