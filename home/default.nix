@@ -2,7 +2,6 @@
 
 {
   imports = [ 
-               ./zsh
                ./rofi
                ./tmux
                ./nvim

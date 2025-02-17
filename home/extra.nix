@@ -4,6 +4,7 @@
    imports = [ 
                 ./gtk
                 ./emacs
+                ./zsh
 	 ];
    home = { 
      packages = with pkgs; [ 
