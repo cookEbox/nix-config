@@ -36,7 +36,7 @@
        };
      history = {
        size = 10000;
-       path = "~/.config/zsh/history";
+       path = "/home/nick/.config/zsh/history";
      };
      plugins = with pkgs; [
        {
