@@ -22,7 +22,12 @@
     };
   };
 
-  systemd.targets.suspend.enable = true;
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybridSleep.enable = false;
+  };
 
   hardware = { 
     graphics.enable = true;
