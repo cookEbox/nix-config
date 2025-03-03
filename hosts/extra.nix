@@ -1,6 +1,12 @@
 {
-
   services = {
+    logind = {
+      extraConfig = ''
+        IdleAction=ignore
+        IdleActionSec=0
+      '';
+    };
+
     # Enable CUPS to print documents for a WiFi printer
     blueman.enable = true;
     printing.enable = true;
@@ -15,6 +21,8 @@
       };
     };
   };
+
+  systemd.targets.suspend.enable = true;
 
   hardware = { 
     graphics.enable = true;
