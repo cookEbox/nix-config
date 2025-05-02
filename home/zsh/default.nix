@@ -33,6 +33,8 @@
        syncup = "rclone copy /home/nick/Documents/Remote/Drive/ Drive:";
        syncdwn = "rclone copy Drive: /home/nick/Documents/Remote/Drive/";
        rpass = "< /dev/urandom tr -dc _A-Z-a-z-0-9'!\"#$%&()*+,-./:;<=>?@[\\]^_`{|}~' | head -c\${1:-32};echo;";
+       ladybird = "/nix/store/1zjr98ippnh7j0vpiga2gpn2lgbk3pbm-ladybird-0-unstable-2025-03-27/bin/Ladybird";
+       lb = "/nix/store/1zjr98ippnh7j0vpiga2gpn2lgbk3pbm-ladybird-0-unstable-2025-03-27/bin/Ladybird";
        };
      history = {
        size = 10000;
