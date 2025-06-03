@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 { 
   imports = [
@@ -47,6 +47,7 @@
   hardware.nvidia = { 
     open = false;
     modesetting.enable = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     powerManagement.enable = false; # Disable experimental power management
   };
 

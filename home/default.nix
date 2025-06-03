@@ -26,12 +26,12 @@
       unzip
       ripgrep
       tldr
-      nerdfonts
       feh
       lsof
       direnv
       nil
       lua-language-server
+      mesa-demos
     ];
   };
 }

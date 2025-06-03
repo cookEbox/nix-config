@@ -8,6 +8,13 @@ lsp.extend_lspconfig()
 -- Use system installed lsps
 lsp.configure('lua_ls', {
   force_setup = true,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+    },
+  },
 })
 
 lsp.configure('ts_ls', {
@@ -21,6 +28,17 @@ lsp.configure('pylsp', {
 lsp.configure('hls', {
   force_setup = true,
   root_dir = require('lspconfig.util').root_pattern('*.cabal', 'hie.yaml', '.git'),
+    settings = {
+      haskell = {
+      formattingProvider = "ormolu",
+      plugin = {
+        ghcide = { globalOn = true },
+        tactics = { globalOn = true },
+        retrie = { globalOn = true },
+        hlint = { globalOn = true },
+      },
+    },
+  },
 })
 
 lsp.configure('nil_ls', {

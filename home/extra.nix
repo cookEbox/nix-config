@@ -8,6 +8,7 @@
 	 ];
    home = { 
      packages = with pkgs; [ 
+       ferium
        brave
        unstable.ladybird
        zoom-us

@@ -27,16 +27,6 @@
         }
       ];
 
-      # set-option -g status-position top
-      # bind -n C-l select-pane -L
-      # bind -n C-; select-pane -R
-      # bind -n C-j select-pane -U
-      # bind -n C-k select-pane -D
-      # bind -r j resize-pane -D 5
-      # bind -r k resize-pane -U 5
-      # bind -r l resize-pane -R 5
-      # bind -r h resize-pane -L 5
-      # bind -r m resize-pane -Z 5
     extraConfig = ''
       unbind C-q
       unbind q

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   nix = {
@@ -14,6 +14,11 @@
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
+  };
+
+  fonts = { 
+    fontconfig.enable = true;
+    packages = [ pkgs.dejavu_fonts ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   };
 
   nixpkgs.config = { 
@@ -44,9 +49,8 @@
       };
     }; 
     openssh.enable = true; 
+    pulseaudio.enable = false;
   };
-
-  hardware.pulseaudio.enable = false;
 
   users.users.nick = {
     shell = pkgs.zsh;
@@ -71,6 +75,9 @@
       adwaita-icon-theme
       haskellPackages.xmonad-contrib
       haskellPackages.xmonad-extras
+      prismlauncher
+      mesa
+      libglvnd
     ];
   };
 

@@ -3,6 +3,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.netrw_browsex_viewer= "xdg-open"
+vim.g.netrw_liststyle = 3
 
 -- [[ Colorsheme ]]
 
@@ -16,6 +17,14 @@ vim.g.netrw_browsex_viewer= "xdg-open"
 --
 -- set completeopt=menu,menuone,noselect
 -- ]]
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "netrw", "terminal" },
+  callback = function()
+    vim.opt_local.number = true
+    vim.opt_local.relativenumber = true
+  end,
+})
 
 vim.cmd([[command! -nargs=0 W wa ]])
 vim.cmd([[command! -nargs=0 Wb lua RunWb()]])
@@ -96,6 +105,7 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 -- My new ones
+vim.keymap.set("n", "<C-z>", "<Nop>", { noremap = true, silent = true })
 
 vim.keymap.set('t', '<C-n>', '<C-\\><C-n>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>ts', ':botright split | term ')
@@ -136,14 +146,14 @@ vim.keymap.set("n", "Q", "<nop>")
 -- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 -- open stack ghci in another window
-vim.keymap.set("n", "<leader>ng", "<cmd>silent !tmux split-window -l 20 'nix develop --command cabal repl'<CR>")
-vim.keymap.set("n", "<leader>nn", "<cmd>silent !tmux split-window -l 20 'nix develop'<CR>")
-vim.keymap.set("n", "<leader>nt", "<cmd>silent !tmux split-window -l 20<CR>")
+-- vim.keymap.set("n", "<leader>ng", "<cmd>silent !tmux split-window -l 20 'nix develop --command cabal repl'<CR>")
+-- vim.keymap.set("n", "<leader>nn", "<cmd>silent !tmux split-window -l 20 'nix develop'<CR>")
+-- vim.keymap.set("n", "<leader>nt", "<cmd>silent !tmux split-window -l 20<CR>")
 
 -- reformat Haskell and elm
 vim.keymap.set("n", "<leader>fh", "<cmd>silent %!stylish-haskell<CR>")
 -- vim.keymap.set("n", "<leader>ff", "<cmd>silent %!fourmolu -i . --indentation=2 --function-arrows=leading --indent-wheres=true --import-export-style=leading &%<CR>")
-vim.keymap.set("n", "<leader>fe", "<cmd>silent %!elm-format --yes %<CR>")
+-- vim.keymap.set("n", "<leader>fe", "<cmd>silent %!elm-format --yes %<CR>")
 
 -- quick fix navigation
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -176,3 +186,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Resize splits with Ctrl+Shift+H/J/K/L
+vim.keymap.set("n", "<C-Left>", ":vertical resize -5<CR>", { silent = true })
+vim.keymap.set("n", "<C-Right>", ":vertical resize +5<CR>", { silent = true })
+vim.keymap.set("n", "<C-Up>", ":resize +5<CR>", { silent = true })
+vim.keymap.set("n", "<C-Down>", ":resize -5<CR>", { silent = true })

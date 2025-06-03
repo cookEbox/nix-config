@@ -46,7 +46,7 @@ with lib.hm.gvariant;
     };
 
     "org/mate/desktop/keybindings/custom0" = {
-      action = "whatsapp-for-linux";
+      action = "/home/nick/bin/whatsapp";
       binding = "<Mod4>m";
       name = "WhatsApp for Linux";
     };

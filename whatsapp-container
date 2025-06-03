@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+sudo nixos-container exec whatsapp -- bash -c '
+  export DISPLAY=:0
+  export LIBGL_ALWAYS_SOFTWARE=1
+  export __GLX_VENDOR_LIBRARY_NAME=mesa
+  export MESA_LOADER_DRIVER_OVERRIDE=llvmpipe
+  whatsapp-for-linux
+'

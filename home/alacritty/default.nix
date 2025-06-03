@@ -4,11 +4,14 @@
     enable = true;
     settings = {
       # Add your other Alacritty settings here
+      terminal.shell = {
+        program = "tmux";
+      };
 
       # Window padding
       window.padding = {
-        x = 20;  # Horizontal padding
-        y = 20;  # Vertical padding
+        x = 5;  # Horizontal padding
+        y = 0;  # Vertical padding
       };
     };
   };
