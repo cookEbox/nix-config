@@ -34,4 +34,11 @@
       mesa-demos
     ];
   };
+  home.file = {
+    ".config/direnv/direnv.toml" = {
+      text = ''
+        hide_env_diff = true
+      '';
+    };
+  };
 }
