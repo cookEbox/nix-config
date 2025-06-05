@@ -175,7 +175,15 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-vim.api.nvim_create_user_command("nA", "normal A", { range = true })
+vim.api.nvim_create_user_command("NA", function(opts)
+  local l1, l2 = opts.line1, opts.line2
+  local text   = opts.args or ""
+  local cmd = string.format("%d,%dnormal A%s", l1, l2, text)
+  vim.cmd(cmd)
+end, {
+  range = true,
+  nargs = "*",
+})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
