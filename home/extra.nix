@@ -46,19 +46,8 @@
        gimp
        weechat
        obs-studio
-
-       cargo
-       zig
-       jre8
-       llvmPackages_latest.clang-unwrapped
        direnv
-       nodejs_20
-       elmPackages.elm-language-server
-       lua-language-server
-       nodePackages.browser-sync
-       nodePackages.typescript-language-server
        nodePackages.bash-language-server
-       sqls
      ];
    };
 }
