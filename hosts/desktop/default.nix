@@ -8,7 +8,7 @@
   ];
 
   boot = {
-    kernelModules = ["vfio-pci"];
+    kernelModules = ["vfio-pci" "xe"];
     blacklistedKernelModules = ["nouveau"];
     kernelParams = ["amd_iommu=on"];
     loader = { 
@@ -35,20 +35,8 @@
   services = { 
     spice-vdagentd.enable = true;
     xserver = {
-      videoDrivers = [ "nvidia" ];
-      screenSection = ''
-        Option         "metamodes" "DP-3: nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}, DP-0: nvidia-auto-select +1920+0 {ForceFullCompositionPipeline=On}"
-        Option         "AllowIndirectGLXProtocol" "off"
-        Option         "TripleBuffer" "on"
-    '';
+      videoDrivers = [ "modesetting" ];
     }; 
-  };
-
-  hardware.nvidia = { 
-    open = false;
-    modesetting.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    powerManagement.enable = false; # Disable experimental power management
   };
 
   # virtualisation services
