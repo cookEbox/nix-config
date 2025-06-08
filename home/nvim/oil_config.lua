@@ -60,7 +60,7 @@ require("oil").setup({
   keymaps = {
     ["g?"] = { "actions.show_help", mode = "n" },
     ["<CR>"] = "actions.select",
-    ["<C-s>"] = { "actions.select", opts = { vertical = true } },
+    ["<C-v>"] = { "actions.select", opts = { vertical = true } },
     ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
     ["<C-t>"] = { "actions.select", opts = { tab = true } },
     ["<C-p>"] = "actions.preview",
@@ -125,11 +125,11 @@ require("oil").setup({
     -- Padding around the floating window
     padding = 2,
     -- max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-    max_width = 0,
-    max_height = 0,
+    max_width = 80,
+    max_height = 20,
     border = "rounded",
     win_options = {
-      winblend = 0,
+      winblend = 10,
     },
     -- optionally override the oil buffers window title with custom function: fun(winid: integer): string
     get_win_title = nil,

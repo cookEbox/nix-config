@@ -5,6 +5,7 @@
     extraConfig = ''
       lua << EOF
       require("settings")
+      require("oil_config")
       require("cmp_config")
       require("snippets_config")
       vim.g.lsp_zero_extend_lspconfig = 0
@@ -27,6 +28,8 @@
       nvim-metals
       nvim-dap-ui
       telescope-dap-nvim
+      oil-nvim
+      nvim-web-devicons
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";

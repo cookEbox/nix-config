@@ -117,6 +117,9 @@ vim.keymap.set("n", "ga", ":EasyAlign ")
 vim.keymap.set("i", "<C-f>", "<esc>la")
 
 vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>o", function()
+  require("oil").open_float()
+end, { desc = "Open Oil", silent = true })
 
 -- moves highlighted lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
