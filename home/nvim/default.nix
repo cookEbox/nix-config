@@ -103,22 +103,7 @@
     ".config/nvim/lua/lsp_zero.lua".source          = ./lsp_zero.lua;
     ".config/nvim/lua/dap_config.lua".source        = ./dap_config.lua;
     ".config/nvim/lua/telescope_config.lua".source  = ./telescope_config.lua;
+    ".config/nvim/lua/oil_config.lua".source        = ./oil_config.lua;
   };
 
 }
-
-      # luafile ~/.config/nix-config/home/nvim/settings.lua
-      # luafile ~/.config/nix-config/home/nvim/cmp.lua
-      # luafile ~/.config/nix-config/home/nvim/snippets.lua
-      #
-      # lua << EOF
-      # vim.g.lsp_zero_extend_lspconfig = 0
-      # vim.defer_fn(function()
-      #   vim.cmd [[
-      #     luafile ~/.config/nix-config/home/nvim/lsp-zero.lua
-      #     luafile ~/.config/nix-config/home/nvim/dap.lua
-      #     luafile ~/.config/nix-config/home/nvim/telescope.lua
-      #     luafile ~/.config/nix-config/home/nvim/harpoon.lua
-      #   ]]
-      # end, 70)
-      # EOF
