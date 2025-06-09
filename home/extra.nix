@@ -48,6 +48,8 @@
        obs-studio
        direnv
        nodePackages.bash-language-server
+       freecad
+       kicad
      ];
    };
 }
