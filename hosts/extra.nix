@@ -30,6 +30,7 @@
   # };
 
   hardware = { 
+    enableAllFirmware = true;
     graphics.enable = true;
     sane.enable = true;
     bluetooth = {

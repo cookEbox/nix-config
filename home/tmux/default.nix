@@ -35,6 +35,7 @@
       bind C-a last-window
       set -g status off 
 
+      bind j new-window -c "#{pane_current_path}" 
        
       bind -n M-j previous-window
       bind -n M-k next-window
@@ -54,6 +55,9 @@
       bind-key -n 'C-y' copy-mode
       bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
       bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+
+      bind-key X display-popup -E "tmux ls | fzf -m --prompt='Kill sessions > ' | cut -d: -f1 | xargs -r -n1 tmux kill-session -t"
+      bind-key S display-popup -E 'tmux switch-client -t "$(tmux ls | fzf --prompt="Switch to session > " | cut -d: -f1)"'
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
       '';
