@@ -6,8 +6,17 @@ with lib.hm.gvariant;
 {
   imports = [ ./default.nix ];
 
-
   dconf.settings = {
+    "org/mate/power-manager" = {
+      sleep-computer-ac = 0;
+      sleep-display-ac = 0;
+      sleep-display-battery = 0;
+      sleep-computer-battery = 0;
+      idle-dim-ac = false;
+      idle-dim-battery = false;
+      critical-battery-action = "nothing";
+    };
+
     "org/mate/desktop/background" = {
       color-shading-type = "vertical-gradient";
       picture-filename = "/home/nick/Pictures/wallpapers/0016.jpg";

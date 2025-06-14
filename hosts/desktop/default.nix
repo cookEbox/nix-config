@@ -33,9 +33,18 @@
   ];
 
   services = { 
+    logind.extraConfig = ''
+      IdleAction=ignore
+    '';
     spice-vdagentd.enable = true;
     xserver = {
       videoDrivers = [ "modesetting" ];
+      serverFlagsSection = ''
+        Option "BlankTime" "0"
+        Option "StandbyTime" "0"
+        Option "SuspendTime" "0"
+        Option "OffTime" "0"
+      '';
     }; 
   };
 
