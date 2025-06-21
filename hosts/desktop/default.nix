@@ -7,6 +7,11 @@
     ./hardware-configuration.nix
   ];
 
+  security.pam.loginLimits = [
+    { domain = "*"; item = "nofile"; type = "soft"; value = "1048576"; }
+    { domain = "*"; item = "nofile"; type = "hard"; value = "1048576"; }
+  ];
+
   boot = {
     kernelModules = ["vfio-pci" "xe"];
     blacklistedKernelModules = ["nouveau"];
@@ -21,6 +26,8 @@
   };
 
   networking.hostName = "nixBox";
+
+  hardware.graphics.enable32Bit = true; 
 
   environment.systemPackages = with pkgs; [
     virt-manager

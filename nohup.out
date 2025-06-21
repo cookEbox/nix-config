@@ -1,0 +1,5 @@
+
+(mate-power-manager:412431): PowerManager-WARNING **: 20:04:30.441: Failed to get session for pid 412431: The name org.freedesktop.ConsoleKit was not provided by any .service files
+
+(mate-power-manager:412431): PowerManager-WARNING **: 20:04:30.443: could not map keysym 1008ffa8 to keycode
+** Message: 00:12:12.308: Got disconnected from the session message bus; retrying to reconnect every 10 seconds

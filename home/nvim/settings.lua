@@ -170,6 +170,8 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- opens undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+vim.g.undotree_CustomUndotreeCmd  = 'rightbelow vertical 30 new'
+vim.g.undotree_CustomDiffpanelCmd = 'rightbelow 10 new'
 
 --
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })

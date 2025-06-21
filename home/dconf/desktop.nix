@@ -17,6 +17,11 @@ with lib.hm.gvariant;
       critical-battery-action = "nothing";
     };
 
+    "org/mate/screensaver" = {
+      lock-enabled = true;
+      idle-activation-enabled = false;
+    };
+
     "org/mate/desktop/background" = {
       color-shading-type = "vertical-gradient";
       picture-filename = "/home/nick/Pictures/wallpapers/0016.jpg";
