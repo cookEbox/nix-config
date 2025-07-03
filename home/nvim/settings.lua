@@ -100,16 +100,34 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- [[ My Functions ]]
+vim.api.nvim_create_user_command('ObRun', function()
+  local old_buf = vim.api.nvim_get_current_buf()
+
+  if vim.api.nvim_buf_get_option(old_buf, 'buftype') == 'terminal' then
+    local ok, job_id = pcall(vim.api.nvim_buf_get_var, old_buf, 'terminal_job_id')
+    if ok and type(job_id) == 'number' then
+      vim.api.nvim_chan_send(job_id, "\3")
+      vim.wait(100)
+    end
+  end
+
+  vim.cmd('terminal ob run')
+  vim.api.nvim_buf_delete(old_buf, { force = true })
+end, {})
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 -- My new ones
+vim.keymap.set('n', '<Leader>r', ':ObRun<CR>', { noremap = true, silent = true })
+
 vim.keymap.set("n", "<C-z>", "<Nop>", { noremap = true, silent = true })
 
 vim.keymap.set('t', '<C-n>', '<C-\\><C-n>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>ts', ':botright split | term ')
-vim.keymap.set('n', '<leader>tv', ':vsplit | term ')
+vim.keymap.set('n', '<leader>bs', ':belowrigh split | ')
+vim.keymap.set('n', '<leader>bv', ':vsplit | ')
 
 vim.keymap.set("v", "ga", ":EasyAlign ")
 vim.keymap.set("n", "ga", ":EasyAlign ")
