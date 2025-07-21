@@ -28,8 +28,8 @@ lsp.configure('pylsp', {
 lsp.configure('hls', {
   force_setup = true,
   root_dir = require('lspconfig.util').root_pattern('*.cabal', 'hie.yaml', '.git'),
-    settings = {
-      haskell = {
+  settings = {
+    haskell = {
       formattingProvider = "ormolu",
       plugin = {
         ghcide = { globalOn = true },
@@ -49,9 +49,13 @@ lsp.configure('clangd', {
   force_setup = true
 })
 
-lsp.configure('asm_lsp', {
-  force_setup = true
-})
+-- lsp.configure('asm_lsp', {
+--   force_setup = true,
+--   settings = {
+--     assembler = "nasm",
+--     arch = "x86_64",
+--   }
+-- })
 
 lsp.configure('metals', {
   force_setup = true,
