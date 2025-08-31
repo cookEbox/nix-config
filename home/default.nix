@@ -32,6 +32,7 @@
       nil
       lua-language-server
       mesa-demos
+      protonvpn-gui
     ];
   };
   home.file = {

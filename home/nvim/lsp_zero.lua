@@ -25,8 +25,16 @@ lsp.configure('pylsp', {
   force_setup = true,
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.fk",
+  callback = function()
+    vim.bo.filetype = "haskell"
+  end,
+})
+
 lsp.configure('hls', {
   force_setup = true,
+  filetypes   = { "haskell", "lhaskell", "fk" },
   root_dir = require('lspconfig.util').root_pattern('*.cabal', 'hie.yaml', '.git'),
   settings = {
     haskell = {

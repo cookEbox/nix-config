@@ -50,6 +50,8 @@
        nodePackages.bash-language-server
        freecad
        kicad
+       keymapp
+       rpi-imager
      ];
    };
 }
