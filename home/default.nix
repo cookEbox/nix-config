@@ -7,14 +7,15 @@
                ./nvim
                ./alacritty
                ./starship
+               ./ranger
 	];
   home = { 
     packages = with pkgs; [ 
+      nmap
       neofetch
       emojipick
       jq
       kitty
-      ranger
       gitui
       tty-clock
       nix-direnv
@@ -35,11 +36,17 @@
       protonvpn-gui
     ];
   };
-  home.file = {
-    ".config/direnv/direnv.toml" = {
-      text = ''
-        hide_env_diff = true
-      '';
+  home = {
+    file = {
+      ".config/direnv/direnv.toml" = {
+        text = ''
+          hide_env_diff = true
+        '';
+      };
+    };
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
   };
 }
