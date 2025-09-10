@@ -11,6 +11,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      zip
       nmap
       neofetch
       emojipick
