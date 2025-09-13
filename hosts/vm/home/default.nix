@@ -3,6 +3,7 @@
 {
    imports = [ 
                 ../../../home/default.nix
+                ../../../home/basic.nix
                 ../../../home/dconf/laptop.nix
 	 ];
    home = { 

@@ -45,6 +45,14 @@ Restart the daemon if needed:
 sudo systemctl restart nix-daemon
 ```
 
+If you find that `nix` or `nix-store` are not on your PATH (common on
+Raspberry Pi OS), fix it with:
+
+``` sh
+sudo ln -sf /nix/var/nix/profiles/default/bin/nix       /usr/local/bin/nix
+sudo ln -sf /nix/var/nix/profiles/default/bin/nix-store /usr/local/bin/nix-store
+```
+
 ------------------------------------------------------------------------
 
 ### 2. Deploy NixOS machines
@@ -116,6 +124,15 @@ nix run github:nix-community/home-manager/release-25.05 --   switch --flake "git
     ``` sh
     chsh -s $(command -v zsh)
     ```
+
+-   To set up passwordless SSH access (for remote apply):
+
+    1.  Leave `PasswordAuthentication yes` enabled in
+        `/etc/ssh/sshd_config`.\
+    2.  Run `ssh-copy-id user@host` from your desktop.\
+    3.  Verify you can log in without a password.\
+    4.  Only then disable password authentication by setting
+        `PasswordAuthentication no`.
 
 ------------------------------------------------------------------------
 

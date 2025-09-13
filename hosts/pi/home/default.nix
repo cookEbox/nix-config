@@ -4,12 +4,11 @@
   programs.home-manager.enable = true;
   imports = [ 
                ../../../home/default.nix
-               ../../../home/basic.nix
 	];
   home = { 
     stateVersion = "24.11";
-    username = "COLUMBUS\\u.7863693"; 
-    homeDirectory = "/home/u.7863693";
+    username = "admin"; 
+    homeDirectory = "/home/admin";
     packages = with pkgs; [ 
     ];
   };
