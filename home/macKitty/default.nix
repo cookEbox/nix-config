@@ -8,4 +8,8 @@
       shell = "${pkgs.tmux}/bin/tmux";
     };
   };
+  home.file = { 
+    ".aerospace.toml".source = ./aerospace.toml;
+  };
+
 }
