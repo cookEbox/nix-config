@@ -8,7 +8,6 @@
   home = { 
     packages = with pkgs; [ 
       nmap
-      emojipick
       kitty
       gitui
       zathura

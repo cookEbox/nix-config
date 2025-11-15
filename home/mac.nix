@@ -9,9 +9,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
-      tty-clock
       zip
-      emojipick
       neofetch
       jq
       nix-direnv

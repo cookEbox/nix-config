@@ -4,7 +4,7 @@
   programs.home-manager.enable = true;
   imports = [ 
                ../../../home/default.nix
-               ../../../home/basic.nix
+               ../../../home/mac.nix
 	];
   home = { 
     stateVersion = "24.11";
