@@ -3,6 +3,7 @@
 {
   imports = [ 
                ./tmux
+               ./macKitty
                ./nvim
                ./starship
                ./zsh

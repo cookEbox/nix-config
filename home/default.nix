@@ -7,7 +7,6 @@
   home = { 
     packages = with pkgs; [ 
       nmap
-      kitty
       gitui
       zathura
       feh
