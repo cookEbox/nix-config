@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.kitty = {
@@ -6,7 +6,7 @@
     settings = {
       macos_option_as_alt = "both";
       terminal.shell = {
-        program = "tmux";
+        program = "${pkgs.tmux}/bin/tmux";
       };
       window.padding = {
         x = 5;
