@@ -4,9 +4,11 @@
   imports = [ 
                ./gtk
                ./emacs
+               ./rofi
 	];
   home = { 
     packages = with pkgs; [ 
+      lutris
       ferium
       brave
       unstable.ladybird
@@ -53,6 +55,9 @@
       rpi-imager
       mesa-demos
       protonvpn-gui
+      jdk17
+      wineWowPackages.staging 
+      winetricks 
     ];
   };
 }

@@ -17,6 +17,7 @@
       EOF
     '';
     plugins = with pkgs.vimPlugins; [
+      haskell-tools-nvim
       LanguageClient-neovim
       vim-tmux-navigator
       vim-nix

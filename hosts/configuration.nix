@@ -103,6 +103,7 @@
       prismlauncher
       mesa
       libglvnd
+      vulkan-tools
     ];
   };
 

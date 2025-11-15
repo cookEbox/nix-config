@@ -2,7 +2,6 @@
 
 {
   imports = [ 
-               ./rofi
                ./alacritty
                ./ranger
 	];

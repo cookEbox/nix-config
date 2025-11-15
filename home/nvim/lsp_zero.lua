@@ -40,7 +40,12 @@ lsp.configure('hls', {
     haskell = {
       formattingProvider = "ormolu",
       plugin = {
-        ghcide = { globalOn = true },
+        ["ghcide-completions"] = {
+          config = {
+            autoExtendOn = true,
+            snippetsOn   = true
+          }
+        },
         tactics = { globalOn = true },
         retrie = { globalOn = true },
         hlint = { globalOn = true },
@@ -97,9 +102,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         underline = false
     }
 )
-
+local ht = require('haskell-tools')
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
+  local opts2 = { buffer = 0, silent = true, noremap = true }
 
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -119,6 +125,8 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>do", function() require'dap'.step_out() end, opts)
   vim.keymap.set("n", "<leader>uo", function() require'dapui'.open() end, opts)
   vim.keymap.set("n", "<leader>uc", function() require'dapui'.close() end, opts)
+  -- vim.keymap.set('n','<leader>hs', ht.hoogle.hoogle_signature, {buffer=0})
+  vim.keymap.set('n', '<leader>hs', ht.hoogle.hoogle_signature, opts2)
 end)
 
 lsp.setup()

@@ -71,6 +71,12 @@
             ./hosts/work/home
           ];
         };
+        workMac = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [
+            ./hosts/workMac/home
+          ];
+        };
       };
     };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -39,10 +39,12 @@
       ladybird = "/nix/store/1zjr98ippnh7j0vpiga2gpn2lgbk3pbm-ladybird-0-unstable-2025-03-27/bin/Ladybird";
       lb = "/nix/store/1zjr98ippnh7j0vpiga2gpn2lgbk3pbm-ladybird-0-unstable-2025-03-27/bin/Ladybird";
       sshpi = "ssh Admin@192.168.1.116";
+      wine888     = ''WINEPREFIX=$HOME/.wine-888 WINEARCH=win64 wine'';
+      wineequilab = ''WINEPREFIX=$HOME/.wine-equilab WINEARCH=win32 wine'';
       };
     history = {
       size = 10000;
-      path = "/home/nick/.config/zsh/history";
+      path = "${config.home.homeDirectory}/.config/zsh/history";
     };
     plugins = with pkgs; [
       {

@@ -8,8 +8,8 @@
 	];
   home = { 
     stateVersion = "24.11";
-    username = "u.7863693"; 
-    homeDirectory = "/home/u.7863693";
+    username = "nick"; 
+    homeDirectory = "/Users/nick";
     packages = with pkgs; [ 
     ];
   };
