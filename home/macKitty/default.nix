@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       macos_option_as_alt = "both";
-      terminal.shell = {
+      shell = {
         program = "${pkgs.tmux}/bin/tmux";
       };
       window.padding = {
