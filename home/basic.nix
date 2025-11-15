@@ -6,6 +6,8 @@
                ./nvim
                ./starship
                ./zsh
+               ./alacritty
+               ./rofi
 	];
   home = { 
     packages = with pkgs; [ 

@@ -4,12 +4,10 @@
   imports = [ 
                ./gtk
                ./emacs
-               ./rofi
 	];
   home = { 
     packages = with pkgs; [ 
       lutris
-      tty-clock
       ferium
       brave
       unstable.ladybird
