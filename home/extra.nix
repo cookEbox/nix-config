@@ -9,6 +9,7 @@
   home = { 
     packages = with pkgs; [ 
       lutris
+      tty-clock
       ferium
       brave
       unstable.ladybird

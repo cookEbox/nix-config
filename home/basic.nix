@@ -12,7 +12,6 @@
       zip
       neofetch
       jq
-      tty-clock
       nix-direnv
       lsd
       bat
