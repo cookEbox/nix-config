@@ -10,6 +10,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      aerospace
       zip
       neofetch
       jq
