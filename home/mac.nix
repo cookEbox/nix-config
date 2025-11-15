@@ -23,6 +23,7 @@
       tldr
       lsof
       direnv
+      qutebrowser
     ];
   };
   home = {
