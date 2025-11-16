@@ -10,6 +10,8 @@
     stateVersion = "24.11";
     username = "nick"; 
     homeDirectory = "/Users/nick";
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true; 
     packages = with pkgs; [ 
     ];
   };
