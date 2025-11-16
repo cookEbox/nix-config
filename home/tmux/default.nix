@@ -59,6 +59,9 @@
       bind-key X display-popup -E "tmux ls | fzf -m --prompt='Kill sessions > ' | cut -d: -f1 | xargs -r -n1 tmux kill-session -t"
       bind-key S display-popup -E 'tmux switch-client -t "$(tmux ls | fzf --prompt="Switch to session > " | cut -d: -f1)"'
 
+      bind-key I send-keys 'tmux switch-client -t "$(tmux ls | fzf --prompt="Switch to session > " | cut -d: -f1)"' C-m
+      bind-key K send-keys "tmux ls | fzf -m --prompt='Kill sessions > ' | cut -d: -f1 | xargs -r -n1 tmux kill-session -t" C-m
+
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
       '';
   };
