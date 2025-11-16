@@ -70,6 +70,26 @@ lsp.configure('clangd', {
 --   }
 -- })
 
+-- Basic JDTLS config
+lsp.configure('jdtls', {
+  cmd = (function()
+    local home = os.getenv("HOME")
+    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+    local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
+
+    return { 'jdtls', '-data', workspace_dir }
+  end)(),
+
+  -- Optional: what counts as a project root
+  root_dir = function(fname)
+    return require('lspconfig.util').root_pattern(
+      'pom.xml',
+      'build.gradle',
+      '.git'
+    )(fname)
+  end,
+})
+
 lsp.configure('metals', {
   force_setup = true,
   settings = {
