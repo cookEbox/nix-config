@@ -26,8 +26,6 @@
       direnv
       qutebrowser
     ];
-  };
-  home = {
     file = {
       ".config/direnv/direnv.toml" = {
         text = ''
@@ -39,5 +37,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true; 
   };
 }

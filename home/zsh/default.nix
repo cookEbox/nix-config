@@ -2,14 +2,6 @@
 {
   programs.zsh = {
     enable = true;
-    # This ends up in ~/.zshrc
-    initExtra = ''
-      # Homebrew on Apple Silicon (M1/M2/M3/M4…)
-      if [ -x /opt/homebrew/bin/brew ]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-      fi
-    '';
-
     # Optional: also in ~/.zprofile, for login shells
     profileExtra = ''
       if [ -x /opt/homebrew/bin/brew ]; then
@@ -20,6 +12,10 @@
     enableCompletion = true;
     initContent = ''
       export PATH="$HOME/bin:$PATH"
+      # Homebrew on Apple Silicon (M1/M2/M3/M4…)
+      if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
     '';
     shellAliases = {
       ".." = "cd ..";
