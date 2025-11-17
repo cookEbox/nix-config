@@ -4,6 +4,7 @@
     enable = true;
     # Optional: also in ~/.zprofile, for login shells
     profileExtra = ''
+      export PATH="$HOME/bin:$PATH"
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
@@ -11,7 +12,6 @@
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
-      export PATH="$HOME/bin:$PATH"
       # Homebrew on Apple Silicon (M1/M2/M3/M4…)
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
