@@ -1,38 +1,20 @@
-# ~/.aerospace.toml
-
-# Use the modern config format so we can use persistent-workspaces
-config-version = 2
-
-# Keep only workspaces "0"–"9" alive even when empty
-persistent-workspaces = [
-  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-]
-
-# Keyboard layout; change if you use dvorak/colemak
-[key-mapping]
-preset = 'qwerty'
-
-# Main keybinding mode
 [mode.main.binding]
-  # Focus movement (vim-style)
+  # ---- Basic navigation (optional, keep/change as you like) ----
   alt-h = 'focus left'
   alt-j = 'focus down'
   alt-k = 'focus up'
   alt-l = 'focus right'
 
-  # Move window within workspace
   alt-shift-h = 'move left'
   alt-shift-j = 'move down'
   alt-shift-k = 'move up'
   alt-shift-l = 'move right'
 
-  # Resize
   alt-minus = 'resize smart -50'
   alt-equal = 'resize smart +50'
 
-  # ----- WORKSPACES: 0–9 ONLY -----
-
-  # Jump to workspace N (wherever it currently is)
+  # ---- Workspaces: only 0–9 ----
+  # Go to workspace N (wherever it currently lives)
   cmd-0 = 'workspace 0'
   cmd-1 = 'workspace 1'
   cmd-2 = 'workspace 2'
@@ -44,7 +26,7 @@ preset = 'qwerty'
   cmd-8 = 'workspace 8'
   cmd-9 = 'workspace 9'
 
-  # Move window to workspace N *and follow it*
+  # Move focused window to workspace N *and follow it*
   cmd-shift-0 = ['move-node-to-workspace 0', 'workspace 0']
   cmd-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
   cmd-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
@@ -56,10 +38,10 @@ preset = 'qwerty'
   cmd-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
   cmd-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-  # Toggle between current & last workspace
+  # Toggle current / last workspace
   alt-tab = 'workspace-back-and-forth'
 
-  # Move the *current workspace* to the other monitor
+  # Move the *current workspace* to the next/prev monitor
   cmd-alt-right = 'move-workspace-to-monitor --wrap-around next'
   cmd-alt-left  = 'move-workspace-to-monitor --wrap-around prev'
 
