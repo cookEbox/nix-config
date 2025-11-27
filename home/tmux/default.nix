@@ -3,6 +3,7 @@
 {
   programs.tmux = {
     enable = true;
+    shell = "${pkgs.zsh}/bin/zsh";
     shortcut = "q";
     escapeTime = 10;
     keyMode = "vi";
