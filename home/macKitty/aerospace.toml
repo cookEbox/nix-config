@@ -1,7 +1,7 @@
 # Minimal AeroSpace config fragment – everything else falls back
 # to the built-in default-config.toml.:contentReference[oaicite:0]{index=0}
 
-[keybindings]
+[mode.global.binding]
 # Switch to workspace N with Cmd+N
 cmd-1 = "workspace 1"
 cmd-2 = "workspace 2"
