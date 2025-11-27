@@ -1,5 +1,8 @@
+# ~/.aerospace.toml
+
+# --- Keybindings ---
 [mode.main.binding]
-  # ---- Basic navigation (optional, keep/change as you like) ----
+  # Focus movement (optional, tweak as you like)
   alt-h = 'focus left'
   alt-j = 'focus down'
   alt-k = 'focus up'
@@ -13,8 +16,8 @@
   alt-minus = 'resize smart -50'
   alt-equal = 'resize smart +50'
 
-  # ---- Workspaces: only 0–9 ----
-  # Go to workspace N (wherever it currently lives)
+  # ----- WORKSPACES: 0–9 ONLY -----
+  # Jump to workspace N (wherever it currently lives)
   cmd-0 = 'workspace 0'
   cmd-1 = 'workspace 1'
   cmd-2 = 'workspace 2'
@@ -41,7 +44,25 @@
   # Toggle current / last workspace
   alt-tab = 'workspace-back-and-forth'
 
-  # Move the *current workspace* to the next/prev monitor
+  # Move the *current workspace* to the other monitor (still useful sometimes)
   cmd-alt-right = 'move-workspace-to-monitor --wrap-around next'
   cmd-alt-left  = 'move-workspace-to-monitor --wrap-around prev'
 
+
+# --- Pin workspaces to monitors ---
+# This tells AeroSpace:
+#   - 1–7 must live on your main monitor
+#   - 8,9,0 must live on your secondary monitor
+# so the second monitor will *always* be showing one of 8/9/0, never 10.
+[workspace-to-monitor-force-assignment]
+  1 = 'main'
+  2 = 'main'
+  3 = 'main'
+  4 = 'main'
+  5 = 'main'
+  6 = 'main'
+  7 = 'main'
+
+  8 = 'secondary'
+  9 = 'secondary'
+  0 = 'secondary'
