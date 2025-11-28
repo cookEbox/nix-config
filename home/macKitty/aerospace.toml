@@ -48,6 +48,9 @@
   cmd-alt-right = 'move-workspace-to-monitor --wrap-around next'
   cmd-alt-left  = 'move-workspace-to-monitor --wrap-around prev'
 
+  # Focus NEXT / PREVIOUS monitor (doesn't move any windows)
+  cmd-right = 'focus-monitor next'
+  cmd-left  = 'focus-monitor prev'
 
 # --- Pin workspaces to monitors ---
 # This tells AeroSpace:
