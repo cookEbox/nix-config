@@ -13,7 +13,20 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       unstable = import nixpkgs-unstable {inherit system;};
+      forgejoInfra = import ./hosts/linode/infra/forgejo/deploy-forgejo.nix;
+      nginxInfra = import ./hosts/linode/infra/nginx/deploy-nginx.nix;
+
     in {
+
+      packages.${system} = { 
+        forgejo = forgejoInfra.forgejo;
+        nginx = nginxInfra.nginx;
+      };
+      apps.${system} = { 
+        deploy-forgejo = forgejoInfra.app;
+        deploy-nginx = nginxInfra.app;
+      };
+
       nixosConfigurations = {
         nixBox = lib.nixosSystem {
           inherit system;
@@ -75,6 +88,12 @@
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           modules = [
             ./hosts/workMac/home
+          ];
+        };
+        linode = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [
+            ./hosts/linode/home
           ];
         };
       };
