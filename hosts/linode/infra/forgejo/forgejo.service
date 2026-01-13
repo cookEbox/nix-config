@@ -1,0 +1,21 @@
+[Unit]
+Description=Forgejo
+After=network.target
+
+[Service]
+Type=simple
+User=forgejo
+Group=forgejo
+WorkingDirectory=/var/lib/forgejo
+ExecStart=@FORGEJO_BIN@ web --config /etc/forgejo/app.ini
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/var/lib/forgejo /var/log/forgejo
+
+[Install]
+WantedBy=multi-user.target
+

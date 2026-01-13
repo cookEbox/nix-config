@@ -1,0 +1,25 @@
+[Unit]
+Description=Nginx (pinned via Nix)
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+
+ExecStartPre=@NGINX_BIN@ -t -c /etc/nginx/nginx.conf
+ExecStart=@NGINX_BIN@ -c /etc/nginx/nginx.conf
+ExecReload=@NGINX_BIN@ -s reload
+ExecStop=@NGINX_BIN@ -s quit
+
+Restart=on-failure
+RestartSec=2
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/var/log/nginx /var/lib/nginx /run /etc/letsencrypt
+
+[Install]
+WantedBy=multi-user.target
+

@@ -21,6 +21,7 @@
       LanguageClient-neovim
       vim-tmux-navigator
       vim-nix
+      diffview-nvim
       plenary-nvim
       indentLine   
       context-vim
