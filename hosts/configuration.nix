@@ -31,6 +31,22 @@
   networking = {
     networkmanager.enable = true;
     nameservers = [ "1.1.1.1" ];
+    firewall = { 
+    enable = true;
+
+    # Desktop: default is allow outbound, block inbound
+    allowPing = false;
+
+    # If you want inbound SSH to your desktop (usually no):
+    allowedTCPPorts = [ ];
+    allowedUDPPorts = [ ];
+
+    # If using Tailscale / WireGuard:
+    trustedInterfaces = [ "tailscale0" "wg0" ];
+
+    # Logging is useful while stabilising
+    logRefusedConnections = true;
+    };
   };
 
   services = {
