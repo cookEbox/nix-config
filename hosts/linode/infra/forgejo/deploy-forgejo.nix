@@ -18,10 +18,7 @@ in
     type = "app";
     program = "${script}";
   };
-
-  forgejo = pkgs.writeShellApplication {
-    name = "deploy-forgejo";
-    text = builtins.readFile script;
-  };
+  forgejo = pkgs.forgejo;
+  deploy = script;
 }
 

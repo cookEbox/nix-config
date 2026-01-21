@@ -37,10 +37,10 @@
       #   forgejo = forgejoInfra.forgejo;
       #   nginx = nginxInfra.nginx;
       # };
-      # apps.${system} = { 
-      #   deploy-forgejo = forgejoInfra.app;
-      #   deploy-nginx = nginxInfra.app;
-      # };
+      apps.${system} = { 
+        deploy-forgejo = forgejoInfra.app;
+        deploy-nginx = nginxInfra.app;
+      };
 
       nixosConfigurations = {
         nixBox = lib.nixosSystem {
