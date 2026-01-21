@@ -13,11 +13,12 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       unstable = import nixpkgs-unstable {inherit system;};
+      pkgs = import nixpkgs { inherit system; };
       forgejoInfra = import ./hosts/linode/infra/forgejo/deploy-forgejo.nix {
-        inherit nixpkgs self;
+        inherit pkgs self;
       };
       nginxInfra = import ./hosts/linode/infra/nginx/deploy-nginx.nix {
-        inherit nixpkgs self;
+        inherit pkgs self;
       };
 
     in {
