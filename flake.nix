@@ -22,15 +22,25 @@
       };
 
     in {
+      packages.${system} = rec {
+        forgejo = forgejoInfra.forgejo or forgejoInfra.package;
+        nginx = nginxInfra.nginx or nginxInfra.package;
 
-      packages.${system} = { 
-        forgejo = forgejoInfra.forgejo;
-        nginx = nginxInfra.nginx;
+        tools = pkgs.buildEnv {
+          name = "nix-config-tools";
+          paths = with pkgs; [ git ripgrep jq tmux neovim ];
+        };
+
+        default = tools;
       };
-      apps.${system} = { 
-        deploy-forgejo = forgejoInfra.app;
-        deploy-nginx = nginxInfra.app;
-      };
+      # packages.${system} = { 
+      #   forgejo = forgejoInfra.forgejo;
+      #   nginx = nginxInfra.nginx;
+      # };
+      # apps.${system} = { 
+      #   deploy-forgejo = forgejoInfra.app;
+      #   deploy-nginx = nginxInfra.app;
+      # };
 
       nixosConfigurations = {
         nixBox = lib.nixosSystem {
@@ -76,17 +86,6 @@
         };
       };
 
-      packages.${system} = rec {
-        forgejo = forgejoInfra.forgejo or forgejoInfra.package;
-        nginx = nginxInfra.nginx or nginxInfra.package;
-
-        tools = pkgs.buildEnv {
-          name = "nix-config-tools";
-          paths = with pkgs; [ git ripgrep jq tmux neovim ];
-        };
-
-        default = tools;
-      };
 
       homeConfigurations = {
         # pi = home-manager.lib.homeManagerConfiguration {
