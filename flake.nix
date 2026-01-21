@@ -75,7 +75,19 @@
           ];
         };
       };
-      defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
+
+      packages.${system} = rec {
+        forgejo = forgejoInfra.forgejo or forgejoInfra.package;
+        nginx = nginxInfra.nginx or nginxInfra.package;
+
+        tools = pkgs.buildEnv {
+          name = "nix-config-tools";
+          paths = with pkgs; [ git ripgrep jq tmux neovim ];
+        };
+
+        default = tools;
+      };
+
       homeConfigurations = {
         # pi = home-manager.lib.homeManagerConfiguration {
         #   pkgs = nixpkgs.legacyPackages.aarch64-linux;
