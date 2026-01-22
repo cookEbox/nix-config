@@ -44,12 +44,6 @@ let
     sudo install -m 0644 ${forgejoSiteHttp}  /etc/nginx/sites-available/forgejo-http.conf
     sudo install -m 0644 ${forgejoSiteHttps} /etc/nginx/sites-available/forgejo-https.conf
 
-    # Remove legacy single-file name if it exists
-    sudo rm -f /etc/nginx/sites-enabled/forgejo.conf \
-           /etc/nginx/sites-enabled/forgejo-https.conf \
-           /etc/nginx/sites-enabled/forgejo-http.conf || true
-    sudo rm -f /etc/nginx/sites-available/forgejo.conf || true
-
     # Always enable HTTP bootstrap site
     sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
 
