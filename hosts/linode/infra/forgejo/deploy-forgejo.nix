@@ -1,24 +1,74 @@
 # hosts/linode/infra/forgejo/deploy-forgejo.nix
-{ pkgs, ... }:
+{ pkgs, self }:
+
 let
-  script = pkgs.writeShellScript "deploy-forgejo" ''
+  appIniTemplate   = ./app.ini;
+  serviceTemplate  = ./forgejo.service;
+
+  deployScript = pkgs.writeShellScript "deploy-forgejo" ''
     set -euo pipefail
 
-    echo "Deploy Forgejo (TODO)"
-    echo "This script should:"
-    echo "  - install/configure forgejo service (systemd) on Ubuntu"
-    echo "  - set SSH on port 2222"
-    echo "  - configure data dir, sqlite, user, permissions"
-    echo "  - restart services"
-    exit 1
+    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
+
+    echo "Deploying Forgejo for domain: $DOMAIN"
+
+    # Build forgejo from this flake and capture the output path
+    FORGEJO_OUT="$(nix build --no-link --print-out-paths ${self}#forgejo)"
+    FORGEJO_BIN="$FORGEJO_OUT/bin/forgejo"
+
+    if [ ! -x "$FORGEJO_BIN" ]; then
+      echo "ERROR: Forgejo binary not found at: $FORGEJO_BIN" >&2
+      exit 1
+    fi
+
+    # Create forgejo user/group if missing
+    if ! getent group forgejo >/dev/null 2>&1; then
+      sudo groupadd --system forgejo
+    fi
+    if ! id -u forgejo >/dev/null 2>&1; then
+      sudo useradd --system \
+        --gid forgejo \
+        --home-dir /var/lib/forgejo \
+        --create-home \
+        --shell /usr/sbin/nologin \
+        forgejo
+    fi
+
+    # Ensure dirs exist
+    sudo install -d -m 0755 /etc/forgejo
+    sudo install -d -m 0755 /var/lib/forgejo /var/log/forgejo
+    sudo install -d -m 0755 /var/lib/forgejo/data /var/lib/forgejo/git /var/lib/forgejo/git/repositories
+
+    # Ownership
+    sudo chown -R forgejo:forgejo /var/lib/forgejo /var/log/forgejo
+
+    # Render app.ini with domain
+    sudo sed "s|@FORGEJO_DOMAIN@|$DOMAIN|g" ${appIniTemplate} \
+      | sudo tee /etc/forgejo/app.ini >/dev/null
+    sudo chmod 0644 /etc/forgejo/app.ini
+
+    # Install systemd unit and patch binary path
+    sudo install -m 0644 ${serviceTemplate} /etc/systemd/system/forgejo.service
+    sudo sed -i "s|@FORGEJO_BIN@|$FORGEJO_BIN|g" /etc/systemd/system/forgejo.service
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable forgejo.service
+    sudo systemctl restart forgejo.service
+
+    sudo systemctl --no-pager status forgejo.service
+    echo
+    echo "Forgejo should now be listening on 127.0.0.1:3000"
+    echo "Next: nginx should proxy to it; if nginx shows 502, check: journalctl -u forgejo -e"
   '';
 in
 {
+  forgejo = pkgs.forgejo;
+
   app = {
     type = "app";
-    program = "${script}";
+    program = toString deployScript;
   };
-  forgejo = pkgs.forgejo;
-  deploy = script;
+
+  deploy = deployScript;
 }
 
