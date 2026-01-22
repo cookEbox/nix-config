@@ -54,7 +54,7 @@ let
     sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
 
     # Enable HTTPS site only if certs exist
-    DOMAIN="''${FORGEJO_DOMAIN:-git.example.com}"
+    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
     CERT_DIR="/etc/letsencrypt/live/$DOMAIN"
 
     if [ -f "$CERT_DIR/fullchain.pem" ] && [ -f "$CERT_DIR/privkey.pem" ]; then
