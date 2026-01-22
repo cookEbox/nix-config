@@ -41,8 +41,16 @@ let
     sudo install -m 0644 ${nginxConf} /etc/nginx/nginx.conf
 
     # Install site configs into sites-available
-    sudo install -m 0644 ${forgejoSiteHttp}  /etc/nginx/sites-available/forgejo-http.conf
-    sudo install -m 0644 ${forgejoSiteHttps} /etc/nginx/sites-available/forgejo-https.conf
+    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
+
+    # Render templates with domain substituted
+    sudo sed "s|@FORGEJO_DOMAIN@|$DOMAIN|g" ${forgejoSiteHttp} \
+      | sudo tee /etc/nginx/sites-available/forgejo-http.conf >/dev/null
+
+    sudo sed "s|@FORGEJO_DOMAIN@|$DOMAIN|g" ${forgejoSiteHttps} \
+      | sudo tee /etc/nginx/sites-available/forgejo-https.conf >/dev/null
+
+    sudo chmod 0644 /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-available/forgejo-https.conf
 
     # Always enable HTTP bootstrap site
     sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
