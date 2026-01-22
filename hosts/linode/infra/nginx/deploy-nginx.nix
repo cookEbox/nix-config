@@ -53,15 +53,37 @@ let
     # Always enable HTTP bootstrap site
     sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
 
-    # Enable HTTPS site only if certs exist
     DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
     CERT_DIR="/etc/letsencrypt/live/$DOMAIN"
 
+    echo "Deploying nginx for domain: $DOMAIN"
+    echo "Checking certs in: $CERT_DIR"
+
+    # Install site configs into sites-available
+    sudo install -m 0644 ${forgejoSiteHttp}  /etc/nginx/sites-available/forgejo-http.conf
+    sudo install -m 0644 ${forgejoSiteHttps} /etc/nginx/sites-available/forgejo-https.conf
+
+    # Stamp domain placeholders
+    sudo sed -i "s|@FORGEJO_DOMAIN@|$DOMAIN|g" \
+      /etc/nginx/sites-available/forgejo-http.conf \
+      /etc/nginx/sites-available/forgejo-https.conf
+
+    # Remove any legacy enabled file names
+    sudo rm -f /etc/nginx/sites-enabled/forgejo.conf || true
+    sudo rm -f /etc/nginx/sites-enabled/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-https.conf || true
+
+    # Always enable HTTP site (bootstrap)
+    sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
+
+    # Enable HTTPS site only if certs exist
     if [ -f "$CERT_DIR/fullchain.pem" ] && [ -f "$CERT_DIR/privkey.pem" ]; then
       sudo ln -sf /etc/nginx/sites-available/forgejo-https.conf /etc/nginx/sites-enabled/forgejo-https.conf
+      echo "TLS: enabled (found certs for $DOMAIN)"
     else
-      sudo rm -f /etc/nginx/sites-enabled/forgejo-https.conf || true
+      echo "WARNING: TLS not enabled yet (certs not found for $DOMAIN). Serving HTTP only."
+      echo "         Expected: $CERT_DIR/fullchain.pem and $CERT_DIR/privkey.pem"
     fi
+
 
     # Install unit and patch @NGINX_BIN@
     sudo install -m 0644 ${unitFile} /etc/systemd/system/nginx-nix.service
