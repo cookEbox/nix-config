@@ -11,7 +11,7 @@ let
   deployScript = pkgs.writeShellScript "deploy-nginx" ''
     set -euo pipefail
 
-    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
+    DOMAIN="''${1:?usage: deploy-nginx <domain>}"
 
     # Build nginx from this flake and capture the output path
     NGINX_OUT="$(nix build --no-link --print-out-paths ${self}#nginx)"

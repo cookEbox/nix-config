@@ -20,11 +20,15 @@
       nginxInfra = import ./hosts/linode/infra/nginx/deploy-nginx.nix {
         inherit pkgs self;
       };
+      deployAllInfra = import ./hosts/linode/infra/deploy-all.nix { 
+        inherit pkgs self; 
+      };
 
     in {
       packages.${system} = rec {
         forgejo = forgejoInfra.forgejo or forgejoInfra.package;
         nginx = nginxInfra.nginx or nginxInfra.package;
+        cerbot = pkgs.cerbot;
 
         tools = pkgs.buildEnv {
           name = "nix-config-tools";
@@ -40,6 +44,7 @@
       apps.${system} = { 
         deploy-forgejo = forgejoInfra.app;
         deploy-nginx = nginxInfra.app;
+        deploy-all = deployAllInfra.app;
       };
 
       nixosConfigurations = {
