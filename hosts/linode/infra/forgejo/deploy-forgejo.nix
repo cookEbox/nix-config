@@ -65,10 +65,16 @@ let
       sudo chown root:root "$SECRETS"
     fi
 
-    set -a
-    # shellcheck disable=SC1090
-    . "$SECRETS"
-    set +a
+    INTERNAL_TOKEN="$(sudo awk -F= '$1=="INTERNAL_TOKEN"{print $2}' "$SECRETS")"
+    SECRET_KEY="$(sudo awk -F= '$1=="SECRET_KEY"{print $2}' "$SECRETS")"
+    OAUTH2_JWT_SECRET="$(sudo awk -F= '$1=="OAUTH2_JWT_SECRET"{print $2}' "$SECRETS")"
+
+    # Sanity: fail fast if something went wrong
+    if [ -z "$INTERNAL_TOKEN" ] || [ -z "$SECRET_KEY" ] || [ -z "$OAUTH2_JWT_SECRET" ]; then
+      echo "ERROR: failed to load one or more secrets from $SECRETS" >&2
+      sudo ls -l "$SECRETS" >&2 || true
+      exit 1
+    fi
 
     TMP="$(mktemp)"
     sed \

@@ -4,7 +4,49 @@ let
   deployScript = pkgs.writeShellScript "deploy-all" ''
     set -euo pipefail
 
-    DOMAIN="''${1:?usage: deploy-all <domain>}"
+    FORCE_RENEW=0
+
+    usage() {
+      echo "usage: deploy-all [--force-renew] <domain>" >&2
+      exit 2
+    }
+
+    # Parse options (must come before <domain>)
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        --force-renew)
+          FORCE_RENEW=1
+          shift
+          ;;
+        -h|--help)
+          usage
+          ;;
+        --)
+          shift
+          break
+          ;;
+        -*)
+          echo "error: unknown option: $1" >&2
+          usage
+          ;;
+        *)
+          break
+          ;;
+      esac
+    done
+
+    DOMAIN="''${1:-}"
+    if [ -z "$DOMAIN" ]; then
+      echo "error: missing <domain>" >&2
+      usage
+    fi
+
+    # minimal sanity check: must contain at least one dot
+    if ! printf '%s' "$DOMAIN" | grep -q '\.'; then
+      echo "error: invalid domain '$DOMAIN' (must contain a dot)" >&2
+      exit 2
+    fi
+    shift
 
     # Server-local deploy config (so deploy-all remains single-arg)
     COMMON_ENV_DIR="/var/lib/megaptera/deploy"
@@ -34,6 +76,12 @@ let
     # Make sure the webroot exists (deploy-nginx also creates it)
     sudo install -d -m 0755 /var/lib/nginx/acme
 
+    CERTBOT_EXTRA=""
+    if [ "$FORCE_RENEW" -eq 1 ]; then
+      CERTBOT_EXTRA="--force-renewal"
+      echo "NOTE: forcing certificate renewal for $DOMAIN" >&2
+    fi
+
     # Non-interactive issuance/renewal
     sudo "$CERTBOT_BIN" certonly --webroot \
       -w /var/lib/nginx/acme \
@@ -41,7 +89,8 @@ let
       --agree-tos \
       --non-interactive \
       -m "$LE_EMAIL" \
-      --keep-until-expiring
+      --keep-until-expiring \
+      $CERTBOT_EXTRA
 
     echo "==> 3) Redeploy nginx (HTTPS should now be enabled)"
     nix run ${self}#deploy-nginx -- "$DOMAIN"
