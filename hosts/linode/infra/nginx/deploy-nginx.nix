@@ -11,6 +11,8 @@ let
   deployScript = pkgs.writeShellScript "deploy-nginx" ''
     set -euo pipefail
 
+    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
+
     # Build nginx from this flake and capture the output path
     NGINX_OUT="$(nix build --no-link --print-out-paths ${self}#nginx)"
     NGINX_BIN="$NGINX_OUT/bin/nginx"
@@ -25,39 +27,31 @@ let
       exit 1
     fi
 
-    # Ensure directories exist (config + logs + state + ACME + service hardening)
-    sudo install -d -m 0755 /etc/nginx
-    sudo install -d -m 0755 /etc/nginx/sites-available
-    sudo install -d -m 0755 /etc/nginx/sites-enabled
-    sudo install -d -m 0755 /var/log/nginx
-    sudo install -d -m 0755 /var/lib/nginx
-    sudo install -d -m 0755 /var/lib/nginx/acme
-    sudo install -d -m 0755 /etc/letsencrypt
+    # Ensure directories exist
+    sudo install -d -m 0755 /etc/nginx /etc/nginx/sites-available /etc/nginx/sites-enabled
+    sudo install -d -m 0755 /var/log/nginx /var/lib/nginx /var/lib/nginx/acme /etc/letsencrypt
 
-    # Install support files expected by nginx.conf
+    # Support files expected by nginx.conf
     sudo install -m 0644 "$MIME_SRC" /etc/nginx/mime.types
 
-    # Install main nginx config
+    # Main nginx config
     sudo install -m 0644 ${nginxConf} /etc/nginx/nginx.conf
 
-    # Install site configs into sites-available
-    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
-
-    # Render templates with domain substituted
+    # Render templated site configs into sites-available
     sudo sed "s|@FORGEJO_DOMAIN@|$DOMAIN|g" ${forgejoSiteHttp} \
       | sudo tee /etc/nginx/sites-available/forgejo-http.conf >/dev/null
-
     sudo sed "s|@FORGEJO_DOMAIN@|$DOMAIN|g" ${forgejoSiteHttps} \
       | sudo tee /etc/nginx/sites-available/forgejo-https.conf >/dev/null
-
     sudo chmod 0644 /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-available/forgejo-https.conf
+
+    # Reset managed enabled sites (avoid stale state)
+    sudo rm -f /etc/nginx/sites-enabled/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-https.conf || true
 
     # Always enable HTTP bootstrap site
     sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
 
-    DOMAIN="''${FORGEJO_DOMAIN:-forgejo.megaptera.dev}"
+    # Enable HTTPS site only if certs exist
     CERT_DIR="/etc/letsencrypt/live/$DOMAIN"
-
     FULLCHAIN="$CERT_DIR/fullchain.pem"
     PRIVKEY="$CERT_DIR/privkey.pem"
 
@@ -66,18 +60,12 @@ let
     echo "  FULLCHAIN=$FULLCHAIN"
     echo "  PRIVKEY=$PRIVKEY"
 
-    # Always enable HTTP bootstrap site
-    sudo ln -sf /etc/nginx/sites-available/forgejo-http.conf /etc/nginx/sites-enabled/forgejo-http.conf
-
-    # Decide HTTPS based on the actual leaf files
     if sudo test -f "$FULLCHAIN" && sudo test -f "$PRIVKEY"; then
       echo "TLS: enabled (certs found)"
       sudo ln -sf /etc/nginx/sites-available/forgejo-https.conf /etc/nginx/sites-enabled/forgejo-https.conf
     else
       echo "WARNING: TLS not enabled yet (certs not found). Serving HTTP only."
-      echo "         Missing one of:"
       sudo ls -la "$CERT_DIR" || true
-      sudo rm -f /etc/nginx/sites-enabled/forgejo-https.conf || true
     fi
 
     # Install unit and patch @NGINX_BIN@
@@ -86,14 +74,13 @@ let
 
     sudo systemctl daemon-reload
 
-    # Validate config before (re)starting service
+    # Validate config before restart
     sudo "$NGINX_BIN" -t -c /etc/nginx/nginx.conf
 
-    # Start/restart
+    # Restart nginx
     sudo systemctl enable nginx-nix.service
     sudo systemctl restart nginx-nix.service
 
-    # Status
     sudo systemctl --no-pager status nginx-nix.service
   '';
 in
@@ -101,3 +88,4 @@ in
   nginx = pkgs.nginx;
   app = { type = "app"; program = toString deployScript; };
 }
+
