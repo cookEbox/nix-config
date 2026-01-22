@@ -14,7 +14,22 @@ let
 
     # Build forgejo from this flake and capture the output path
     FORGEJO_OUT="$(nix build --no-link --print-out-paths ${self}#forgejo)"
-    FORGEJO_BIN="$FORGEJO_OUT/bin/forgejo"
+
+    # Determine actual executable name (nixpkgs forgejo often provides bin/gitea)
+    if [ -x "$FORGEJO_OUT/bin/forgejo" ]; then
+      FORGEJO_BIN="$FORGEJO_OUT/bin/forgejo"
+    elif [ -x "$FORGEJO_OUT/bin/gitea" ]; then
+      FORGEJO_BIN="$FORGEJO_OUT/bin/gitea"
+    else
+      echo "ERROR: Could not find forgejo/gitea executable under: $FORGEJO_OUT" >&2
+      echo "Contents of $FORGEJO_OUT/bin:" >&2
+      ls -la "$FORGEJO_OUT/bin" >&2 || true
+      echo "Candidate matches:" >&2
+      find "$FORGEJO_OUT" -maxdepth 3 -type f \( -name forgejo -o -name gitea \) -print >&2 || true
+      exit 1
+    fi
+
+    echo "Using Forgejo executable: $FORGEJO_BIN"
 
     if [ ! -x "$FORGEJO_BIN" ]; then
       echo "ERROR: Forgejo binary not found at: $FORGEJO_BIN" >&2
