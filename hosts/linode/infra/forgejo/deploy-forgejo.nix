@@ -48,18 +48,21 @@ let
     SECRETS="/var/lib/forgejo/custom/conf/secrets.env"
     if [ ! -f "$SECRETS" ]; then
       echo "Generating Forgejo secrets: $SECRETS"
-      sudo install -m 0600 /dev/null "$SECRETS"
 
       INTERNAL_TOKEN="$(openssl rand -hex 32)"
       SECRET_KEY="$(openssl rand -hex 64)"
       OAUTH2_JWT_SECRET="$(openssl rand -base64 32 | tr -d '\n')"
 
-      sudo sh -c "printf '%s\n' \
-        'INTERNAL_TOKEN=$INTERNAL_TOKEN' \
-        'SECRET_KEY=$SECRET_KEY' \
-        'OAUTH2_JWT_SECRET=$OAUTH2_JWT_SECRET' \
-        > '$SECRETS'"
+      # Ensure directory exists and is owned appropriately
+      sudo install -d -m 0755 /var/lib/forgejo/custom/conf
+
+      # Write atomically-ish via tee (no shell redirection)
+      printf 'INTERNAL_TOKEN=%s\nSECRET_KEY=%s\nOAUTH2_JWT_SECRET=%s\n' \
+        "$INTERNAL_TOKEN" "$SECRET_KEY" "$OAUTH2_JWT_SECRET" \
+        | sudo tee "$SECRETS" >/dev/null
+
       sudo chmod 0600 "$SECRETS"
+      sudo chown root:root "$SECRETS"
     fi
 
     set -a
