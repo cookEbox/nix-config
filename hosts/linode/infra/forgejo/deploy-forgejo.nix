@@ -38,7 +38,7 @@ let
     fi
 
     # dirs (no /etc/forgejo)
-    sudo install -d -m 0755 /var/lib/forgejo/custom/conf
+    sudo install -d -m 0750 -o forgejo -g forgejo /var/lib/forgejo/custom/conf
     sudo install -d -m 0755 /var/lib/forgejo/data /var/lib/forgejo/git/repositories
     sudo install -d -m 0755 /var/lib/forgejo/data/log
     sudo install -d -m 0755 /var/log/forgejo
@@ -53,16 +53,13 @@ let
       SECRET_KEY="$(openssl rand -hex 64)"
       OAUTH2_JWT_SECRET="$(openssl rand -base64 32 | tr -d '\n')"
 
-      # Ensure directory exists and is owned appropriately
-      sudo install -d -m 0755 /var/lib/forgejo/custom/conf
-
       # Write atomically-ish via tee (no shell redirection)
+      TMP_SECRETS="$(mktemp)"
       printf 'INTERNAL_TOKEN=%s\nSECRET_KEY=%s\nOAUTH2_JWT_SECRET=%s\n' \
-        "$INTERNAL_TOKEN" "$SECRET_KEY" "$OAUTH2_JWT_SECRET" \
-        | sudo tee "$SECRETS" >/dev/null
+        "$INTERNAL_TOKEN" "$SECRET_KEY" "$OAUTH2_JWT_SECRET" > "$TMP_SECRETS"
 
-      sudo chmod 0600 "$SECRETS"
-      sudo chown root:root "$SECRETS"
+      sudo install -m 0600 -o root -g root "$TMP_SECRETS" "$SECRETS"
+      rm -f "$TMP_SECRETS"
     fi
 
     INTERNAL_TOKEN="$(sudo awk -F= '$1=="INTERNAL_TOKEN"{print $2}' "$SECRETS")"
