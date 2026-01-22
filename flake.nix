@@ -45,6 +45,10 @@
         deploy-forgejo = forgejoInfra.app;
         deploy-nginx = nginxInfra.app;
         deploy-all = deployAllInfra.app;
+        certbot = { 
+          type = "app"; 
+          program = "${pkgs.cerbot}/bin/certbot";
+        };
       };
 
       nixosConfigurations = {
