@@ -23,6 +23,9 @@
       deployAllInfra = import ./hosts/linode/infra/deploy-all.nix { 
         inherit pkgs self; 
       };
+      deployCert = import ./hosts/linode/infra/deploy-cert.nix { 
+        inherit pkgs self; 
+      };
 
     in {
       packages.${system} = rec {
@@ -45,6 +48,7 @@
         deploy-forgejo = forgejoInfra.app;
         deploy-nginx = nginxInfra.app;
         deploy-all = deployAllInfra.app;
+        deploy-cert = deployCert.app;
       };
 
       nixosConfigurations = {
