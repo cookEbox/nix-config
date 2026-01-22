@@ -28,7 +28,7 @@
       packages.${system} = rec {
         forgejo = forgejoInfra.forgejo or forgejoInfra.package;
         nginx = nginxInfra.nginx or nginxInfra.package;
-        cerbot = pkgs.cerbot;
+        certbot = pkgs.certbot;
 
         tools = pkgs.buildEnv {
           name = "nix-config-tools";
@@ -45,10 +45,6 @@
         deploy-forgejo = forgejoInfra.app;
         deploy-nginx = nginxInfra.app;
         deploy-all = deployAllInfra.app;
-        certbot = { 
-          type = "app"; 
-          program = "${pkgs.cerbot}/bin/certbot";
-        };
       };
 
       nixosConfigurations = {
