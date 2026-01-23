@@ -16,6 +16,23 @@
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
+      publish() {
+        local repo="$1"
+        if [ -z "$repo" ]; then
+          echo "usage: publish <repo-name>" >&2
+          return 1
+        fi
+
+        sudo -u forgejo -H sh -c "
+          set -euo pipefail
+          REPO_DIR=/var/lib/forgejo/git/repositories/sysop/''${repo}.git
+          [ -d \"\$REPO_DIR\" ] || { echo \"repo not found: \$REPO_DIR\" >&2; exit 1; }
+          cd \"\$REPO_DIR\"
+          git remote get-url github >/dev/null
+          git push github main
+          git push github --tags
+        "
+      }
     '';
     shellAliases = {
       ".." = "cd ..";
