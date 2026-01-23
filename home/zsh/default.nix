@@ -23,7 +23,7 @@
           return 1
         fi
 
-        sudo -u forgejo -H sh -c "
+        sudo -u forgejo -H bash -lc "
           set -euo pipefail
           REPO_DIR=/var/lib/forgejo/git/repositories/sysop/''${repo}.git
           [ -d \"\$REPO_DIR\" ] || { echo \"repo not found: \$REPO_DIR\" >&2; exit 1; }
