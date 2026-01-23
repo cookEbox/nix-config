@@ -25,12 +25,15 @@
 
         sudo -u forgejo -H bash -lc "
           set -euo pipefail
+
           REPO_DIR=/var/lib/forgejo/git/repositories/sysop/''${repo}.git
           [ -d \"\$REPO_DIR\" ] || { echo \"repo not found: \$REPO_DIR\" >&2; exit 1; }
+
           cd \"\$REPO_DIR\"
-          git remote get-url github >/dev/null
-          git push github main
-          git push github --tags
+
+          # Push directly to GitHub using the per-repo SSH Host alias.
+          git push git@github-''${repo}:cookEbox/''${repo}.git main
+          git push git@github-''${repo}:cookEbox/''${repo}.git --tags
         "
       }
     '';
