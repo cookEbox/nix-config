@@ -8,6 +8,7 @@
       require("oil_config")
       require("cmp_config")
       require("snippets_config")
+      require("avante_config")
       vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
         require("lsp_zero")
@@ -32,6 +33,8 @@
       telescope-dap-nvim
       oil-nvim
       nvim-web-devicons
+      nui-nvim
+      avante-nvim
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";
@@ -109,6 +112,7 @@
     ".config/nvim/lua/dap_config.lua".source        = ./dap_config.lua;
     ".config/nvim/lua/telescope_config.lua".source  = ./telescope_config.lua;
     ".config/nvim/lua/oil_config.lua".source        = ./oil_config.lua;
+    ".config/nvim/lua/avante_config.lua".source     = ./avante_config.lua;
   };
 
 }
