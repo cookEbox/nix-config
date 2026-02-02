@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... } :
+{ pkgs, ... }:
 
 {
   gtk = { 
@@ -16,5 +16,6 @@
       package = pkgs.gruvbox-dark-icons-gtk;
     };
   };
+
   programs.direnv.enable = true;
 }
