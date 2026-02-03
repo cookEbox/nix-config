@@ -84,9 +84,6 @@ in
       bind-key X display-popup -E "${tmuxSessionKill}"
       bind-key S display-popup -E "${tmuxSessionSwitch}"
 
-      bind-key I run-shell "${tmuxSessionSwitch}"
-      bind-key K run-shell "${tmuxSessionKill}"
-
       # Pane navigation (vim home row)
       # Note: C-; can be unreliable depending on terminal/OS key handling.
       bind -n C-h select-pane -L
