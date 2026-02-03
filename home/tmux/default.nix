@@ -23,6 +23,7 @@ let
   '';
 
   tmuxReloadConfig = pkgs.writeShellScript "tmux-reload-config" ''
+    #!${pkgs.bash}/bin/bash
     set -euo pipefail
 
     # Home Manager typically generates tmux.conf in the Nix store.
