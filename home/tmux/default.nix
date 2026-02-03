@@ -22,22 +22,6 @@ let
         done
   '';
 
-  tmuxReloadConfig = pkgs.writeShellScript "tmux-reload-config" ''
-    #!${pkgs.bash}/bin/bash
-    set -euo pipefail
-
-    # Home Manager typically generates tmux.conf in the Nix store.
-    # Ask tmux which config file it loaded and source it.
-    conf="$(tmux display-message -p "#{config_files}")"
-    [ -n "''${conf}" ] || exit 0
-
-    # `#{config_files}` may include multiple entries (including plugin .tmux files) and may be
-    # space-separated. We only want to reload the HM-generated config.
-    hm_conf="$(printf '%s\n' "''${conf}" | tr ' ' '\n' | grep -E '/nix/store/[^ ]+-hm_tmux.*\.conf$' | head -n1)"
-    [ -n "''${hm_conf}" ] || exit 0
-
-    tmux source-file "''${hm_conf}"
-  '';
 in
 {
   programs.tmux = {
@@ -80,9 +64,7 @@ in
       bind -n M-j previous-window
       bind -n M-k next-window
 
-      unbind r
-      # Reload the actual config file tmux is using (HM typically generates it in the Nix store).
-      bind r run-shell "${tmuxReloadConfig}"
+      # Note: no tmux config reload binding. Restart tmux (`tmux kill-server`) to apply changes.
        
       setw -g mouse on
        
