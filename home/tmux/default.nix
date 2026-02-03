@@ -90,10 +90,10 @@ in
 
       # Pane navigation (vim home row)
       # Note: C-; can be unreliable depending on terminal/OS key handling.
-      bind -n C-j select-pane -L
-      bind -n C-k select-pane -D
-      bind -n C-l select-pane -U
-      bind -n C-\; select-pane -R
+      bind -n C-h select-pane -L
+      bind -n C-j select-pane -D
+      bind -n C-k select-pane -U
+      bind -n C-l select-pane -R
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
       '';
