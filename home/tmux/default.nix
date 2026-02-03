@@ -64,8 +64,8 @@ in
       bind -n M-j previous-window
       bind -n M-k next-window
 
-      # Note: no tmux config reload binding. Restart tmux (`tmux kill-server`) to apply changes.
-       
+      bind r source-file ~/.config/tmux/tmux.conf 
+
       setw -g mouse on
        
       unbind %
