@@ -41,15 +41,13 @@
     virt-viewer
     spice spice-gtk
     spice-protocol
-    win-virtio
+    virtio-win
     win-spice
     virglrenderer
   ];
 
   services = { 
-    logind.extraConfig = ''
-      IdleAction=ignore
-    '';
+    logind.settings.Login = { IdleAction = "ignore"; };
     spice-vdagentd.enable = true;
     xserver = {
       videoDrivers = [ "modesetting" ];
@@ -68,8 +66,10 @@
       enable = true;
       qemu = {
         swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
+
+        # NixOS 25.11: the ovmf submodule was removed; OVMF images are available by default.
+        # Keep this block minimal; if you need a specific OVMF variant later, we can re-add
+        # the appropriate qemu/firmware configuration.
       };
     };
     spiceUSBRedirection.enable = true;

@@ -29,9 +29,13 @@
   i18n.defaultLocale = "en_GB.UTF-8";
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      # Required for ProtonVPN GUI / NetworkManager OpenVPN profiles.
+      plugins = with pkgs; [ networkmanager-openvpn ];
+    };
     nameservers = [ "1.1.1.1" ];
-    firewall = { 
+    firewall = {
     enable = true;
 
     # Desktop: default is allow outbound, block inbound

@@ -1,10 +1,8 @@
 {
   services = {
-    logind = {
-      extraConfig = ''
-        IdleAction=ignore
-        IdleActionSec=0
-      '';
+    logind.settings.Login = { 
+      IdleAction = "ignore"; 
+      IdleActionSec = 0;
     };
 
     # Enable CUPS to print documents for a WiFi printer

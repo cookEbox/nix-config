@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, ... }:
+{ pkgs, unstable, ... }:
 
 {
   imports = [ 
@@ -18,7 +18,7 @@
       rclone
       android-file-transfer
       thunderbird
-      onlyoffice-bin
+      onlyoffice-desktopeditors
       deja-dup
       redshift
       networkmanagerapplet
@@ -33,7 +33,7 @@
       nix-prefetch-git
       qutebrowser
       mpv
-      whatsapp-for-linux
+      wasistlos
       cmus
       gccgo13
       go
@@ -50,7 +50,7 @@
       direnv
       nodePackages.bash-language-server
       freecad
-      kicad
+      # kicad
       keymapp
       mesa-demos
       protonvpn-gui

@@ -9,6 +9,9 @@
       require("cmp_config")
       require("snippets_config")
       require("avante_config")
+      -- Neovim 0.11+: silence nvim-lspconfig deprecation notice (lsp-zero still uses require('lspconfig'))
+      vim.g.lspconfig_deprecation_warning = 0
+
       vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
         require("lsp_zero")
