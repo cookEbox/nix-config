@@ -85,11 +85,19 @@ in
       bind-key S display-popup -E "${tmuxSessionSwitch}"
 
       # Pane navigation (vim home row)
-      # Note: C-; can be unreliable depending on terminal/OS key handling.
-      bind -n C-h select-pane -L
-      bind -n C-j select-pane -D
-      bind -n C-k select-pane -U
-      bind -n C-l select-pane -R
+      # Seamless nvim <-> tmux navigation via tmux plugin `vim-tmux-navigator`
+      # (and Neovim plugin `vim-tmux-navigator`, already enabled in home/nvim/default.nix).
+      #
+      # The tmux plugin provides these commands:
+      #   TmuxNavigateLeft/Down/Up/Right/Previous
+      # which will:
+      #   - move between tmux panes when you're not in (n)vim
+      #   - forward the keypress into (n)vim when you are
+      bind -n C-h TmuxNavigateLeft
+      bind -n C-j TmuxNavigateDown
+      bind -n C-k TmuxNavigateUp
+      bind -n C-l TmuxNavigateRight
+      bind -n C-\\ TmuxNavigatePrevious
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
       '';

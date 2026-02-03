@@ -103,7 +103,7 @@ lsp.configure('metals', {
     statusBarProvider = "on",
     inpurBoxProvider = "on",
   },
-  on_attach = function(client, bufnr)
+  on_attach = function(_, _)
     require("metals").setup_dap() -- Ensure DAP setup for Scala debugging
     require("dapui").setup() -- Optional, if you use dap-ui
   end,
@@ -123,8 +123,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
 )
 local ht = require('haskell-tools')
-lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
+lsp.on_attach(function(_, bufnr)
+  local opts = { buffer = bufnr, remap = false }
   local opts2 = { buffer = 0, silent = true, noremap = true }
 
   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -137,7 +137,15 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+  -- Window navigation shortcuts (match common tmux/vim-tmux-navigator muscle memory)
+  -- These mirror the standard <C-w>{h,j,k,l} window moves.
+  vim.keymap.set({ "n", "t" }, "<C-h>", "<C-w>h", opts)
+  vim.keymap.set({ "n", "t" }, "<C-j>", "<C-w>j", opts)
+  vim.keymap.set({ "n", "t" }, "<C-k>", "<C-w>k", opts)
+  vim.keymap.set({ "n", "t" }, "<C-l>", "<C-w>l", opts)
+
+  -- Keep signature help on a different key to avoid clobbering <C-k> window navigation.
+  vim.keymap.set("i", "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
   vim.keymap.set("n", "<leader>dc", function() require'dap'.continue() end, opts)
   vim.keymap.set("n", "<leader>db", function() require'dap'.toggle_breakpoint() end, opts)
   vim.keymap.set("n", "<leader>ds", function() require'dap'.step_over() end, opts)
