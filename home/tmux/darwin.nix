@@ -4,25 +4,57 @@ let
   tmuxSessionSwitch = pkgs.writeShellScript "tmux-session-switch" ''
     set -euo pipefail
 
-    # On macOS we want errors visible while debugging (socket/env issues can make `tmux ls` look empty).
-    sessions="$(tmux list-sessions 2>&1 || true)"
+    # Ensure we talk to the *current* tmux server even if the popup environment is missing TMUX.
+    # If TMUX is set, it looks like: "/path/to/socket,server-pid,client-id".
+    socket=""
+    if [ -n "''${TMUX-}" ]; then
+      socket="''${TMUX%%,*}"
+    fi
+
+    if [ -n "''${socket}" ]; then
+      sessions="$(${pkgs.tmux}/bin/tmux -S "''${socket}" list-sessions 2>&1 || true)"
+    else
+      sessions="$(${pkgs.tmux}/bin/tmux list-sessions 2>&1 || true)"
+    fi
+
+    # If tmux returned an error, show it so we can diagnose why the list is empty.
+    if printf '%s' "''${sessions}" | ${pkgs.gnugrep}/bin/grep -qi "^no server running"; then
+      echo "tmux: no server running"
+      echo "(popup may be missing TMUX env; try restarting tmux server)"
+      exit 0
+    fi
+
     if [ -z "''${sessions}" ]; then
-      echo "No sessions (or tmux error)."
+      echo "No sessions found."
       exit 0
     fi
 
     session="$(printf '%s\n' "''${sessions}" | ${pkgs.fzf}/bin/fzf --prompt='Switch to session > ' | cut -d: -f1)"
     [ -n "''${session}" ] || exit 0
 
-    tmux switch-client -t "''${session}"
+    if [ -n "''${socket}" ]; then
+      ${pkgs.tmux}/bin/tmux -S "''${socket}" switch-client -t "''${session}"
+    else
+      ${pkgs.tmux}/bin/tmux switch-client -t "''${session}"
+    fi
   '';
 
   tmuxSessionKill = pkgs.writeShellScript "tmux-session-kill" ''
     set -euo pipefail
 
-    sessions="$(tmux list-sessions 2>&1 || true)"
+    socket=""
+    if [ -n "''${TMUX-}" ]; then
+      socket="''${TMUX%%,*}"
+    fi
+
+    if [ -n "''${socket}" ]; then
+      sessions="$(${pkgs.tmux}/bin/tmux -S "''${socket}" list-sessions 2>&1 || true)"
+    else
+      sessions="$(${pkgs.tmux}/bin/tmux list-sessions 2>&1 || true)"
+    fi
+
     if [ -z "''${sessions}" ]; then
-      echo "No sessions (or tmux error)."
+      echo "No sessions found."
       exit 0
     fi
 
@@ -31,7 +63,11 @@ let
       | cut -d: -f1 \
       | while IFS= read -r session; do
           [ -n "''${session}" ] || continue
-          tmux kill-session -t "''${session}"
+          if [ -n "''${socket}" ]; then
+            ${pkgs.tmux}/bin/tmux -S "''${socket}" kill-session -t "''${session}"
+          else
+            ${pkgs.tmux}/bin/tmux kill-session -t "''${session}"
+          fi
         done
   '';
 
@@ -99,11 +135,12 @@ in
 
       # Pane navigation (vim home row)
       # Use vim-tmux-navigator for seamless nvim <-> tmux navigation.
-      bind -n C-h TmuxNavigateLeft
-      bind -n C-j TmuxNavigateDown
-      bind -n C-k TmuxNavigateUp
-      bind -n C-l TmuxNavigateRight
-      bind -n C-\\ TmuxNavigatePrevious
+      #
+      # If you see "unknown command: TmuxNavigateLeft", the tmux plugin isn't loaded.
+      # In that case, we fall back to native select-pane bindings below.
+      if-shell -b '${pkgs.tmux}/bin/tmux list-commands | ${pkgs.gnugrep}/bin/grep -q "^TmuxNavigateLeft"' \
+        'bind -n C-h TmuxNavigateLeft; bind -n C-j TmuxNavigateDown; bind -n C-k TmuxNavigateUp; bind -n C-l TmuxNavigateRight; bind -n C-\\ TmuxNavigatePrevious' \
+        'bind -n C-h select-pane -L; bind -n C-j select-pane -D; bind -n C-k select-pane -U; bind -n C-l select-pane -R; bind -n C-\\ last-pane'
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
     '';
