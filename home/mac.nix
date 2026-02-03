@@ -26,16 +26,5 @@
       direnv
       qutebrowser
     ];
-    file = {
-      ".config/direnv/direnv.toml" = {
-        text = ''
-          hide_env_diff = true
-        '';
-      };
-    };
-    sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
   };
 }
