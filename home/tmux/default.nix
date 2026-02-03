@@ -31,7 +31,12 @@ let
     conf="$(tmux display-message -p "#{config_files}")"
     [ -n "''${conf}" ] || exit 0
 
-    tmux source-file "''${conf}"
+    # Source each config file (Home Manager may provide multiple, newline-separated).
+    # Ignore empty lines.
+    while IFS= read -r f; do
+      [ -n "''${f}" ] || continue
+      tmux source-file "''${f}"
+    done <<< "''${conf}"
   '';
 in
 {
