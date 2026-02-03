@@ -5,6 +5,7 @@
   imports = [ 
                ../../../home/default.nix
                ../../../home/mac.nix
+               
 	];
   # Disable direnv on workMac while we debug tmux regressions.
   # Keep it enabled on other hosts (e.g. desktop) via shared modules.
