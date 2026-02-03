@@ -4,7 +4,14 @@ let
   tmuxSessionSwitch = pkgs.writeShellScript "tmux-session-switch" ''
     set -euo pipefail
 
-    session="$(tmux ls 2>/dev/null | ${pkgs.fzf}/bin/fzf --prompt='Switch to session > ' | cut -d: -f1)"
+    # On macOS we want errors visible while debugging (socket/env issues can make `tmux ls` look empty).
+    sessions="$(tmux list-sessions 2>&1 || true)"
+    if [ -z "''${sessions}" ]; then
+      echo "No sessions (or tmux error)."
+      exit 0
+    fi
+
+    session="$(printf '%s\n' "''${sessions}" | ${pkgs.fzf}/bin/fzf --prompt='Switch to session > ' | cut -d: -f1)"
     [ -n "''${session}" ] || exit 0
 
     tmux switch-client -t "''${session}"
@@ -13,7 +20,13 @@ let
   tmuxSessionKill = pkgs.writeShellScript "tmux-session-kill" ''
     set -euo pipefail
 
-    tmux ls 2>/dev/null \
+    sessions="$(tmux list-sessions 2>&1 || true)"
+    if [ -z "''${sessions}" ]; then
+      echo "No sessions (or tmux error)."
+      exit 0
+    fi
+
+    printf '%s\n' "''${sessions}" \
       | ${pkgs.fzf}/bin/fzf -m --prompt='Kill sessions > ' \
       | cut -d: -f1 \
       | while IFS= read -r session; do
@@ -85,11 +98,12 @@ in
       bind-key S display-popup -E "${tmuxSessionSwitch}"
 
       # Pane navigation (vim home row)
-      # Note: C-; can be unreliable depending on terminal/OS key handling.
-      bind -n C-h select-pane -L
-      bind -n C-j select-pane -D
-      bind -n C-k select-pane -U
-      bind -n C-l select-pane -R
+      # Use vim-tmux-navigator for seamless nvim <-> tmux navigation.
+      bind -n C-h TmuxNavigateLeft
+      bind -n C-j TmuxNavigateDown
+      bind -n C-k TmuxNavigateUp
+      bind -n C-l TmuxNavigateRight
+      bind -n C-\\ TmuxNavigatePrevious
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
     '';
