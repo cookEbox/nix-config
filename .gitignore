@@ -2,5 +2,4 @@ cleanup.md
 result
 tmux-client-1644484.log
 all_files_output.txt
-*.md
 ./*concat.sh

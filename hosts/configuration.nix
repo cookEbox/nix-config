@@ -90,16 +90,48 @@
         options = "altwin:menu_win";
       };
     }; 
-    openssh.enable = true; 
+    # Desktop: keep SSH disabled unless you explicitly need inbound access.
+    # If you do need it, re-enable and use the hardened settings below.
+    openssh = {
+      enable = false;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
+        AllowUsers = [ "nick" ];
+      };
+    };
+
     pulseaudio.enable = false;
+
+    # Flatpak provides strong sandboxing for browsers/Electron apps.
+    flatpak.enable = true;
+  };
+
+  # AppArmor is a safe default on NixOS and reduces impact of app compromise.
+  security.apparmor.enable = true;
+
+  # Low-friction kernel/sysctl hardening.
+  security = {
+    protectKernelImage = true;
+    sudo.execWheelOnly = true;
+    sudo.wheelNeedsPassword = true;
+  };
+
+  boot.kernel.sysctl = {
+    "kernel.kptr_restrict" = 2;
+    "kernel.dmesg_restrict" = 1;
+    "fs.protected_symlinks" = 1;
+    "fs.protected_hardlinks" = 1;
   };
 
   users.groups.plugdev = { };
   users.users.nick = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    initialPassword = "P@ssword01";
-    extraGroups = [ "wheel" "libvirtd" "lp" "scanner" "plugdev"]; 
+    # Do not store plaintext passwords in Nix (ends up in the Nix store + git history).
+    # Set the password interactively once with: passwd
+    extraGroups = [ "wheel" "libvirtd" "lp" "scanner" "plugdev" ];
   };
 
   environment = { 

@@ -80,8 +80,7 @@
       syncup = "rclone copy /home/nick/Documents/Remote/Drive/ Drive:";
       syncdwn = "rclone copy Drive: /home/nick/Documents/Remote/Drive/";
       rpass = "< /dev/urandom tr -dc _A-Z-a-z-0-9'!\"#$%&()*+,-./:;<=>?@[\\]^_`{|}~' | head -c\${1:-32};echo;";
-      ladybird = "/nix/store/1zjr98ippnh7j0vpiga2gpn2lgbk3pbm-ladybird-0-unstable-2025-03-27/bin/Ladybird";
-      lb = "/nix/store/1zjr98ippnh7j0vpiga2gpn2lgbk3pbm-ladybird-0-unstable-2025-03-27/bin/Ladybird";
+      ladybird = "/nix/store/lh8ach0v72kv9h36jcbg2pzfpgz420nc-ladybird-0-unstable-2026-01-31/bin/Ladybird";
       sshpi = "ssh Admin@192.168.1.116";
       wine888     = ''WINEPREFIX=$HOME/.wine-888 WINEARCH=win64 wine'';
       wineequilab = ''WINEPREFIX=$HOME/.wine-equilab WINEARCH=win32 wine'';

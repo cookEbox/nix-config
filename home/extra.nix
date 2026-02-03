@@ -52,7 +52,6 @@
       freecad
       kicad
       keymapp
-      rpi-imager
       mesa-demos
       protonvpn-gui
       jdk17

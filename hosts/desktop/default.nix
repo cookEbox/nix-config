@@ -1,8 +1,15 @@
-{ pkgs, config, ... }:
+{ pkgs, unstable, ... }:
 
-{ 
+{
+  # Prefer Ladybird from nixos-unstable while keeping the rest of the system on stable.
+  nixpkgs.overlays = [
+    (final: prev: {
+      ladybird = unstable.ladybird;
+    })
+  ];
+
   imports = [
-    ../configuration.nix 
+    ../configuration.nix
     ../extra.nix
     ./hardware-configuration.nix
   ];
