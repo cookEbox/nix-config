@@ -49,6 +49,8 @@
     };
   };
 
+  xdg.portal.enable = true;
+
   services = {
     udev.extraRules = ''
       # Rules for Oryx web flashing and live training
