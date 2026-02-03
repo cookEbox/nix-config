@@ -21,6 +21,17 @@ let
           tmux kill-session -t "''${session}"
         done
   '';
+
+  tmuxReloadConfig = pkgs.writeShellScript "tmux-reload-config" ''
+    set -euo pipefail
+
+    # Home Manager typically generates tmux.conf in the Nix store.
+    # Ask tmux which config file it loaded and source it.
+    conf="$(tmux display-message -p "#{config_files}")"
+    [ -n "''${conf}" ] || exit 0
+
+    tmux source-file "''${conf}"
+  '';
 in
 {
   programs.tmux = {
@@ -65,8 +76,7 @@ in
 
       unbind r
       # Reload the actual config file tmux is using (HM typically generates it in the Nix store).
-      # tmux does not expand format strings in `source-file`, so we expand via `display-message`.
-      bind r run-shell 'tmux source-file "$(tmux display-message -p -F "#{config_files}")"'
+      bind r run-shell "${tmuxReloadConfig}"
        
       setw -g mouse on
        
