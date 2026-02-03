@@ -31,12 +31,12 @@ let
     conf="$(tmux display-message -p "#{config_files}")"
     [ -n "''${conf}" ] || exit 0
 
-    # Source each config file (Home Manager may provide multiple, newline-separated).
-    # Ignore empty lines.
-    while IFS= read -r f; do
-      [ -n "''${f}" ] || continue
-      tmux source-file "''${f}"
-    done <<< "''${conf}"
+    # `#{config_files}` may include multiple entries (including plugin .tmux files) and may be
+    # space-separated. We only want to reload the HM-generated config.
+    hm_conf="$(printf '%s\n' "''${conf}" | tr ' ' '\n' | grep -E '/nix/store/[^ ]+-hm_tmux.*\.conf$' | head -n1)"
+    [ -n "''${hm_conf}" ] || exit 0
+
+    tmux source-file "''${hm_conf}"
   '';
 in
 {
