@@ -65,7 +65,8 @@ in
 
       unbind r
       # Reload the actual config file tmux is using (HM typically generates it in the Nix store).
-      bind r source-file "#{config_files}"
+      # tmux does not expand format strings in `source-file`, so we expand via `display-message`.
+      bind r run-shell 'tmux source-file "$(tmux display-message -p "#{config_files}")"'
        
       setw -g mouse on
        

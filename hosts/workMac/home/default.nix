@@ -7,11 +7,9 @@
                ../../../home/mac.nix
                
 	];
-  # Disable direnv on workMac while we debug tmux regressions.
-  # Keep it enabled on other hosts (e.g. desktop) via shared modules.
   programs.direnv = {
-    enable = false;
-    nix-direnv.enable = false;
+    enable = true;
+    nix-direnv.enable = true;
   };
   home = { 
     stateVersion = "24.11";
