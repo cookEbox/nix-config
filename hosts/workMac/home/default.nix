@@ -5,7 +5,6 @@
   imports = [
     ../../../home/default.nix
     ../../../home/mac.nix
-    ../../../home/tmux/darwin.nix
   ];
   programs.direnv = {
     enable = true;

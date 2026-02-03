@@ -2,7 +2,7 @@
 
 {
   imports = [ 
-               ./tmux
+               ./tmux/darwin.nix
                ./macKitty
                ./nvim
                ./starship
