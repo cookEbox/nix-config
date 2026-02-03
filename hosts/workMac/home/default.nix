@@ -1,14 +1,15 @@
-{ config, lib, pkgs, nixpkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.home-manager.enable = true;
   imports = [ 
                ../../../home/default.nix
                ../../../home/mac.nix
+               
 	];
-  programs.direnv = { 
+  programs.direnv = {
     enable = true;
-    nix-direnv.enable = true; 
+    nix-direnv.enable = true;
   };
   home = { 
     stateVersion = "24.11";

@@ -36,6 +36,20 @@
           git push git@github-''${repo}:cookEbox/''${repo}.git --tags
         "
       }
+
+      hm_remote() {
+        local machine="''${1:-}"
+        local branch="''${2:-main}"
+
+        if [ -z "$machine" ]; then
+          echo "usage: hm_remote <machine> [branch]" >&2
+          return 2
+        fi
+
+        nix flake metadata --refresh "github:cookEbox/nix-config/''${branch}" || return $?
+        nix run "github:nix-community/home-manager/release-25.05" -- \
+          switch --flake "github:cookEbox/nix-config/''${branch}#''${machine}" --impure
+      }
     '';
     shellAliases = {
       ".." = "cd ..";
