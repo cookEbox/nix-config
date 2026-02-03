@@ -64,7 +64,8 @@ in
       bind -n M-k next-window
 
       unbind r
-      bind r source-file ~/.config/tmux/tmux.conf
+      # Reload the actual config file tmux is using (HM typically generates it in the Nix store).
+      bind r source-file "#{config_files}"
        
       setw -g mouse on
        
