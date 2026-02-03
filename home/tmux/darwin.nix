@@ -110,8 +110,12 @@ in
 
       bind j new-window -c "#{pane_current_path}"
 
+      # macOS/Kitty: Option is configured as Alt (Meta). Bind both Meta and ESC-prefixed variants
+      # to be resilient if the terminal sends Option as an escape sequence.
       bind -n M-j previous-window
       bind -n M-k next-window
+      bind -n Escape j previous-window
+      bind -n Escape k next-window
 
       # Note: no tmux config reload binding. Restart tmux (`tmux kill-server`) to apply changes.
 
