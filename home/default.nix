@@ -5,11 +5,13 @@
                ./ranger
 	];
   home = { 
-    packages = with pkgs; [ 
+    packages = with pkgs; [
       nmap
       gitui
       zathura
       feh
+
+      # LSP server binaries (used by Neovim's built-in LSP)
       nil
       lua-language-server
     ];

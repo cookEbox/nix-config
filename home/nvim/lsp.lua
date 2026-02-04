@@ -1,10 +1,10 @@
--- Neovim LSP configuration (without lsp-zero)
+-- Neovim LSP configuration using the Neovim 0.11+ API (`vim.lsp.config`).
 --
--- This avoids the deprecated lspconfig "framework" API that lsp-zero relies on
--- in Neovim 0.11+.
+-- This intentionally avoids `require('lspconfig')`, which is deprecated.
 
-local ok_lspconfig, lspconfig = pcall(require, "lspconfig")
-if not ok_lspconfig then
+local lsp = vim.lsp
+if type(lsp) ~= "table" or type(lsp.config) ~= "table" then
+  -- Older Neovim; nothing to do.
   return
 end
 
@@ -14,13 +14,8 @@ vim.diagnostic.config({
   underline = false,
 })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-    virtual_text = false,
-    underline = false,
-  }
-)
+-- Neovim 0.11+ no longer uses the legacy publishDiagnostics handler.
+-- Configure diagnostics via vim.diagnostic.config() only.
 
 local function on_attach(_, bufnr)
   local opts = { buffer = bufnr, remap = false }
@@ -60,7 +55,7 @@ local function on_attach(_, bufnr)
   end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = lsp.protocol.make_client_capabilities()
 local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 if ok_cmp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
@@ -74,10 +69,52 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
+-- Neovim 0.11+: `vim.lsp.config` defines server configs, but you still need to
+-- start/enable them for relevant buffers.
+local function start_lsp_for_buffer(server_name)
+  local cfg = lsp.config[server_name]
+  if type(cfg) ~= "table" then
+    return
+  end
+
+  -- Avoid starting multiple clients for the same buffer.
+  local bufnr = vim.api.nvim_get_current_buf()
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    if client.name == server_name then
+      return
+    end
+  end
+
+  -- Ensure the client has a name (used for de-duplication and :LspInfo).
+  local start_cfg = vim.tbl_deep_extend("force", { name = server_name }, cfg)
+  vim.lsp.start(start_cfg)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "nix",
+  callback = function()
+    start_lsp_for_buffer("nil_ls")
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    start_lsp_for_buffer("lua_ls")
+  end,
+})
+
 -- Server configs
-lspconfig.lua_ls.setup({
-  on_attach = on_attach,
+--
+-- Note: `vim.lsp.config` defines server configurations. Starting the servers is
+-- handled by Neovim when a matching filetype is opened.
+
+-- Explicit cmd is required for non-builtin server definitions.
+-- Nix provides the binary as `lua-language-server`.
+lsp.config.lua_ls = {
+  cmd = { "lua-language-server" },
   capabilities = capabilities,
+  on_attach = on_attach,
   settings = {
     Lua = {
       diagnostics = {
@@ -85,37 +122,29 @@ lspconfig.lua_ls.setup({
       },
     },
   },
-})
+}
 
--- TypeScript: keep your existing server name (ts_ls) if that's what you have installed.
-if lspconfig.ts_ls then
-  lspconfig.ts_ls.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-elseif lspconfig.tsserver then
-  lspconfig.tsserver.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-end
-
-lspconfig.pylsp.setup({
-  on_attach = on_attach,
+-- TypeScript: prefer `ts_ls` if present, otherwise `tsserver`.
+-- (The actual server binary must be available in PATH.)
+lsp.config.ts_ls = {
   capabilities = capabilities,
-})
-
-lspconfig.hls.setup({
   on_attach = on_attach,
+}
+
+lsp.config.tsserver = {
   capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+lsp.config.pylsp = {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+lsp.config.hls = {
+  capabilities = capabilities,
+  on_attach = on_attach,
   filetypes = { "haskell", "lhaskell", "fk" },
-  root_dir = function(fname)
-    local ok, util = pcall(require, "lspconfig.util")
-    if not ok then
-      return nil
-    end
-    return util.root_pattern("*.cabal", "hie.yaml", ".git")(fname)
-  end,
   settings = {
     haskell = {
       formattingProvider = "ormolu",
@@ -132,47 +161,44 @@ lspconfig.hls.setup({
       },
     },
   },
-})
+}
 
-lspconfig.nil_ls.setup({
-  on_attach = on_attach,
+-- Nix LSP: the server binary is `nil`, but the config name is `nil_ls`.
+-- Neovim's built-in LSP uses the config name to decide what to start.
+-- Nix provides the server binary as `nil`.
+lsp.config.nil_ls = {
+  cmd = { "nil" },
   capabilities = capabilities,
-})
+  on_attach = on_attach,
+}
 
-lspconfig.clangd.setup({
-  on_attach = on_attach,
+lsp.config.clangd = {
   capabilities = capabilities,
-})
+  on_attach = on_attach,
+}
 
 -- JDTLS (Java)
-lspconfig.jdtls.setup({
-  on_attach = on_attach,
+lsp.config.jdtls = {
   capabilities = capabilities,
+  on_attach = on_attach,
   cmd = (function()
     local home = os.getenv("HOME")
     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
     local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
     return { "jdtls", "-data", workspace_dir }
   end)(),
-  root_dir = function(fname)
-    local ok, util = pcall(require, "lspconfig.util")
-    if not ok then
-      return nil
-    end
-    return util.root_pattern("pom.xml", "build.gradle", ".git")(fname)
-  end,
-})
+}
 
 -- Metals (Scala)
 local ok_metals, metals = pcall(require, "metals")
 if ok_metals then
-  lspconfig.metals.setup({
+  lsp.config.metals = {
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
       metals.setup_dap()
       pcall(function() require("dapui").setup() end)
     end,
-    capabilities = capabilities,
     settings = {
       useBloop = true,
       showImplicitArguments = true,
@@ -184,6 +210,6 @@ if ok_metals then
       statusBarProvider = "on",
       inputBoxProvider = "on",
     },
-  })
+  }
 end
 

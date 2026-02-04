@@ -73,7 +73,6 @@
         plugin = mason-nvim;
         config = "lua require('mason').setup()";
       }
-      nvim-lspconfig
       lspkind-nvim
       nvim-cmp
       {
