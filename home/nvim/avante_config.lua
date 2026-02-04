@@ -14,8 +14,10 @@ require("avante").setup({
     },
   },
   provider = "openai",
-  openai = {
-    model   = os.getenv("OPENAI_MODEL") or "gpt-4o",
+  providers = {
+    openai = {
+      model = os.getenv("OPENAI_MODEL") or "gpt-4o",
+    },
   },
   project = {
     instructions_file = "avante.md",

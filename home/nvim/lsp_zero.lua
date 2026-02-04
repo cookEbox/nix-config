@@ -3,6 +3,10 @@
 local lsp = require("lsp-zero")
 lsp.preset("recommended")
 
+-- Neovim 0.11+ deprecates the lspconfig "framework" API.
+-- lsp-zero v3 still relies on it; silence the warning until lsp-zero migrates.
+vim.g.lspconfig_deprecation_warning = 0
+
 lsp.extend_lspconfig()
 
 -- Use system installed lsps
@@ -35,7 +39,14 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 lsp.configure('hls', {
   force_setup = true,
   filetypes   = { "haskell", "lhaskell", "fk" },
-  root_dir = require('lspconfig.util').root_pattern('*.cabal', 'hie.yaml', '.git'),
+  -- Avoid requiring lspconfig.util directly (deprecated path in Neovim 0.11+).
+  root_dir = function(fname)
+    local ok, util = pcall(require, 'lspconfig.util')
+    if not ok then
+      return nil
+    end
+    return util.root_pattern('*.cabal', 'hie.yaml', '.git')(fname)
+  end,
   settings = {
     haskell = {
       formattingProvider = "ormolu",
@@ -82,7 +93,11 @@ lsp.configure('jdtls', {
 
   -- Optional: what counts as a project root
   root_dir = function(fname)
-    return require('lspconfig.util').root_pattern(
+    local ok, util = pcall(require, 'lspconfig.util')
+    if not ok then
+      return nil
+    end
+    return util.root_pattern(
       'pom.xml',
       'build.gradle',
       '.git'
