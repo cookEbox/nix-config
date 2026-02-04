@@ -9,12 +9,9 @@
       require("cmp_config")
       require("snippets_config")
       require("avante_config")
-      -- Neovim 0.11+: silence nvim-lspconfig deprecation notice (lsp-zero still uses require('lspconfig'))
-      vim.g.lspconfig_deprecation_warning = 0
 
-      vim.g.lsp_zero_extend_lspconfig = 0
       vim.defer_fn(function()
-        require("lsp_zero")
+        require("lsp")
         require("dap_config")
         require("telescope_config")
       end, 70)
@@ -76,7 +73,6 @@
         plugin = mason-nvim;
         config = "lua require('mason').setup()";
       }
-      lsp-zero-nvim
       nvim-lspconfig
       lspkind-nvim
       nvim-cmp
@@ -111,7 +107,7 @@
     ".config/nvim/lua/settings.lua".source          = ./settings.lua;
     ".config/nvim/lua/cmp_config.lua".source        = ./cmp_config.lua;
     ".config/nvim/lua/snippets_config.lua".source   = ./snippets_config.lua;
-    ".config/nvim/lua/lsp_zero.lua".source          = ./lsp_zero.lua;
+    ".config/nvim/lua/lsp.lua".source              = ./lsp.lua;
     ".config/nvim/lua/dap_config.lua".source        = ./dap_config.lua;
     ".config/nvim/lua/telescope_config.lua".source  = ./telescope_config.lua;
     ".config/nvim/lua/oil_config.lua".source        = ./oil_config.lua;
