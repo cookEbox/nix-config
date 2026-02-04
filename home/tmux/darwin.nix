@@ -139,13 +139,25 @@ in
       bind-key S display-popup -E "${tmuxSessionSwitch}"
 
       # Pane navigation (vim home row)
-      # Use vim-tmux-navigator for seamless nvim <-> tmux navigation.
-      #
-      # If you see "unknown command: TmuxNavigateLeft", the tmux plugin isn't loaded.
-      # In that case, we fall back to native select-pane bindings below.
-      if-shell -b '${pkgs.tmux}/bin/tmux list-commands | ${pkgs.gnugrep}/bin/grep -q "^TmuxNavigateLeft"' \
-        'bind -n C-h TmuxNavigateLeft; bind -n C-j TmuxNavigateDown; bind -n C-k TmuxNavigateUp; bind -n C-l TmuxNavigateRight; bind -n C-\\ TmuxNavigatePrevious' \
-        'bind -n C-h select-pane -L; bind -n C-j select-pane -D; bind -n C-k select-pane -U; bind -n C-l select-pane -R; bind -n C-\\ last-pane'
+      # vim-tmux-navigator tmux plugin is not reliably providing TmuxNavigate* commands on tmux 3.5a.
+      # Use the plugin's recommended "if-shell is_vim" pattern instead.
+      # This preserves:
+      #  - C-h/j/k/l inside (n)vim for split navigation
+      #  - C-h/j/k/l in tmux for pane navigation
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+        | ${pkgs.gnugrep}/bin/grep -iqE '^[^TXZ ]+ +(.*/)?(g?view|g?n?vim?x?)(diff)?$'"
+
+      bind -n C-h if-shell "''${is_vim}" "send-keys C-h" "select-pane -L"
+      bind -n C-j if-shell "''${is_vim}" "send-keys C-j" "select-pane -D"
+      bind -n C-k if-shell "''${is_vim}" "send-keys C-k" "select-pane -U"
+      bind -n C-l if-shell "''${is_vim}" "send-keys C-l" "select-pane -R"
+      bind -n C-\\ if-shell "''${is_vim}" "send-keys C-\\" "last-pane"
+
+      bind -T copy-mode-vi C-h select-pane -L
+      bind -T copy-mode-vi C-j select-pane -D
+      bind -T copy-mode-vi C-k select-pane -U
+      bind -T copy-mode-vi C-l select-pane -R
+=======
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
     '';
