@@ -157,7 +157,6 @@ in
       bind -T copy-mode-vi C-j select-pane -D
       bind -T copy-mode-vi C-k select-pane -U
       bind -T copy-mode-vi C-l select-pane -R
-=======
 
       unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
     '';
