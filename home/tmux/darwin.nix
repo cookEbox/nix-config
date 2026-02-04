@@ -114,8 +114,9 @@ in
       # to be resilient if the terminal sends Option as an escape sequence.
       bind -n M-j previous-window
       bind -n M-k next-window
-      bind -n Escape j previous-window
-      bind -n Escape k next-window
+      # tmux expects key names like "Escape" to be a single key token.
+      # For ESC-prefixed sequences, use "M-" bindings (Meta) and rely on terminal config.
+      # (Binding "Escape j" is parsed as: key=Escape, command=j ... which causes "ambiguous command: k".)
 
       # Note: no tmux config reload binding. Restart tmux (`tmux kill-server`) to apply changes.
 
