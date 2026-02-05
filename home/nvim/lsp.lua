@@ -17,7 +17,53 @@ vim.diagnostic.config({
 -- Neovim 0.11+ no longer uses the legacy publishDiagnostics handler.
 -- Configure diagnostics via vim.diagnostic.config() only.
 
+
+-- Some servers/plugins may return duplicate locations for definition.
+-- De-duplicate quickfix items by (filename, lnum, col) before presenting them.
+local function dedupe_qf_items(items)
+  local seen = {}
+  local out = {}
+
+  for _, item in ipairs(items) do
+    local filename = item.filename or ""
+    local lnum = item.lnum or 0
+    local col = item.col or 0
+    local key = string.format("%s:%d:%d", filename, lnum, col)
+
+    if not seen[key] then
+      seen[key] = true
+      table.insert(out, item)
+    end
+  end
+
+  return out
+end
+
+local function on_list_dedup(opts)
+  opts.items = dedupe_qf_items(opts.items or {})
+
+  if #opts.items == 0 then
+    vim.notify("No location found", vim.log.levels.INFO)
+    return
+  end
+
+  -- Use quickfix for multi-location results.
+  vim.fn.setqflist({}, " ", opts)
+  if #opts.items == 1 then
+    vim.cmd("cfirst")
+  else
+    vim.cmd("copen")
+  end
+end
+
 local function on_attach(_, bufnr)
+  -- Avoid running mappings multiple times if the same buffer gets multiple
+  -- LSP clients attached (or if a server is started by another plugin).
+  if vim.b[bufnr].__lsp_on_attach_done then
+    return
+  end
+  vim.b[bufnr].__lsp_on_attach_done = true
+
   local opts = { buffer = bufnr, remap = false }
   local opts2 = { buffer = 0, silent = true, noremap = true }
 
@@ -55,6 +101,17 @@ local function on_attach(_, bufnr)
   end
 end
 
+-- Ensure keymaps are applied even when a server is started by another plugin
+-- (e.g. haskell-tools) and our `on_attach` callback is not used.
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      on_attach(client, args.buf)
+    end
+  end,
+})
+
 local capabilities = lsp.protocol.make_client_capabilities()
 local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 if ok_cmp then
@@ -78,10 +135,20 @@ local function start_lsp_for_buffer(server_name)
   end
 
   -- Avoid starting multiple clients for the same buffer.
+  -- Some plugins (e.g. haskell-tools, LanguageClient-neovim) may start the same
+  -- server with a *different* client name, which leads to duplicated diagnostics.
   local bufnr = vim.api.nvim_get_current_buf()
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
     if client.name == server_name then
       return
+    end
+
+    -- If another client is already running the same underlying server command,
+    -- don't start a duplicate.
+    if type(cfg.cmd) == "table" and type(client.config) == "table" and type(client.config.cmd) == "table" then
+      if cfg.cmd[1] ~= nil and client.config.cmd[1] == cfg.cmd[1] then
+        return
+      end
     end
   end
 
@@ -101,6 +168,13 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "lua",
   callback = function()
     start_lsp_for_buffer("lua_ls")
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "haskell", "lhaskell" },
+  callback = function()
+    start_lsp_for_buffer("hls")
   end,
 })
 
@@ -142,6 +216,7 @@ lsp.config.pylsp = {
 }
 
 lsp.config.hls = {
+  cmd = { "haskell-language-server-wrapper", "--lsp" },
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { "haskell", "lhaskell", "fk" },
