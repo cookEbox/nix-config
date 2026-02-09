@@ -1,10 +1,28 @@
-{pkgs, ... }:
+{ pkgs, ... }:
 
+let
+  # Provide a stable system-wide `concat` command. The actual script is deployed into
+  # ~/.config/concat/concat.sh via `home.file`, so this also works for remote flake
+  # installs (e.g. from GitHub) without depending on the repo path at runtime.
+  concat = pkgs.writeShellApplication {
+    name = "concat";
+    runtimeInputs = [
+      pkgs.bash
+      pkgs.coreutils
+      pkgs.findutils
+    ];
+    text = ''
+      exec ${pkgs.bash}/bin/bash "$HOME/.config/concat/concat.sh" "$@"
+    '';
+  };
+
+in
 {
-  imports = [ 
-               ./ranger
-	];
-  home = { 
+  imports = [
+    ./ranger
+  ];
+
+  home = {
     packages = with pkgs; [
       nmap
       gitui
@@ -14,8 +32,18 @@
       # LSP server binaries (used by Neovim's built-in LSP)
       nil
       lua-language-server
+
+      # Custom scripts
+      concat
     ];
+
     file = {
+      # Deploy the script to a stable location in the home directory.
+      ".config/concat/concat.sh" = {
+        source = ../concat.sh;
+        executable = true;
+      };
+
       ".config/direnv/direnv.toml" = {
         text = ''
           hide_env_diff = true
@@ -46,6 +74,7 @@
         '';
       };
     };
+
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
