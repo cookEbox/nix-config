@@ -1,5 +1,10 @@
 { pkgs, ... }:
 { programs.neovim = {
+    # Make HLS available to Neovim so haskell-tools/HLS doesn't error when editing *.hs
+    # outside of `nix develop`.
+    extraPackages = with pkgs; [
+      haskell-language-server
+    ];
     enable = true;
     vimAlias = true;
     extraConfig = ''

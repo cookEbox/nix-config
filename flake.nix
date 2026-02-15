@@ -44,11 +44,31 @@
       #   forgejo = forgejoInfra.forgejo;
       #   nginx = nginxInfra.nginx;
       # };
-      apps.${system} = { 
+      apps.${system} = {
         deploy-forgejo = forgejoInfra.app;
         deploy-nginx = nginxInfra.app;
         deploy-all = deployAllInfra.app;
         deploy-cert = deployCert.app;
+      };
+
+      devShells.${system} = {
+        # Dev shell for editing/typing-checking XMonad config with HLS.
+        # Usage: nix develop
+        default =
+          let
+            ghc = pkgs.haskellPackages.ghcWithPackages (p: [
+              p.xmonad
+              p.xmonad-contrib
+              p.xmonad-extras
+            ]);
+          in
+          pkgs.mkShell {
+            packages = [
+              ghc
+              pkgs.cabal-install
+              pkgs.haskell-language-server
+            ];
+          };
       };
 
       nixosConfigurations = {
@@ -60,6 +80,9 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              # Prevent HM activation failures when a file already exists.
+              # Existing files will be renamed with this extension.
+              home-manager.backupFileExtension = "hm-bak";
               home-manager.extraSpecialArgs = { inherit unstable; };
               home-manager.users.nick = {
                 imports = [ ./hosts/desktop/home ];
@@ -74,6 +97,9 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              # Prevent HM activation failures when a file already exists.
+              # Existing files will be renamed with this extension.
+              home-manager.backupFileExtension = "hm-bak";
               home-manager.extraSpecialArgs = { inherit unstable; };
               home-manager.users.nick = {
                 imports = [ ./hosts/laptop/home ];
@@ -88,6 +114,9 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              # Prevent HM activation failures when a file already exists.
+              # Existing files will be renamed with this extension.
+              home-manager.backupFileExtension = "hm-bak";
               home-manager.users.nick = {
                 imports = [ ./hosts/vm/home ];
               };

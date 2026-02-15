@@ -3,6 +3,10 @@
   programs.alacritty = {
     enable = true;
     settings = {
+      # Font settings
+      # If your text looks "zoomed"/too large, reduce this value.
+      font.size = 11.0;
+
       # Add your other Alacritty settings here
       terminal.shell = {
         program = "tmux";

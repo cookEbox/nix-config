@@ -7,6 +7,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
+
       nftables
       lutris
       ferium
@@ -18,6 +19,7 @@
       rclone
       android-file-transfer
       thunderbird
+      evolutionWithPlugins
       onlyoffice-desktopeditors
       deja-dup
       redshift
@@ -54,6 +56,7 @@
       keymapp
       mesa-demos
       protonvpn-gui
+      xournalpp
       jdk17
       wineWowPackages.staging 
       winetricks 

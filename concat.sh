@@ -4,32 +4,128 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Usage:
+  concat [OPTIONS]
   concat [OUTPUT_DIR] [SCAN_ROOT]
 
-Writes a concatenation of all (non-ignored) files under SCAN_ROOT into:
-  OUTPUT_DIR/all_files_output.txt
+Concatenate all (non-ignored) files under SCAN_ROOT into a single output file.
+
+Options:
+  -s, --source DIR        Root directory to scan (default: .)
+  -t, --target DIR        Output directory (default: .)
+      --output-dir DIR    Alias for --target
+  -o, --output NAME       Output filename within target dir (default: all_files_output.txt)
+      --output-file NAME  Alias for --output
+  -h, --help              Show this help and exit
+
+Outputs:
+  TARGET_DIR/OUTPUT
 
 Examples:
+  concat --source /path/to/project --target /tmp --output project.txt
+  concat -s . -t /tmp -o all_files_output.txt
+
+Backwards-compatible positional usage:
   concat . /path/to/project
   concat /tmp .
 EOF
 }
 
-case "${1:-}" in
-  -h|--help)
-    usage
-    exit 0
-    ;;
-esac
+# Requested behaviour: if invoked without args, show help.
+if [ "$#" -eq 0 ]; then
+  usage
+  exit 0
+fi
 
-output_dir="${1:-.}"
-base_dir="${2:-.}"
+# Defaults
+output_dir="."
+base_dir="."
+output_name="all_files_output.txt"
+
+# Parse flags
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+
+    -s|--source)
+      if [ -z "${2:-}" ]; then
+        echo "Error: --source requires a directory argument." >&2
+        usage >&2
+        exit 2
+      fi
+      base_dir="$2"
+      shift 2
+      ;;
+
+    -t|--target|--output-dir)
+      if [ -z "${2:-}" ]; then
+        echo "Error: --target requires a directory argument." >&2
+        usage >&2
+        exit 2
+      fi
+      output_dir="$2"
+      shift 2
+      ;;
+
+    -o|--output|--output-file)
+      if [ -z "${2:-}" ]; then
+        echo "Error: --output requires a filename argument." >&2
+        usage >&2
+        exit 2
+      fi
+      output_name="$2"
+      shift 2
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    -*)
+      echo "Error: unknown option: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+
+    *)
+      # Stop flag parsing; remaining args treated as positional.
+      break
+      ;;
+  esac
+done
+
+# Backwards-compatible positional parsing:
+#   concat [OUTPUT_DIR] [SCAN_ROOT]
+if [ "$#" -gt 2 ]; then
+  echo "Error: too many positional arguments." >&2
+  usage >&2
+  exit 2
+fi
+
+if [ "$#" -ge 1 ]; then
+  output_dir="$1"
+  shift
+fi
+
+if [ "$#" -ge 1 ]; then
+  base_dir="$1"
+  shift
+fi
+
+if [ ! -d "$base_dir" ]; then
+  echo "Error: source directory does not exist or is not a directory: $base_dir" >&2
+  exit 2
+fi
 
 # Normalise output_dir so "/" isn't duplicated.
 output_dir="${output_dir%/}"
-output_file="${output_dir}/all_files_output.txt"
+output_file="${output_dir}/${output_name}"
 
-mkdir -p "$output_dir"
+# Ensure parent dir exists even if output_name includes subdirs.
+mkdir -p "$(dirname -- "$output_file")"
 : > "$output_file"  # Clear output file if it exists
 
 # Find all files, skipping VCS/build dirs and all image/media/archive formats

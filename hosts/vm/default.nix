@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 { 
   imports = [
     ./hardware-configuration.nix
     ../configuration.nix
+    ../gui.nix
+    ../mate.nix
   ];
 
   boot = {

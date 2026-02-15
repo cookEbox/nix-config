@@ -2,7 +2,9 @@
 
 { 
   imports = [
-    ../configuration.nix 
+    ../configuration.nix
+    ../gui.nix
+    ../mate.nix
     ../extra.nix
     ./hardware-configuration.nix
   ];
@@ -39,8 +41,8 @@
       enable = true;
       qemu = {
         swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
+
+        # NixOS 25.11: the ovmf submodule was removed; OVMF images are available by default.
       };
     };
     spiceUSBRedirection.enable = true;

@@ -1,0 +1,84 @@
+// Gruvbox-ish bar styling (keep it simple; refine later).
+$bg: #282828;
+$fg: #ebdbb2;
+$accent: #d79921;
+$border: #3c3836;
+
+// Make the Eww window itself transparent so only the bar widget is visible.
+// This is what allows the desktop wallpaper/background to show through
+// in the margins around the bar.
+window {
+  background-color: transparent;
+}
+
+.bar {
+  // Inset "floating" bar with rounded corners.
+  background: rgba(40, 40, 40, 0.92);
+  color: $fg;
+
+  margin: 8px 10px 0 10px;
+  padding: 6px 10px;
+
+  border: 1px solid $border;
+  border-radius: 12px;
+
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 12px;
+}
+
+.workspaces {
+  margin-right: 8px;
+}
+
+// Workspace buttons: ring styling (focused = gold, visible = white).
+.ws-button {
+  background: transparent;
+  color: $fg;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  padding: 2px 8px;
+}
+
+.ws-button:hover {
+  border-color: $border;
+}
+
+.ws-focused {
+  border-color: $accent;
+}
+
+.ws-visible {
+  border-color: #fbf1c7;
+}
+
+// Right side: keep general text readable; let the clock/date pop.
+.bar-right {
+  color: $fg;
+}
+
+.clock {
+  color: $accent;
+}
+
+// Volume widget (between systray and clock).
+// Make it compact: remove GTK button defaults and minimise padding.
+.volume {
+  all: unset; // removes default GTK button padding/min-width
+  background: transparent;
+  color: $fg;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  padding: 0 4px;
+  min-width: 0;
+}
+
+.volume:hover {
+  border-color: $border;
+}
+
+.volume-label {
+  color: $fg;
+  padding: 0;
+  margin: 0;
+}
+

@@ -85,17 +85,12 @@
     fwupd.enable = true;
     xserver = {
       enable = true;
-      displayManager.lightdm.greeters.slick.enable = true;
-      desktopManager.mate.enable = true;
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-      };
+
       xkb = {
         layout = "gb";
         options = "altwin:menu_win";
       };
-    }; 
+    };
     # Desktop: keep SSH disabled unless you explicitly need inbound access.
     # If you do need it, re-enable and use the hardened settings below.
     openssh = {
@@ -107,8 +102,6 @@
         AllowUsers = [ "nick" ];
       };
     };
-
-    pulseaudio.enable = false;
 
     # Flatpak provides strong sandboxing for browsers/Electron apps.
     flatpak.enable = true;

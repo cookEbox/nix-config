@@ -1,0 +1,83 @@
+(defpoll time :interval "1s"
+  "date '+%a %d %b %H:%M'"
+)
+
+(defpoll volume :interval "1s"
+  "sh -lc 'command -v pamixer >/dev/null 2>&1 && pamixer --get-volume-human || echo --'"
+)
+
+(defvar xmonad_focused_ws "")
+(defvar xmonad_visible_ws "[]")
+
+(defwidget workspaces []
+  (box :class "workspaces" :orientation "h" :spacing 6
+    (button
+      :class {xmonad_focused_ws == 'hme' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"hme"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+1"
+      "hme")
+    (button
+      :class {xmonad_focused_ws == 'cht' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"cht"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+2"
+      "cht")
+    (button
+      :class {xmonad_focused_ws == 'www' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"www"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+3"
+      "www")
+    (button
+      :class {xmonad_focused_ws == 'dev' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"dev"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+4"
+      "dev")
+    (button
+      :class {xmonad_focused_ws == 'dev2' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"dev2"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+5"
+      "dev2")
+    (button
+      :class {xmonad_focused_ws == 'flt' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"flt"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+6"
+      "flt")
+    (button
+      :class {xmonad_focused_ws == 'med' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"med"') ? 'ws-button ws-visible' : 'ws-button')}
+      :onclick "xdotool key super+7"
+      "med")
+  )
+)
+
+(defwidget bar-content [show_tray]
+  (box
+    :class "bar"
+    :orientation "h"
+    :space-evenly false
+    :halign "fill"
+    (box :class "bar-left" :halign "start" :hexpand true
+      (workspaces)
+    )
+    (label :class "bar-centre" :text "")
+    (box :class "bar-right" :halign "end" :spacing 4
+      (systray :class "systray" :icon-size 16 :spacing 8 :visible show_tray)
+      (button :class "volume" :onclick "sh -lc 'pavucontrol >/dev/null 2>&1 &'"
+        (label :class "volume-label" :text {"  " + volume})
+      )
+      (label :class "clock" :text time)
+    )
+  )
+)
+
+
+(defwindow bar0
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "48px")
+  :anchor "top center"
+  :exclusive true
+  :windowtype "dock"
+  (bar-content :show_tray true)
+)
+
+(defwindow bar1
+  :monitor 1
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "48px")
+  :anchor "top center"
+  :exclusive true
+  :windowtype "dock"
+  (bar-content :show_tray false)
+)
+

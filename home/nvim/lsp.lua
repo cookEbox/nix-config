@@ -118,6 +118,42 @@ if ok_cmp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
 end
 
+
+-- Helper: only enable a server if its executable is available.
+local function can_exec(cmd)
+  if type(cmd) == "string" then
+    return vim.fn.executable(cmd) == 1
+  end
+
+  if type(cmd) == "table" and type(cmd[1]) == "string" then
+    return vim.fn.executable(cmd[1]) == 1
+  end
+
+  return false
+end
+
+-- Helper: safely register a server config if available.
+local function maybe_setup(server_name, cfg)
+  if type(server_name) ~= "string" or type(cfg) ~= "table" then
+    return
+  end
+
+  if not can_exec(cfg.cmd) then
+    -- Don’t spam errors when the binary isn’t installed.
+    return
+  end
+
+  lsp.config[server_name] = cfg
+end
+
+-- Haskell (HLS)
+maybe_setup("hls", {
+  cmd = { "haskell-language-server-wrapper", "--lsp" },
+  filetypes = { "haskell" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
 -- Filetype override for *.fk
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.fk",

@@ -10,6 +10,9 @@
 
   imports = [
     ../configuration.nix
+    ../gui.nix
+    ../xmonad.nix
+    ../mate.nix
     ../extra.nix
     ./hardware-configuration.nix
   ];

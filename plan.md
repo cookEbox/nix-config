@@ -252,14 +252,14 @@
 **Session startup (XMonad session responsibilities)**
 - Start these on login (via HM-managed X session startup or user services):
   - `picom`
-  - `eww daemon` + `eww open bar`
+  - (Stage 5.2) `eww daemon` + `eww open bar`
   - `dunst`
   - `nm-applet`, `blueman-applet` (and `pasystray` if used)
   - `polkit-gnome-authentication-agent-1`
   - `gnome-keyring-daemon` (if not auto-started)
   - `xss-lock` (wired to your chosen locker)
 
-**Eww bar modules (initial scope)**
+**Eww bar modules (Stage 5.2 — deferred until after MVP)**
 - Workspaces (clickable): integrate with XMonad workspace state + switching
 - System tray area (for applets)
 - Clock/date
@@ -268,33 +268,57 @@
 - Audio volume
 - Battery (optional; useful if you ever run this on a laptop)
 
-**Tasks (split into two sub-stages)**
+**Tasks (split into three sub-stages)**
 
-#### Stage 5.1 — Target workflow on NixOS (stabilise first)
-**Goal:** get the full “target desktop/workflow” working on a standard NixOS install, using the same HM modules we’ll later reuse on Bazzite.
+#### Stage 5.1 — XMonad MVP on NixOS (no Eww)
+**Goal:** daily-drive XMonad on a standard NixOS install with minimal, reliable “desktop glue”, *without* depending on Eww yet. This should become the baseline we later reuse on Bazzite.
 
 1. Decide rollback mechanism (NixOS-native):
    - Use NixOS generations + boot menu as the primary rollback.
 2. Create a dedicated NixOS host/target (if needed):
    - Add a host entry for the gaming machine (or a VM) that represents the target desktop.
-   - Keep system config minimal: X11 session plumbing + drivers + SDDM.
-3. Implement the desktop stack in HM (this is the portable part):
-   - XMonad config (named/icon workspaces) + Eww workspace integration.
-   - Eww bar modules: workspaces, tray, clock, CPU/RAM, network, audio.
-   - picom config for transparency/shadows.
-   - rofi theme + cliphist menu.
-   - dunst theme (ensure it matches the global palette).
-   - Screenshot script using maim+slop (save + copy + notify).
-   - Autostart/session glue (start eww, picom, applets, polkit agent, etc.).
+   - Keep system config minimal: X11 session plumbing + drivers + SDDM + XMonad session.
+   - Recommended safety: keep MATE available as a fallback session until the MVP is stable.
+3. Implement the **MVP** desktop stack in Home Manager (portable part):
+   - XMonad config + keybindings (terminal, launcher, basic window navigation).
+   - Terminal (WezTerm/Kitty) + launcher (`rofi`).
+   - Notifications (`dunst`).
+   - Polkit agent autostart (e.g. `polkit-gnome-authentication-agent-1`).
+   - Tray provider (temporary) + networking UI:
+     - `trayer`/`stalonetray` (minimal) or `tint2` (simple panel)
+     - `nm-applet` (+ `blueman-applet` if needed)
+   - File manager: Nemo.
+   - Audio utilities: `pavucontrol` + `wpctl`/`pamixer` for bindings.
+   - Optional (early): `picom` for tear-free + basic compositing.
+   - Screenshots (simple first): `flameshot` (switch to `maim + slop` scripted flow later if desired).
 4. Validate “daily driver” behaviour:
    - Login/session start is reliable
-   - Suspend/resume (if applicable)
-   - Audio, Bluetooth, networking, tray applets
+   - Terminal + rofi works
+   - Notifications work
+   - Polkit prompts work
+   - Network/Bluetooth UI works (tray visible)
+   - Audio controls work
+   - File manager works
    - Gaming basics (Steam, controller, GPU drivers)
 
-**Exit criteria (5.1):** the target desktop/workflow is stable on NixOS and the HM config is the source of truth.
+**Exit criteria (5.1):** XMonad is usable as a daily driver on NixOS without Eww; any remaining gaps are clearly identified.
 
-#### Stage 5.2 — Swap base OS to Bazzite (keep HM the same)
+#### Stage 5.2 — UX upgrades (Eww last)
+**Goal:** once the XMonad MVP is stable, layer on UX improvements (bar/widgets, theming, and “nice workflows”) without destabilising the core session.
+
+1. Add Eww bar:
+   - Workspaces (clickable), tray area, clock/date.
+   - CPU/RAM, network status, audio volume, battery (if needed).
+2. Clipboard workflow:
+   - `cliphist` + rofi picker (add/delete entries).
+3. Screenshots (scripted workflow):
+   - `maim + slop` (drag-to-select), save + copy-to-clipboard + notify.
+4. Theme unification:
+   - Apply one palette (e.g. Gruvbox Material) across rofi/dunst/terminal/Eww.
+
+**Exit criteria (5.2):** Eww replaces the temporary tray/panel, and UX improvements don’t regress core session stability.
+
+#### Stage 5.3 — Swap base OS to Bazzite (keep HM the same)
 **Goal:** replace the base OS with Bazzite while keeping the user environment as unchanged as possible.
 
 1. Decide rollback mechanism (immutable-first):
@@ -310,9 +334,9 @@
    - Install Nix (choose single-user vs multi-user; keep it minimal).
    - Enable flakes.
    - Apply Home Manager.
-4. Re-run the same validation checklist from Stage 5.1.
+4. Re-run the validation checklist from Stage 5.1 (and Stage 5.2 if completed).
 
-**Exit criteria (5.2):** you can set up a Bazzite machine and restore your full desktop workflow + dev environment with one HM apply, while gaming remains native and stable.
+**Exit criteria (5.3):** you can set up a Bazzite machine and restore your full desktop workflow + dev environment with one HM apply, while gaming remains native and stable.
 
 ## What changed vs before
 - Added a single critical path: confirm direnv causality → identify failure mode → minimal fix → verify.
