@@ -4,6 +4,9 @@
 import XMonad
 import Data.Monoid
 import System.Exit
+import Control.Monad (when)
+import Graphics.X11.Xlib (setWindowBorderWidth)
+import Graphics.X11.Xlib.Extras (Event(..))
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -108,6 +111,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch screentshot 
     , ((modm,               xK_s     ), spawn "flameshot gui")
+
+    -- launch screentshot 
+    , ((modm .|. shiftMask, xK_s     ), spawn "systemctl suspend")
 
     -- dunst history
     , ((modm .|. shiftMask, xK_grave), spawn "dunstctl close-all")
@@ -307,17 +313,47 @@ myManageHook = composeAll
     , className =? "Application Finder" --> doFloat
     , resource  =? "desktop_window"    --> doIgnore
     , resource  =? "kdesktop"          --> doIgnore
-    , isFullscreen                       --> doFullFloat ]
+    , isFullscreen                       --> (doFullFloat <+> hasBorder False) ]
 
 ------------------------------------------------------------------------
 -- Event handling
 -- Ensure EWMH fullscreen requests are handled correctly (cover docks/bars).
-myEventHook = docksEventHook <+> fullscreenEventHook
+--
+-- NOTE: `manageHook` only runs when a window is first created. Many browsers
+-- (Firefox/Chromium/Brave) toggle fullscreen by updating `_NET_WM_STATE` on the
+-- *existing* window, which can leave the focused border in place.
+--
+-- This event hook listens for `_NET_WM_STATE` changes and forcefully removes
+-- the border whenever the window is fullscreen.
+fixFullscreenBorderEventHook :: Event -> X All
+fixFullscreenBorderEventHook e = do
+    netWmState <- getAtom "_NET_WM_STATE"
+    case e of
+        ClientMessageEvent { ev_window = w, ev_message_type = t }
+            | t == netWmState -> fix w
+        PropertyEvent { ev_window = w, ev_atom = a }
+            | a == netWmState -> fix w
+        _ -> pure (All True)
+  where
+    fix w = do
+        fs <- runQuery isFullscreen w
+        when fs $ withDisplay $ \d -> io $ setWindowBorderWidth d w 0
+        pure (All True)
+
+myEventHook = docksEventHook <+> fullscreenEventHook <+> fixFullscreenBorderEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging
 -- Publish workspace state to Eww so the bar can highlight focused/visible workspaces.
 updateEwwWorkspaces :: X ()
+
+-- As an extra safeguard, enforce borderless fullscreen on every logHook tick.
+-- This runs after event handling, so it can undo any border-width resets.
+fixFullscreenBorderLogHook :: X ()
+fixFullscreenBorderLogHook = withFocused $ \w -> do
+    fs <- runQuery isFullscreen w
+    when fs $ withDisplay $ \d -> io $ setWindowBorderWidth d w 0
+
 updateEwwWorkspaces = withWindowSet $ \ws -> do
         let focused = W.currentTag ws
             visible = map (W.tag . W.workspace) (W.visible ws)
@@ -326,7 +362,7 @@ updateEwwWorkspaces = withWindowSet $ \ws -> do
         safeSpawn "eww" ["update", "xmonad_visible_ws=" ++ visibleJson]
 
 myLogHook :: X ()
-myLogHook = workspaceHistoryHook >> updateEwwWorkspaces
+myLogHook = workspaceHistoryHook >> updateEwwWorkspaces >> fixFullscreenBorderLogHook
 
 ------------------------------------------------------------------------
 -- Startup hook
