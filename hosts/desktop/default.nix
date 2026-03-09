@@ -61,6 +61,7 @@
         Option "OffTime" "0"
       '';
     }; 
+    tailscale.enable = true;
   };
 
   # virtualisation services

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # GUI-only defaults (kept separate from hosts/configuration.nix so non-GUI systems
@@ -22,6 +22,12 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
+  xdg.portal = { 
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # Recommended for PipeWire scheduling.
