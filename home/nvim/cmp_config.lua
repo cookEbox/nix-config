@@ -8,6 +8,15 @@ local luasnip = require("luasnip")
 local cmp = require("cmp")
 local lspkind = require('lspkind')
 
+-- Hide Copilot inline suggestions when the completion menu is open.
+cmp.event:on("menu_opened", function()
+  vim.b.copilot_suggestion_hidden = true
+end)
+
+cmp.event:on("menu_closed", function()
+  vim.b.copilot_suggestion_hidden = false
+end)
+
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine

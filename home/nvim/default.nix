@@ -4,6 +4,10 @@
     # outside of `nix develop`.
     extraPackages = with pkgs; [
       haskell-language-server
+
+      # copilot.lua requirements
+      curl
+      nodejs_22
     ];
     enable = true;
     vimAlias = true;
@@ -41,6 +45,7 @@
       nvim-web-devicons
       nui-nvim
       avante-nvim
+      copilot-lua
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";
@@ -117,6 +122,7 @@
     ".config/nvim/lua/telescope_config.lua".source  = ./telescope_config.lua;
     ".config/nvim/lua/oil_config.lua".source        = ./oil_config.lua;
     ".config/nvim/lua/avante_config.lua".source     = ./avante_config.lua;
+    ".config/nvim/lua/copilot_config.lua".source    = ./copilot_config.lua;
   };
 
 }
