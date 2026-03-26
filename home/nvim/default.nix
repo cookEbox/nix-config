@@ -13,6 +13,7 @@
       require("oil_config")
       require("cmp_config")
       require("snippets_config")
+      require("copilot_config")
       require("avante_config")
 
       vim.defer_fn(function()

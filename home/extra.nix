@@ -60,6 +60,7 @@
       jdk17
       wineWowPackages.staging 
       winetricks 
+      claude-code
     ];
   };
 }
