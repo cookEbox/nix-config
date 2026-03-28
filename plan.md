@@ -108,6 +108,33 @@
 
 ---
 
+## 5. EWW Bar: Dual Clocks (UK + Canada)
+
+**Goal**: Show two timezones in the EWW bar (UK time + Canada time) with a clear, readable format.
+
+### Tasks
+
+* [ ] Locate the EWW bar config/widgets in this repo and identify the current clock widget
+* [ ] Set the Canada timezone to **Toronto (East coast)**: `America/Toronto`
+* [ ] Implement a dual-clock widget with format: `<UK date/time><Toronto time>`
+  * UK side includes date + time (e.g. `Fri 27 Mar 19:42`)
+  * Toronto side shows **time only** (e.g. `14:42`)
+  * Prefer explicit timezones via `TZ=Europe/London date ...` and `TZ=America/Toronto date ...`
+* [ ] Ensure update interval is reasonable (e.g. 1s or 30s depending on seconds display)
+* [ ] Verify layout does not cause flicker/redraw loops
+* [ ] Validate on nixBox (and ensure Mac config is unaffected unless EWW is used there)
+
+### Hypotheses
+
+* Flicker might be exacerbated by overly aggressive polling/updates in EWW
+
+### Success Criteria
+
+* Both UK and Canada times are visible and correct
+* No noticeable performance regression or bar flicker
+
+---
+
 # Cross-Cutting Improvements
 
 * [ ] Centralise configs via Nix where possible
@@ -122,3 +149,4 @@
 2. Reproduce flicker and test with EWW disabled
 3. Install Copilot plugin in Neovim (minimal config first)
 4. Capture state when XMonad input bug occurs (logs + xinput)
+5. Update EWW bar to display dual clocks (UK time + Canada time)

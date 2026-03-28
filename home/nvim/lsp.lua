@@ -118,6 +118,16 @@ if ok_cmp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
 end
 
+local function start_lsp_for_buffer(name)
+  vim.lsp.enable(name)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "scala", "sbt", "java" },
+  callback = function()
+    start_lsp_for_buffer("metals")
+  end,
+})
 
 -- Helper: only enable a server if its executable is available.
 local function can_exec(cmd)
@@ -304,6 +314,7 @@ lsp.config.jdtls = {
 local ok_metals, metals = pcall(require, "metals")
 if ok_metals then
   lsp.config.metals = {
+    cmd = { "metals" },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
