@@ -78,11 +78,8 @@ local function on_attach(_, bufnr)
   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 
-  -- Window navigation shortcuts (match common tmux/vim-tmux-navigator muscle memory)
-  vim.keymap.set({ "n", "t" }, "<C-h>", "<C-w>h", opts)
-  vim.keymap.set({ "n", "t" }, "<C-j>", "<C-w>j", opts)
-  vim.keymap.set({ "n", "t" }, "<C-k>", "<C-w>k", opts)
-  vim.keymap.set({ "n", "t" }, "<C-l>", "<C-w>l", opts)
+  -- Window/pane navigation is handled by vim-tmux-navigator for seamless nvim <-> tmux.
+  -- Don't override its default <C-h/j/k/l> mappings here.
 
   -- Keep signature help on a different key to avoid clobbering <C-k> window navigation.
   vim.keymap.set("i", "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
