@@ -16,6 +16,41 @@
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
       fi
+
+      workmac-bootstrap() {
+        set -euo pipefail
+
+        if ! command -v brew >/dev/null 2>&1; then
+          echo "Homebrew not found. Install it first."
+          return 1
+        fi
+
+        brew list docker >/dev/null 2>&1 || brew install docker
+        brew list colima >/dev/null 2>&1 || brew install colima
+        brew list bash >/dev/null 2>&1 || brew install bash
+
+        if ! colima status >/dev/null 2>&1; then
+          colima start
+        fi
+
+        if [ ! -d "$HOME/.sdkman" ]; then
+          curl -s "https://get.sdkman.io" | bash
+        fi
+
+        if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+        else
+          echo "SDKMAN init script not found"
+          return 1
+        fi
+
+        if ! command -v sbt >/dev/null 2>&1; then
+          sdk install sbt
+        fi
+
+        echo "Bootstrap complete"
+      }
+
       publish() {
         local repo="$1"
         if [ -z "$repo" ]; then
@@ -86,6 +121,7 @@
       wine888     = ''WINEPREFIX=$HOME/.wine-888 WINEARCH=win64 wine'';
       wineequilab = ''WINEPREFIX=$HOME/.wine-equilab WINEARCH=win32 wine'';
       macup = "nix flake metadata github:cookEbox/nix-config --refresh; nix run github:nix-community/home-manager/release-25.11 -- switch --flake 'github:cookEbox/nix-config#workMac' --impure; source ~/.zshrc";
+      sdkman = ''source "$HOME/.sdkman/bin/sdkman-init.sh"''; 
       };
     history = {
       size = 10000;
