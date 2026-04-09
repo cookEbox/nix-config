@@ -10,6 +10,8 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      chromium
+      slack
       copilot-cli
       aerospace
       zip
