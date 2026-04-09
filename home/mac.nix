@@ -11,6 +11,7 @@
   home = { 
     packages = with pkgs; [ 
       brave
+      bitwarden
       slack
       copilot-cli
       aerospace
