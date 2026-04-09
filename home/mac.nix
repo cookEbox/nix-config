@@ -10,6 +10,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      brave
       slack
       copilot-cli
       aerospace
