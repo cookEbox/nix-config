@@ -28,6 +28,8 @@
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
 
+  virtualisation.docker.enable = true;
+
   networking = {
     networkmanager = {
       enable = true;
@@ -130,7 +132,7 @@
     isNormalUser = true;
     # Do not store plaintext passwords in Nix (ends up in the Nix store + git history).
     # Set the password interactively once with: passwd
-    extraGroups = [ "wheel" "libvirtd" "lp" "scanner" "plugdev" ];
+    extraGroups = [ "wheel" "libvirtd" "lp" "scanner" "plugdev" "docker" ];
   };
 
   environment = { 
