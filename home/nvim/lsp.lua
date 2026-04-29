@@ -312,6 +312,13 @@ local ok_metals, metals = pcall(require, "metals")
 if ok_metals then
   lsp.config.metals = {
     cmd = { "metals" },
+    root_makers = {
+      "build.sbt",
+      "build.sc",
+      "scala-cli.yaml",
+      ".bloop",
+      ".git",
+    },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
