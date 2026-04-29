@@ -119,12 +119,12 @@ local function start_lsp_for_buffer(name)
   vim.lsp.enable(name)
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "scala", "sbt", "java" },
-  callback = function()
-    start_lsp_for_buffer("metals")
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "scala", "sbt", "java" },
+--   callback = function()
+--     start_lsp_for_buffer("metals")
+--   end,
+-- })
 
 -- Helper: only enable a server if its executable is available.
 local function can_exec(cmd)
@@ -312,6 +312,7 @@ local ok_metals, metals = pcall(require, "metals")
 if ok_metals then
   lsp.config.metals = {
     cmd = { "metals" },
+    filetypes =  { "scala", "sbt"},
     root_makers = {
       "build.sbt",
       "build.sc",
