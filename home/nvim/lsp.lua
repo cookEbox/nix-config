@@ -115,16 +115,16 @@ if ok_cmp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
 end
 
-local function start_lsp_for_buffer(name)
-  vim.lsp.enable(name)
-end
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "scala", "sbt", "java" },
-  callback = function()
-    start_lsp_for_buffer("metals")
-  end,
-})
+-- local function start_lsp_for_buffer(name)
+--   vim.lsp.enable(name)
+-- end
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "scala", "sbt", "java" },
+--   callback = function()
+--     start_lsp_for_buffer("metals")
+--   end,
+-- })
 
 -- Helper: only enable a server if its executable is available.
 local function can_exec(cmd)
@@ -310,22 +310,34 @@ lsp.config.jdtls = {
 -- Metals (Scala)
 local ok_metals, metals = pcall(require, "metals")
 if ok_metals then
-  lsp.config.metals = {
+  vim.lsp.config("metals", {
     cmd = { "metals" },
-    filetypes =  { "scala", "sbt"},
-    root_makers = {
+    filetypes = { "scala", "sbt", "java" },
+
+    root_markers = {
       "build.sbt",
       "build.sc",
       "scala-cli.yaml",
       ".bloop",
       ".git",
     },
+
+    workspace_required = true,
+
     capabilities = capabilities,
+
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
-      metals.setup_dap()
-      pcall(function() require("dapui").setup() end)
+
+      pcall(function()
+        metals.setup_dap()
+      end)
+
+      pcall(function()
+        require("dapui").setup()
+      end)
     end,
+
     settings = {
       useBloop = true,
       showImplicitArguments = true,
@@ -333,10 +345,12 @@ if ok_metals then
       showInferredType = true,
       excludedPackages = {},
     },
+
     init_options = {
       statusBarProvider = "on",
       inputBoxProvider = "on",
     },
-  }
-end
+  })
 
+  vim.lsp.enable("metals")
+end

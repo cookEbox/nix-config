@@ -18,6 +18,7 @@
       require("cmp_config")
       require("snippets_config")
       require("copilot_config")
+      require("copilot_chat_config")
       require("avante_config")
 
       vim.defer_fn(function()
@@ -29,7 +30,6 @@
     '';
     plugins = with pkgs.vimPlugins; [
       haskell-tools-nvim
-      LanguageClient-neovim
       vim-tmux-navigator
       vim-nix
       diffview-nvim
@@ -46,6 +46,7 @@
       nui-nvim
       avante-nvim
       copilot-lua
+      CopilotChat-nvim
       {
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";
@@ -114,15 +115,16 @@
 
   };
   home.file = { 
-    ".config/nvim/lua/settings.lua".source          = ./settings.lua;
-    ".config/nvim/lua/cmp_config.lua".source        = ./cmp_config.lua;
-    ".config/nvim/lua/snippets_config.lua".source   = ./snippets_config.lua;
-    ".config/nvim/lua/lsp.lua".source              = ./lsp.lua;
-    ".config/nvim/lua/dap_config.lua".source        = ./dap_config.lua;
-    ".config/nvim/lua/telescope_config.lua".source  = ./telescope_config.lua;
-    ".config/nvim/lua/oil_config.lua".source        = ./oil_config.lua;
-    ".config/nvim/lua/avante_config.lua".source     = ./avante_config.lua;
-    ".config/nvim/lua/copilot_config.lua".source    = ./copilot_config.lua;
+    ".config/nvim/lua/settings.lua".source            = ./settings.lua;
+    ".config/nvim/lua/cmp_config.lua".source          = ./cmp_config.lua;
+    ".config/nvim/lua/snippets_config.lua".source     = ./snippets_config.lua;
+    ".config/nvim/lua/lsp.lua".source                 = ./lsp.lua;
+    ".config/nvim/lua/dap_config.lua".source          = ./dap_config.lua;
+    ".config/nvim/lua/telescope_config.lua".source    = ./telescope_config.lua;
+    ".config/nvim/lua/oil_config.lua".source          = ./oil_config.lua;
+    ".config/nvim/lua/avante_config.lua".source       = ./avante_config.lua;
+    ".config/nvim/lua/copilot_config.lua".source      = ./copilot_config.lua;
+    ".config/nvim/lua/copilot_chat_config.lua".source = ./copilot_chat_config.lua;
   };
 
 }
