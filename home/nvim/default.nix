@@ -4,10 +4,12 @@
     # outside of `nix develop`.
     extraPackages = with pkgs; [
       haskell-language-server
-
-      # copilot.lua requirements
       curl
       nodejs_22
+      gh 
+      lynx 
+      gnumake 
+      gcc
     ];
     enable = true;
     vimAlias = true;

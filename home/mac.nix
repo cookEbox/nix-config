@@ -29,6 +29,10 @@
       lsof
       direnv
       qutebrowser
+      gh 
+      lynx
+      gnumake 
+      gcc
     ];
   };
 }
