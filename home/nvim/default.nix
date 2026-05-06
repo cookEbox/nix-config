@@ -40,7 +40,7 @@
       context-vim
       undotree
       zen-mode-nvim
-      nvim-metals
+      # nvim-metals
       nvim-dap-ui
       telescope-dap-nvim
       oil-nvim
