@@ -1,5 +1,5 @@
 (defpoll time :interval "1s"
-  "date '+%a %d %b %H:%M'"
+  "sh -lc 'printf \"%s | %s\" \"$(TZ=Europe/London date \"+%a %d %b %H:%M\")\" \"$(TZ=America/Toronto date \"+%H:%M\")\"'"
 )
 
 (defpoll volume :interval "1s"

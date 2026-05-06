@@ -307,50 +307,95 @@ lsp.config.jdtls = {
   end)(),
 }
 
--- Metals (Scala)
+-- Metals (Scala) via nvim-metals.
 local ok_metals, metals = pcall(require, "metals")
 if ok_metals then
-  vim.lsp.config("metals", {
-    cmd = { "metals" },
-    filetypes = { "scala", "sbt", "java" },
+  local metals_config = metals.bare_config()
 
-    root_markers = {
-      "build.sbt",
-      "build.sc",
-      "scala-cli.yaml",
-      ".bloop",
-      ".git",
-    },
+  metals_config.capabilities = capabilities
 
-    workspace_required = true,
+  metals_config.on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
 
-    capabilities = capabilities,
+    pcall(function()
+      metals.setup_dap()
+    end)
 
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
+    pcall(function()
+      require("dapui").setup()
+    end)
+  end
 
-      pcall(function()
-        metals.setup_dap()
-      end)
+  metals_config.settings = {
+    useBloop = true,
+    showImplicitArguments = true,
+    superMethodLensesEnabled = true,
+    showInferredType = true,
+    excludedPackages = {},
+  }
 
-      pcall(function()
-        require("dapui").setup()
-      end)
+  metals_config.init_options = {
+    statusBarProvider = "on",
+    inputBoxProvider = "on",
+  }
+
+  local metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "scala", "sbt", "java" },
+    callback = function()
+      metals.initialize_or_attach(metals_config)
     end,
-
-    settings = {
-      useBloop = true,
-      showImplicitArguments = true,
-      superMethodLensesEnabled = true,
-      showInferredType = true,
-      excludedPackages = {},
-    },
-
-    init_options = {
-      statusBarProvider = "on",
-      inputBoxProvider = "on",
-    },
+    group = metals_group,
   })
-
-  vim.lsp.enable("metals")
 end
+
+
+
+-- -- Metals (Scala)
+-- local ok_metals, metals = pcall(require, "metals")
+-- if ok_metals then
+--   vim.lsp.config("metals", {
+--     cmd = { "metals" },
+--     filetypes = { "scala", "sbt", "java" },
+--
+--     root_markers = {
+--       "build.sbt",
+--       "build.sc",
+--       "scala-cli.yaml",
+--       ".bloop",
+--       ".git",
+--     },
+--
+--     workspace_required = true,
+--
+--     capabilities = capabilities,
+--
+--     on_attach = function(client, bufnr)
+--       on_attach(client, bufnr)
+--
+--       pcall(function()
+--         metals.setup_dap()
+--       end)
+--
+--       pcall(function()
+--         require("dapui").setup()
+--       end)
+--     end,
+--
+--     settings = {
+--       useBloop = true,
+--       showImplicitArguments = true,
+--       superMethodLensesEnabled = true,
+--       showInferredType = true,
+--       excludedPackages = {},
+--     },
+--
+--     init_options = {
+--       statusBarProvider = "on",
+--       inputBoxProvider = "on",
+--     },
+--   })
+--
+--   vim.lsp.enable("metals")
+-- end
