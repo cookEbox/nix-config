@@ -120,7 +120,7 @@
       sshpi = "ssh Admin@192.168.1.116";
       wine888     = ''WINEPREFIX=$HOME/.wine-888 WINEARCH=win64 wine'';
       wineequilab = ''WINEPREFIX=$HOME/.wine-equilab WINEARCH=win32 wine'';
-      macup = "nix flake metadata github:cookEbox/nix-config --refresh; nix run github:nix-community/home-manager/release-25.11 -- switch --flake 'github:cookEbox/nix-config#workMac' --impure; source ~/.zshrc";
+      macup = "export NIXPKGS_ALLOW_UNFREE=1; nix flake metadata github:cookEbox/nix-config --refresh; nix run github:nix-community/home-manager/release-25.11 -- switch --flake 'github:cookEbox/nix-config#workMac' --impure; source ~/.zshrc";
       sdkman = ''source "$HOME/.sdkman/bin/sdkman-init.sh"''; 
       };
     history = {
