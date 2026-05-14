@@ -11,6 +11,7 @@
   home = { 
     packages = with pkgs; [ 
       vscode
+      procps
       brave
       bitwarden-desktop
       slack
