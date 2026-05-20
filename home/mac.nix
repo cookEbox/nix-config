@@ -15,7 +15,7 @@
       brave
       bitwarden-desktop
       slack
-      github-copilot-cli
+      # github-copilot-cli
       aerospace
       zip
       neofetch
