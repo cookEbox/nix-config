@@ -55,19 +55,45 @@ in
       ".config/direnv/direnvrc" = {
         text = ''
           use_openai() {
-            if [ -f "$HOME/.config/openai/api_key" ]; then
-              export OPENAI_API_KEY="$(cat "$HOME/.config/openai/api_key")"
+            local key_file="$HOME/.config/openai/api_key"
+
+            if [ -f "$key_file" ]; then
+              export OPENAI_API_KEY="$(tr -d '\n' < "$key_file")"
+            else
+              echo "use_openai: missing $key_file" >&2
+              return 1
             fi
 
-            # Set your preferred model ID (must be a valid OpenAI API model name you have access to)
-            export OPENAI_MODEL="gpt-5.2"
+            export OPENAI_MODEL="gpt-5.5"
+          }
+
+          use_claude() {
+            local key_file="$HOME/.config/claude/api_key"
+
+            if [ -f "$key_file" ]; then
+              export ANTHROPIC_API_KEY="$(tr -d '\n' < "$key_file")"
+
+              # Optional compatibility alias for your own code.
+              export CLAUDE_API_KEY="$ANTHROPIC_API_KEY"
+            else
+              echo "use_claude: missing $key_file" >&2
+              return 1
+            fi
+
+            # Good default for an agent: cheaper/faster than Opus, strong for coding.
+            export ANTHROPIC_MODEL="claude-sonnet-4-6"
+
+            # Optional compatibility alias for your own code.
+            export CLAUDE_MODEL="$ANTHROPIC_MODEL"
           }
 
           use_tavily() {
-            if [ -f "$HOME/.config/tavily/api_key" ]; then
-              export TAVILY_API_KEY="$(cat "$HOME/.config/tavily/api_key")"
+            local key_file="$HOME/.config/tavily/api_key"
+
+            if [ -f "$key_file" ]; then
+              export TAVILY_API_KEY="$(tr -d '\n' < "$key_file")"
             else
-              echo "use_tavily: missing $HOME/.config/tavily/api_key" >&2
+              echo "use_tavily: missing $key_file" >&2
               return 1
             fi
           }
