@@ -10,7 +10,6 @@
 	];
   home = { 
     packages = with pkgs; [ 
-      chrome
       vscode
       procps
       brave
