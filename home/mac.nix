@@ -10,6 +10,8 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      awscli2
+      awsls
       vscode
       procps
       brave
