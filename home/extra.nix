@@ -9,6 +9,8 @@
     packages = with pkgs; [ 
 
       nftables
+      figlet
+      toilet
       lutris
       ferium
       brave
