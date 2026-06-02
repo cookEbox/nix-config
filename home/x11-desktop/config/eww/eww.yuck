@@ -13,31 +13,31 @@
   (box :class "workspaces" :orientation "h" :spacing 6
     (button
       :class {xmonad_focused_ws == 'hme' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"hme"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+1"
+      :onclick "wmctrl -s 0"
       "hme")
     (button
       :class {xmonad_focused_ws == 'cht' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"cht"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+2"
+      :onclick "wmctrl -s 1"
       "cht")
     (button
       :class {xmonad_focused_ws == 'www' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"www"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+3"
+      :onclick "wmctrl -s 2"
       "www")
     (button
       :class {xmonad_focused_ws == 'dev' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"dev"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+4"
+      :onclick "wmctrl -s 3"
       "dev")
     (button
       :class {xmonad_focused_ws == 'dev2' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"dev2"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+5"
+      :onclick "wmctrl -s 4"
       "dev2")
     (button
       :class {xmonad_focused_ws == 'flt' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"flt"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+6"
+      :onclick "wmctrl -s 5"
       "flt")
     (button
       :class {xmonad_focused_ws == 'med' ? 'ws-button ws-focused' : (matches(xmonad_visible_ws, '"med"') ? 'ws-button ws-visible' : 'ws-button')}
-      :onclick "xdotool key super+7"
+      :onclick "wmctrl -s 6"
       "med")
   )
 )

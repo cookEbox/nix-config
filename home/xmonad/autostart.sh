@@ -169,12 +169,12 @@ if command -v feh >/dev/null 2>&1; then
 fi
 
 # Keyboard layout tweaks (safe if not present).
-if command -v setxkbmap >/dev/null 2>&1; then
-  setxkbmap gb || true
-fi
-if command -v xmodmap >/dev/null 2>&1; then
-  xmodmap -e 'keysym Menu = Super_R' || true
-fi
+# if command -v setxkbmap >/dev/null 2>&1; then
+#   setxkbmap gb || true
+# fi
+# if command -v xmodmap >/dev/null 2>&1; then
+#   xmodmap -e 'keysym Menu = Super_R' || true
+# fi
 
 
 # Night light / colour temperature.

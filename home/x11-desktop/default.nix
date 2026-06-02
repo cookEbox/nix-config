@@ -65,6 +65,7 @@ in
 
   home.packages = with pkgs; [
     # Clipboard
+    wmctrl
     cliphist
     clipnotify
     xclip
