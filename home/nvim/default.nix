@@ -1,18 +1,36 @@
 { pkgs, ... }:
-{ programs.neovim = {
+
+let
+  luaPlugin = plugin: {
+    inherit plugin;
+    type = "lua";
+  };
+
+  luaPluginWithConfig = plugin: config: {
+    inherit plugin config;
+    type = "lua";
+  };
+in
+{
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+
+    withRuby = true;
+    withPython3 = true;
+
     # Make HLS available to Neovim so haskell-tools/HLS doesn't error when editing *.hs
     # outside of `nix develop`.
     extraPackages = with pkgs; [
       haskell-language-server
       curl
       nodejs_22
-      gh 
-      lynx 
-      gnumake 
+      gh
+      lynx
+      gnumake
       gcc
     ];
-    enable = true;
-    vimAlias = true;
+
     extraConfig = ''
       lua << EOF
       require("settings")
@@ -30,13 +48,14 @@
       end, 70)
       EOF
     '';
+
     plugins = with pkgs.vimPlugins; [
       haskell-tools-nvim
       vim-tmux-navigator
       vim-nix
       diffview-nvim
       plenary-nvim
-      indentLine   
+      indentLine
       context-vim
       undotree
       zen-mode-nvim
@@ -49,84 +68,78 @@
       avante-nvim
       copilot-lua
       CopilotChat-nvim
-      {
-        plugin = gruvbox-nvim;
-        config = "colorscheme gruvbox";
-      }
-      {
-        plugin = which-key-nvim;
-        config = "lua require('lualine').setup()";
-      }
-      {
-        plugin = lualine-nvim;
-        config = "lua require('lualine').setup()";
-      }
-      {
-        plugin = comment-nvim;
-        config = "lua require('Comment').setup()";
-      }
-      {
-        plugin = nvim-autopairs;
-        config = "lua require('nvim-autopairs').setup({check_ts = true})";
-      }
-      {
-        plugin = nvim-surround;
-        config = "lua require('nvim-surround').setup()";
-      }
+
+      (luaPluginWithConfig gruvbox-nvim ''
+        vim.cmd.colorscheme("gruvbox")
+      '')
+
+      (luaPluginWithConfig which-key-nvim ''
+        require("which-key").setup({})
+      '')
+
+      (luaPluginWithConfig lualine-nvim ''
+        require("lualine").setup({})
+      '')
+
+      (luaPluginWithConfig comment-nvim ''
+        require("Comment").setup({})
+      '')
+
+      (luaPluginWithConfig nvim-autopairs ''
+        require("nvim-autopairs").setup({
+          check_ts = true
+        })
+      '')
+
+      (luaPluginWithConfig nvim-surround ''
+        require("nvim-surround").setup({})
+      '')
+
       harpoon
       telescope-nvim
       telescope_hoogle
       telescope-fzf-native-nvim
       nvim-treesitter.withAllGrammars
       neodev-nvim
-      {
-        plugin = nvim-ts-autotag;
-        config = "lua require('nvim-ts-autotag').setup()";
-      }
-      {
-        plugin = mason-nvim;
-        config = "lua require('mason').setup()";
-      }
+
+      (luaPluginWithConfig nvim-ts-autotag ''
+        require("nvim-ts-autotag").setup({})
+      '')
+
+      (luaPluginWithConfig mason-nvim ''
+        require("mason").setup({})
+      '')
+
       lspkind-nvim
       nvim-cmp
-      {
-        plugin = cmp-nvim-lsp;
-        config = "lua after = 'nvim-cmp'";
-      }
-      {
-        plugin = cmp-buffer;
-        config = "lua after = 'nvim-cmp'";
-      }
-      {
-        plugin = cmp-path;
-        config = "lua after = 'nvim-cmp'";
-      }
-      {
-        plugin = cmp-cmdline;
-        config = "lua after = 'nvim-cmp'";
-      }
+
+      (luaPlugin cmp-nvim-lsp)
+      (luaPlugin cmp-buffer)
+      (luaPlugin cmp-path)
+      (luaPlugin cmp-cmdline)
+
       luasnip
       cmp_luasnip
-      {
-        plugin = snippets-nvim;
-        config = "lua require('snippets').use_suggested_mappings()";
-      }
+
+      (luaPluginWithConfig snippets-nvim ''
+        require("snippets").use_suggested_mappings()
+      '')
+
       vim-easy-align
       friendly-snippets
     ];
-
   };
-  home.file = { 
-    ".config/nvim/lua/settings.lua".source            = ./settings.lua;
-    ".config/nvim/lua/cmp_config.lua".source          = ./cmp_config.lua;
-    ".config/nvim/lua/snippets_config.lua".source     = ./snippets_config.lua;
-    ".config/nvim/lua/lsp.lua".source                 = ./lsp.lua;
-    ".config/nvim/lua/dap_config.lua".source          = ./dap_config.lua;
-    ".config/nvim/lua/telescope_config.lua".source    = ./telescope_config.lua;
-    ".config/nvim/lua/oil_config.lua".source          = ./oil_config.lua;
-    ".config/nvim/lua/avante_config.lua".source       = ./avante_config.lua;
-    ".config/nvim/lua/copilot_config.lua".source      = ./copilot_config.lua;
+
+  home.file = {
+    ".config/nvim/lua/settings.lua".source = ./settings.lua;
+    ".config/nvim/lua/cmp_config.lua".source = ./cmp_config.lua;
+    ".config/nvim/lua/snippets_config.lua".source = ./snippets_config.lua;
+    ".config/nvim/lua/lsp.lua".source = ./lsp.lua;
+    ".config/nvim/lua/dap_config.lua".source = ./dap_config.lua;
+    ".config/nvim/lua/telescope_config.lua".source = ./telescope_config.lua;
+    ".config/nvim/lua/oil_config.lua".source = ./oil_config.lua;
+    ".config/nvim/lua/avante_config.lua".source = ./avante_config.lua;
+    ".config/nvim/lua/copilot_config.lua".source = ./copilot_config.lua;
     ".config/nvim/lua/copilot_chat_config.lua".source = ./copilot_chat_config.lua;
   };
-
 }

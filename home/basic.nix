@@ -14,7 +14,7 @@
       tty-clock
       zip
       emojipick
-      neofetch
+      fastfetch
       jq
       nix-direnv
       lsd

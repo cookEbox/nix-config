@@ -21,7 +21,7 @@
       # github-copilot-cli
       aerospace
       zip
-      neofetch
+      fastfetch
       jq
       nix-direnv
       lsd

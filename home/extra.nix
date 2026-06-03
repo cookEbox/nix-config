@@ -27,7 +27,7 @@
       redshift
       networkmanagerapplet
       simple-scan
-      mate.mate-tweak
+      mate-tweak
       dconf2nix
       gnupg
       xclip
@@ -36,7 +36,8 @@
       git-crypt
       nix-prefetch-git
       mpv
-      wasistlos
+      karere
+      # wasistlos
       cmus
       gccgo13
       go
@@ -51,15 +52,15 @@
       weechat
       obs-studio
       direnv
-      nodePackages.bash-language-server
+      bash-language-server
       freecad
       # kicad
       keymapp
       mesa-demos
-      protonvpn-gui
+      proton-vpn
       xournalpp
       jdk17
-      wineWowPackages.staging 
+      wineWow64Packages.staging 
       winetricks 
       claude-code
     ];

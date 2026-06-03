@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   gtk = { 
     enable = true;
+    gtk4.theme = config.gtk.theme;
     theme = {
       name = "gruvbox-dark";
       package = pkgs.gruvbox-dark-gtk;
