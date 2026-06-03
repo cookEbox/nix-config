@@ -20,6 +20,7 @@ in
 {
   imports = [
     ./ranger
+    ./qutebrowser
   ];
 
   home = {

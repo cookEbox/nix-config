@@ -33,7 +33,6 @@
       tldr
       lsof
       direnv
-      qutebrowser
       gh 
       lynx
       gnumake 

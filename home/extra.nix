@@ -35,7 +35,6 @@
       xdotool
       git-crypt
       nix-prefetch-git
-      qutebrowser
       mpv
       wasistlos
       cmus
