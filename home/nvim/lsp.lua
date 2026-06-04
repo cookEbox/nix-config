@@ -339,7 +339,6 @@ if ok_metals then
     end,
 
     settings = {
-      useBloop = true,
       showImplicitArguments = true,
       superMethodLensesEnabled = true,
       showInferredType = true,
