@@ -16,7 +16,7 @@
       vscode
       procps
       brave
-      bitwarden-desktop
+      # bitwarden-desktop
       slack
       # github-copilot-cli
       aerospace
