@@ -1,6 +1,10 @@
 -- Neovim LSP configuration using the Neovim 0.11+ API (`vim.lsp.config`).
 --
 -- This intentionally avoids `require('lspconfig')`, which is deprecated.
+--
+-- Scala/Metals is the exception to the generic native-LSP setup below:
+-- nvim-metals still uses Neovim's built-in LSP client, but it owns the Metals
+-- attach lifecycle so build import, Metals commands, DAP, and extensions work.
 
 local lsp = vim.lsp
 if type(lsp) ~= "table" or type(lsp.config) ~= "table" then
@@ -16,7 +20,6 @@ vim.diagnostic.config({
 
 -- Neovim 0.11+ no longer uses the legacy publishDiagnostics handler.
 -- Configure diagnostics via vim.diagnostic.config() only.
-
 
 -- Some servers/plugins may return duplicate locations for definition.
 -- De-duplicate quickfix items by (filename, lnum, col) before presenting them.
@@ -56,24 +59,33 @@ local function on_list_dedup(opts)
   end
 end
 
+local function safe_require(module_name)
+  local ok, module = pcall(require, module_name)
+  if ok then
+    return module
+  end
+
+  return nil
+end
+
 local function on_attach(_, bufnr)
   -- Avoid running mappings multiple times if the same buffer gets multiple
-  -- LSP clients attached (or if a server is started by another plugin).
-  if vim.b[bufnr].__lsp_on_attach_done then
+  -- LSP clients attached. This flag is deliberately about keymaps only.
+  if vim.b[bufnr].__lsp_keymaps_done then
     return
   end
-  vim.b[bufnr].__lsp_on_attach_done = true
+  vim.b[bufnr].__lsp_keymaps_done = true
 
   local opts = { buffer = bufnr, remap = false }
-  local opts2 = { buffer = 0, silent = true, noremap = true }
+  local opts2 = { buffer = bufnr, silent = true, noremap = true }
 
-  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition({ on_list = on_list_dedup }) end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float(nil, { focusable = true }) end, opts)
   vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-  vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", { buffer = bufnr, noremap = true, silent = true })
   vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
@@ -84,47 +96,44 @@ local function on_attach(_, bufnr)
   -- Keep signature help on a different key to avoid clobbering <C-k> window navigation.
   vim.keymap.set("i", "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
 
-  vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end, opts)
-  vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end, opts)
-  vim.keymap.set("n", "<leader>ds", function() require("dap").step_over() end, opts)
-  vim.keymap.set("n", "<leader>di", function() require("dap").step_into() end, opts)
-  vim.keymap.set("n", "<leader>do", function() require("dap").step_out() end, opts)
-  vim.keymap.set("n", "<leader>uo", function() require("dapui").open() end, opts)
-  vim.keymap.set("n", "<leader>uc", function() require("dapui").close() end, opts)
+  local dap = safe_require("dap")
+  if dap then
+    vim.keymap.set("n", "<leader>dc", function() dap.continue() end, opts)
+    vim.keymap.set("n", "<leader>db", function() dap.toggle_breakpoint() end, opts)
+    vim.keymap.set("n", "<leader>ds", function() dap.step_over() end, opts)
+    vim.keymap.set("n", "<leader>di", function() dap.step_into() end, opts)
+    vim.keymap.set("n", "<leader>do", function() dap.step_out() end, opts)
+  end
 
-  local ok_ht, ht = pcall(require, "haskell-tools")
-  if ok_ht then
+  local dapui = safe_require("dapui")
+  if dapui then
+    vim.keymap.set("n", "<leader>uo", function() dapui.open() end, opts)
+    vim.keymap.set("n", "<leader>uc", function() dapui.close() end, opts)
+  end
+
+  local ht = safe_require("haskell-tools")
+  if ht then
     vim.keymap.set("n", "<leader>hs", ht.hoogle.hoogle_signature, opts2)
   end
 end
 
 -- Ensure keymaps are applied even when a server is started by another plugin
--- (e.g. haskell-tools) and our `on_attach` callback is not used.
+-- (e.g. haskell-tools). Ignore Copilot here because it can attach before the
+-- real language server and otherwise mark the buffer as already configured.
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client then
+    if client and client.name ~= "copilot" then
       on_attach(client, args.buf)
     end
   end,
 })
 
 local capabilities = lsp.protocol.make_client_capabilities()
-local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-if ok_cmp then
+local cmp_lsp = safe_require("cmp_nvim_lsp")
+if cmp_lsp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
 end
-
--- local function start_lsp_for_buffer(name)
---   vim.lsp.enable(name)
--- end
---
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "scala", "sbt", "java" },
---   callback = function()
---     start_lsp_for_buffer("metals")
---   end,
--- })
 
 -- Helper: only enable a server if its executable is available.
 local function can_exec(cmd)
@@ -153,14 +162,6 @@ local function maybe_setup(server_name, cfg)
   lsp.config[server_name] = cfg
 end
 
--- Haskell (HLS)
-maybe_setup("hls", {
-  cmd = { "haskell-language-server-wrapper", "--lsp" },
-  filetypes = { "haskell" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
 -- Filetype override for *.fk
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.fk",
@@ -169,25 +170,28 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
--- Neovim 0.11+: `vim.lsp.config` defines server configs, but you still need to
--- start/enable them for relevant buffers.
+-- Neovim 0.11+: `vim.lsp.config` defines server configurations, but in this
+-- file we start most generic servers explicitly from FileType autocmds. Metals
+-- is started separately via nvim-metals further below.
 local function start_lsp_for_buffer(server_name)
   local cfg = lsp.config[server_name]
   if type(cfg) ~= "table" then
     return
   end
 
+  if cfg.cmd and not can_exec(cfg.cmd) then
+    return
+  end
+
   -- Avoid starting multiple clients for the same buffer.
-  -- Some plugins (e.g. haskell-tools, LanguageClient-neovim) may start the same
-  -- server with a *different* client name, which leads to duplicated diagnostics.
+  -- Some plugins may start the same underlying server command with a different
+  -- client name, which leads to duplicated diagnostics.
   local bufnr = vim.api.nvim_get_current_buf()
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
     if client.name == server_name then
       return
     end
 
-    -- If another client is already running the same underlying server command,
-    -- don't start a duplicate.
     if type(cfg.cmd) == "table" and type(client.config) == "table" and type(client.config.cmd) == "table" then
       if cfg.cmd[1] ~= nil and client.config.cmd[1] == cfg.cmd[1] then
         return
@@ -195,11 +199,93 @@ local function start_lsp_for_buffer(server_name)
     end
   end
 
-  -- Ensure the client has a name (used for de-duplication and :LspInfo).
+  -- Ensure the client has a name, used for de-duplication and health output.
   local start_cfg = vim.tbl_deep_extend("force", { name = server_name }, cfg)
   vim.lsp.start(start_cfg)
 end
 
+-- Server configs
+
+-- Lua LSP. Nix provides the binary as `lua-language-server`.
+maybe_setup("lua_ls", {
+  cmd = { "lua-language-server" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+    },
+  },
+})
+
+-- Haskell (HLS)
+maybe_setup("hls", {
+  cmd = { "haskell-language-server-wrapper", "--lsp" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = { "haskell", "lhaskell", "fk" },
+  settings = {
+    haskell = {
+      formattingProvider = "ormolu",
+      plugin = {
+        ["ghcide-completions"] = {
+          config = {
+            autoExtendOn = true,
+            snippetsOn = true,
+          },
+        },
+        tactics = { globalOn = true },
+        retrie = { globalOn = true },
+        hlint = { globalOn = true },
+      },
+    },
+  },
+})
+
+-- Nix LSP: the server binary is `nil`, but the config name is `nil_ls`.
+maybe_setup("nil_ls", {
+  cmd = { "nil" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+-- TypeScript. Only starts if typescript-language-server is in PATH.
+maybe_setup("ts_ls", {
+  cmd = { "typescript-language-server", "--stdio" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+-- Python. Only starts if pylsp is in PATH.
+maybe_setup("pylsp", {
+  cmd = { "pylsp" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+-- C/C++/Objective-C. Only starts if clangd is in PATH.
+maybe_setup("clangd", {
+  cmd = { "clangd" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+-- JDTLS (Java). Do not auto-start for Java because Metals also uses Java files
+-- in Scala projects. Start jdtls manually if/when you want standalone Java LSP.
+maybe_setup("jdtls", {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  cmd = (function()
+    local home = os.getenv("HOME")
+    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+    local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
+    return { "jdtls", "-data", workspace_dir }
+  end)(),
+})
+
+-- Generic LSP startup autocmds.
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "nix",
   callback = function()
@@ -221,135 +307,71 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Server configs
---
--- Note: `vim.lsp.config` defines server configurations. Starting the servers is
--- handled by Neovim when a matching filetype is opened.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  callback = function()
+    start_lsp_for_buffer("ts_ls")
+  end,
+})
 
--- Explicit cmd is required for non-builtin server definitions.
--- Nix provides the binary as `lua-language-server`.
-lsp.config.lua_ls = {
-  cmd = { "lua-language-server" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-    },
-  },
-}
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    start_lsp_for_buffer("pylsp")
+  end,
+})
 
--- TypeScript: prefer `ts_ls` if present, otherwise `tsserver`.
--- (The actual server binary must be available in PATH.)
-lsp.config.ts_ls = {
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-lsp.config.tsserver = {
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-lsp.config.pylsp = {
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-lsp.config.hls = {
-  cmd = { "haskell-language-server-wrapper", "--lsp" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  filetypes = { "haskell", "lhaskell", "fk" },
-  settings = {
-    haskell = {
-      formattingProvider = "ormolu",
-      plugin = {
-        ["ghcide-completions"] = {
-          config = {
-            autoExtendOn = true,
-            snippetsOn = true,
-          },
-        },
-        tactics = { globalOn = true },
-        retrie = { globalOn = true },
-        hlint = { globalOn = true },
-      },
-    },
-  },
-}
-
--- Nix LSP: the server binary is `nil`, but the config name is `nil_ls`.
--- Neovim's built-in LSP uses the config name to decide what to start.
--- Nix provides the server binary as `nil`.
-lsp.config.nil_ls = {
-  cmd = { "nil" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-lsp.config.clangd = {
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
--- JDTLS (Java)
-lsp.config.jdtls = {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  cmd = (function()
-    local home = os.getenv("HOME")
-    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-    local workspace_dir = home .. "/.local/share/eclipse/" .. project_name
-    return { "jdtls", "-data", workspace_dir }
-  end)(),
-}
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp", "objc", "objcpp" },
+  callback = function()
+    start_lsp_for_buffer("clangd")
+  end,
+})
 
 -- Metals (Scala)
-local ok_metals, metals = pcall(require, "metals")
-if ok_metals then
-  vim.lsp.config("metals", {
-    cmd = { "metals" },
-    filetypes = { "scala", "sbt", "java" },
+--
+-- Do not also configure Metals via `vim.lsp.config("metals", ...)` or
+-- `vim.lsp.enable("metals")`. nvim-metals owns the attach lifecycle here.
+local metals = safe_require("metals")
+if metals then
+  local metals_config = metals.bare_config()
 
-    root_markers = {
-      "build.sbt",
-      "build.sc",
-      "scala-cli.yaml",
-      ".bloop",
-      ".git",
-    },
+  metals_config.capabilities = capabilities
 
-    workspace_required = true,
+  metals_config.on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
 
-    capabilities = capabilities,
+    pcall(function()
+      metals.setup_dap()
+    end)
 
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-
+    local dapui = safe_require("dapui")
+    if dapui then
       pcall(function()
-        metals.setup_dap()
+        dapui.setup()
       end)
+    end
+  end
 
-      pcall(function()
-        require("dapui").setup()
-      end)
-    end,
-
-    settings = {
-      showImplicitArguments = true,
-      superMethodLensesEnabled = true,
-      showInferredType = true,
-      excludedPackages = {},
-    },
-
-    init_options = {
-      statusBarProvider = "on",
-      inputBoxProvider = "on",
-    },
+  metals_config.settings = vim.tbl_deep_extend("force", metals_config.settings or {}, {
+    showImplicitArguments = true,
+    superMethodLensesEnabled = true,
+    showInferredType = true,
+    excludedPackages = {},
   })
 
-  vim.lsp.enable("metals")
+  metals_config.init_options = vim.tbl_deep_extend("force", metals_config.init_options or {}, {
+    statusBarProvider = "on",
+    inputBoxProvider = "on",
+  })
+
+  local metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "scala", "sbt", "java" },
+    callback = function()
+      metals.initialize_or_attach(metals_config)
+    end,
+    group = metals_group,
+  })
 end
