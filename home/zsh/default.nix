@@ -86,10 +86,11 @@
           switch --flake "github:cookEbox/nix-config/''${branch}#''${machine}" --impure
       }
 
-      macup() {
+      macup () {
         local repo="$HOME/Dev/utils/nix-config"
         local old_dir="$PWD"
 
+        export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
         export NIXPKGS_ALLOW_UNFREE=1
         export NIXPKGS_ALLOW_INSECURE=1
 
@@ -116,8 +117,10 @@
         }
 
         cd "$old_dir" || return 1
-        source "$HOME/.zshrc"
-      }
+
+        echo "Home Manager activation complete. Starting a fresh login shell..."
+        exec zsh -l
+      } 
     '';
     shellAliases = {
       ".." = "cd ..";

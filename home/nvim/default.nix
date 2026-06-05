@@ -44,6 +44,9 @@ in
     ];
 
     extraConfig = ''
+      let $NVIM_METALS_JAVA_HOME = '${pkgs.jdk17}/lib/openjdk'
+      let $NVIM_METALS_CMD = '${pkgs.metals}/bin/metals'
+
       lua << EOF
       require("settings")
       require("oil_config")

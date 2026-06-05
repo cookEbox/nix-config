@@ -336,7 +336,13 @@ local metals = safe_require("metals")
 if metals then
   local metals_config = metals.bare_config()
 
-  metals_config.capabilities = capabilities
+  metals_config.cmd = { vim.env.NVIM_METALS_CMD }
+
+  metals_config.cmd_env = vim.tbl_deep_extend("force", metals_config.cmd_env or {}, {
+    JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
+    METALS_JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
+    PATH = vim.env.NVIM_METALS_JAVA_HOME .. "/bin:" .. vim.env.PATH,
+  })  metals_config.capabilities = capabilities
 
   metals_config.on_attach = function(client, bufnr)
     on_attach(client, bufnr)
@@ -366,6 +372,12 @@ if metals then
   })
 
   local metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+
+  metals_config.cmd_env = vim.tbl_deep_extend("force", metals_config.cmd_env or {}, {
+    JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
+    METALS_JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
+    PATH = vim.fn.fnamemodify(vim.env.NVIM_METALS_JAVA_HOME, ":h") .. "/bin:" .. vim.env.PATH,
+  })
 
   vim.api.nvim_create_autocmd("FileType", {
     pattern = { "scala", "sbt", "java" },
