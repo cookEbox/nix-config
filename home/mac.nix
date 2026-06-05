@@ -16,12 +16,12 @@
       vscode
       procps
       brave
-      bitwarden-desktop
+      # bitwarden-desktop
       slack
       # github-copilot-cli
       aerospace
       zip
-      neofetch
+      fastfetch
       jq
       nix-direnv
       lsd

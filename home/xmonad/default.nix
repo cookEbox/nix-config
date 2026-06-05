@@ -12,7 +12,7 @@
       # Utilities referenced by existing keybindings
       dmenu
       flameshot
-      xfce.xfce4-volumed-pulse
+      xfce4-volumed-pulse
 
       # Useful for the built-in help popup
       xmessage

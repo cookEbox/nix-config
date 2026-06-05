@@ -22,6 +22,7 @@
   };
 
   nixpkgs.config = { 
+    permittedInsecurePackages = [ "electron-39.8.10" ];
     allowUnfree = true; 
   };
 
@@ -146,7 +147,7 @@
       wget
       firefox
       htop
-      neofetch
+      fastfetch
       pfetch
       adwaita-icon-theme
       prismlauncher
