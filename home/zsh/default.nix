@@ -85,6 +85,39 @@
         nix run "github:nix-community/home-manager/release-25.11" -- \
           switch --flake "github:cookEbox/nix-config/''${branch}#''${machine}" --impure
       }
+
+      macup() {
+        local repo="$HOME/Dev/utils/nix-config"
+        local old_dir="$PWD"
+
+        export NIXPKGS_ALLOW_UNFREE=1
+        export NIXPKGS_ALLOW_INSECURE=1
+
+        cd "$repo" || return 1
+
+        if [ "$(git branch --show-current)" != "mac" ]; then
+          echo "Switching nix-config to mac branch..."
+          git switch mac || {
+            cd "$old_dir"
+            return 1
+          }
+        fi
+
+        echo "Building local workMac Home Manager activation package..."
+        nix build --impure --no-write-lock-file '.#homeConfigurations."workMac".activationPackage' || {
+          cd "$old_dir"
+          return 1
+        }
+
+        echo "Activating workMac Home Manager generation..."
+        ./result/activate || {
+          cd "$old_dir"
+          return 1
+        }
+
+        cd "$old_dir" || return 1
+        source "$HOME/.zshrc"
+      }
     '';
     shellAliases = {
       ".." = "cd ..";
@@ -120,7 +153,7 @@
       sshpi = "ssh Admin@192.168.1.116";
       wine888     = ''WINEPREFIX=$HOME/.wine-888 WINEARCH=win64 wine'';
       wineequilab = ''WINEPREFIX=$HOME/.wine-equilab WINEARCH=win32 wine'';
-      macup = "export NIXPKGS_ALLOW_UNFREE=1; nix flake metadata github:cookEbox/nix-config --refresh; nix run github:nix-community/home-manager/release-25.11 -- switch --flake 'github:cookEbox/nix-config#workMac' --impure; source ~/.zshrc";
+      # macup = "export NIXPKGS_ALLOW_UNFREE=1; nix flake metadata github:cookEbox/nix-config --refresh; nix run github:nix-community/home-manager/release-25.11 -- switch --flake 'github:cookEbox/nix-config#workMac' --impure; source ~/.zshrc";
       sdkman = ''source "$HOME/.sdkman/bin/sdkman-init.sh"''; 
       };
     history = {
