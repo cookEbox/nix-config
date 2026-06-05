@@ -19,10 +19,22 @@ in
     withRuby = true;
     withPython3 = true;
 
-    # Make HLS available to Neovim so haskell-tools/HLS doesn't error when editing *.hs
-    # outside of `nix develop`.
+    # Keep core language servers available to Neovim even when it is opened
+    # outside a project-specific `nix develop` shell.
     extraPackages = with pkgs; [
+      # Haskell
       haskell-language-server
+
+      # Scala / Metals
+      metals
+      coursier
+      jdk17
+
+      # Nix / Lua servers used by lsp.lua
+      nil
+      lua-language-server
+
+      # General CLI tooling already used by this config
       curl
       nodejs_22
       gh
@@ -32,6 +44,9 @@ in
     ];
 
     extraConfig = ''
+      let $NVIM_METALS_JAVA_HOME = '${pkgs.jdk17}/lib/openjdk'
+      let $NVIM_METALS_CMD = '${pkgs.metals}/bin/metals'
+
       lua << EOF
       require("settings")
       require("oil_config")
@@ -60,6 +75,7 @@ in
       undotree
       zen-mode-nvim
       nvim-metals
+      nvim-dap
       nvim-dap-ui
       telescope-dap-nvim
       oil-nvim

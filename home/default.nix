@@ -27,6 +27,7 @@ in
     packages = with pkgs; [
       nmap
       gitui
+      zathura
       feh
 
       # LSP server binaries (used by Neovim's built-in LSP)
