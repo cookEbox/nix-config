@@ -175,7 +175,11 @@ done < <(
       -path '*/.tox' -o \
       -path '*/.idea' -o \
       -path '*/.vscode' -o \
-      -path '*/.DS_Store' \
+      -path '*/.metals' -o \
+      -path '*/.bloop' -o \
+      -path '*/.bsp' -o \
+      -path '*/target' -o \
+      -path '*/.scala-build' \
     \) -prune -o \
     -type f ! \( \
       -iname '*.png'  -o \
@@ -210,6 +214,17 @@ done < <(
       -iname '*.dmg'  -o \
       -iname '*.iso'  -o \
       -iname '*.lock' -o \
+      -iname '*.db' -o \
+      -iname '*.sqlite' -o \
+      -iname '*.sqlite3' -o \
+      -iname '*.h2.db' -o \
+      -iname '*.mv.db' -o \
+      -iname '*.trace.db' -o \
+      -iname '*.class' -o \
+      -iname '*.jar' -o \
+      -iname '*.war' -o \
+      -iname '*.ear' -o \
+      -iname '*.semanticdb' -o \
       -iname 'package-lock.json' -o \
       -iname 'pnpm-lock.yaml' -o \
       -iname 'yarn.lock' -o \
@@ -223,6 +238,16 @@ done < <(
       -iname '*.tmp' -o \
       -iname '*.swp' -o \
       -iname '*.swo' -o \
+      -iname '.DS_Store' -o \
+      -iname '*.db' -o \
+      -iname '*.sqlite' -o \
+      -iname '*.sqlite3' -o \
+      -iname '*.h2.db' -o \
+      -iname '*.mv.db' -o \
+      -iname '*.trace.db' -o \
+      -iname '*.class' -o \
+      -iname '*.jar' -o \
+      -iname '*.semanticdb' -o \
       -iname '*~' \
     \) -print0
 )
