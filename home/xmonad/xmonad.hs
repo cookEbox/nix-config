@@ -101,7 +101,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_c    ), spawn "discord")
 
     -- launch whatsapp
-    , ((modm .|. shiftMask, xK_c     ), spawn "wasistlos")
+    , ((modm .|. shiftMask, xK_c     ), spawn "karere")
 
     -- launch file managers
     , ((modm,               xK_f     ), spawn "nemo")
