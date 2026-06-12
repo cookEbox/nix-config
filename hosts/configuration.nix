@@ -125,7 +125,6 @@
     "kernel.dmesg_restrict" = 1;
     "fs.protected_symlinks" = 1;
     "fs.protected_hardlinks" = 1;
-    "vm.max_map_count" = 2147483642;
   };
 
   users.groups.plugdev = { };

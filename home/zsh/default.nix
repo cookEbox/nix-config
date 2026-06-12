@@ -86,6 +86,8 @@
           switch --flake "github:cookEbox/nix-config/''${branch}#''${machine}" --impure
       }
 
+      unalias macup 2>/dev/null || true
+
       macup () {
         local repo="$HOME/Dev/utils/nix-config"
         local old_dir="$PWD"

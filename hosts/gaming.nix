@@ -25,12 +25,6 @@
   boot.kernel.sysctl = {
     # Proton / modern game compatibility.
     "vm.max_map_count" = 2147483642;
-
-    # Keep your existing hardening values.
-    "kernel.kptr_restrict" = 2;
-    "kernel.dmesg_restrict" = 1;
-    "fs.protected_symlinks" = 1;
-    "fs.protected_hardlinks" = 1;
   };
 
   environment.systemPackages = with pkgs; [
