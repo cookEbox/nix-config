@@ -14,6 +14,7 @@
     ../xmonad.nix
     ../mate.nix
     ../extra.nix
+    ../gaming.nix
     ./hardware-configuration.nix
   ];
 
