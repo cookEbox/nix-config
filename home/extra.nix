@@ -8,6 +8,7 @@
   home = { 
     packages = with pkgs; [ 
 
+      codex
       zathura
       nftables
       figlet
