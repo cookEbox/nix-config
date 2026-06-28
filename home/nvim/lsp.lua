@@ -259,8 +259,8 @@ maybe_setup("ts_ls", {
 })
 
 -- Python. Only starts if pylsp is in PATH.
-maybe_setup("pylsp", {
-  cmd = { "pylsp" },
+maybe_setup("basedpyright", {
+  cmd = { "basedpyright" },
   capabilities = capabilities,
   on_attach = on_attach,
 })
