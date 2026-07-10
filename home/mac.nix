@@ -16,9 +16,9 @@
       vscode
       procps
       brave
+      bruno
       # bitwarden-desktop
       slack
-      # github-copilot-cli
       aerospace
       zip
       fastfetch
