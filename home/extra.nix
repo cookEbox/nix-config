@@ -5,9 +5,15 @@
                ./gtk
                ./emacs
 	];
+
   home = { 
     packages = with pkgs; [ 
-
+      (evolutionWithPlugins.override {
+        plugins = [
+          evolution
+          evolution-ews
+        ];
+      })
       codex
       zathura
       nftables
@@ -23,7 +29,6 @@
       rclone
       android-file-transfer
       thunderbird
-      evolutionWithPlugins
       onlyoffice-desktopeditors
       deja-dup
       redshift

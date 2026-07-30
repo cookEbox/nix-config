@@ -260,7 +260,7 @@ maybe_setup("ts_ls", {
 
 -- Python. Only starts if pylsp is in PATH.
 maybe_setup("basedpyright", {
-  cmd = { "basedpyright" },
+  cmd = { "basedpyright-langserver", "--stdio" },
   capabilities = capabilities,
   on_attach = on_attach,
 })
@@ -317,7 +317,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "python",
   callback = function()
-    start_lsp_for_buffer("pylsp")
+    start_lsp_for_buffer("basedpyright")
   end,
 })
 
