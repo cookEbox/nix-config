@@ -83,8 +83,8 @@ local function on_attach(_, bufnr)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float(nil, { focusable = true }) end, opts)
-  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", { buffer = bufnr, noremap = true, silent = true })
   vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
@@ -134,6 +134,59 @@ local cmp_lsp = safe_require("cmp_nvim_lsp")
 if cmp_lsp then
   capabilities = cmp_lsp.default_capabilities(capabilities)
 end
+
+-- haskell-tools.nvim owns the HLS lifecycle. Do not also register or start a
+-- separate generic "hls" client below.
+vim.g.haskell_tools = {
+  tools = {
+    hover = {
+      -- Put focus in the enhanced hover so <CR> can follow its "Go to" action.
+      auto_focus = true,
+    },
+  },
+  hls = {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+      on_attach(client, bufnr)
+
+      -- Use haskell-tools' enhanced hover rather than the generic LSP hover.
+      vim.keymap.set("n", "K", function()
+        vim.cmd.Haskell({ "hover" })
+      end, {
+        buffer = bufnr,
+        silent = true,
+        noremap = true,
+        desc = "Haskell hover actions",
+      })
+
+      local goto_preview = safe_require("goto-preview")
+      if goto_preview then
+        vim.keymap.set("n", "gK", goto_preview.goto_preview_type_definition, {
+          buffer = bufnr,
+          silent = true,
+          noremap = true,
+          desc = "Preview Haskell type definition",
+        })
+      end
+    end,
+    default_settings = {
+      haskell = {
+        formattingProvider = "ormolu",
+        plugin = {
+          ["ghcide-completions"] = {
+            config = {
+              autoExtendOn = true,
+              snippetsOn = true,
+            },
+          },
+          tactics = { globalOn = true },
+          retrie = { globalOn = true },
+          hlint = { globalOn = true },
+        },
+      },
+    },
+  },
+}
 
 -- Helper: only enable a server if its executable is available.
 local function can_exec(cmd)
@@ -220,30 +273,6 @@ maybe_setup("lua_ls", {
   },
 })
 
--- Haskell (HLS)
-maybe_setup("hls", {
-  cmd = { "haskell-language-server-wrapper", "--lsp" },
-  capabilities = capabilities,
-  on_attach = on_attach,
-  filetypes = { "haskell", "lhaskell", "fk" },
-  settings = {
-    haskell = {
-      formattingProvider = "ormolu",
-      plugin = {
-        ["ghcide-completions"] = {
-          config = {
-            autoExtendOn = true,
-            snippetsOn = true,
-          },
-        },
-        tactics = { globalOn = true },
-        retrie = { globalOn = true },
-        hlint = { globalOn = true },
-      },
-    },
-  },
-})
-
 -- Nix LSP: the server binary is `nil`, but the config name is `nil_ls`.
 maybe_setup("nil_ls", {
   cmd = { "nil" },
@@ -301,13 +330,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "haskell", "lhaskell" },
-  callback = function()
-    start_lsp_for_buffer("hls")
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
   pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
   callback = function()
     start_lsp_for_buffer("ts_ls")
@@ -342,7 +364,8 @@ if metals then
     JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
     METALS_JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
     PATH = vim.env.NVIM_METALS_JAVA_HOME .. "/bin:" .. vim.env.PATH,
-  })  metals_config.capabilities = capabilities
+  })
+  metals_config.capabilities = capabilities
 
   metals_config.on_attach = function(client, bufnr)
     on_attach(client, bufnr)
@@ -372,12 +395,6 @@ if metals then
   })
 
   local metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-
-  metals_config.cmd_env = vim.tbl_deep_extend("force", metals_config.cmd_env or {}, {
-    JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
-    METALS_JAVA_HOME = vim.env.NVIM_METALS_JAVA_HOME,
-    PATH = vim.fn.fnamemodify(vim.env.NVIM_METALS_JAVA_HOME, ":h") .. "/bin:" .. vim.env.PATH,
-  })
 
   vim.api.nvim_create_autocmd("FileType", {
     pattern = { "scala", "sbt", "java" },

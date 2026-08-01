@@ -56,8 +56,9 @@ in
       require("copilot_chat_config")
       require("avante_config")
 
+      require("lsp")
+
       vim.defer_fn(function()
-        require("lsp")
         require("dap_config")
         require("telescope_config")
       end, 70)
@@ -84,6 +85,17 @@ in
       avante-nvim
       copilot-lua
       CopilotChat-nvim
+
+      (luaPluginWithConfig goto-preview ''
+        require("goto-preview").setup({
+          width = 100,
+          height = 20,
+          default_mappings = false,
+          focus_on_open = true,
+          dismiss_on_move = false,
+          vim_ui_input = false,
+        })
+      '')
 
       (luaPluginWithConfig gruvbox-nvim ''
         vim.cmd.colorscheme("gruvbox")
