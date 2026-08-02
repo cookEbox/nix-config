@@ -1,13 +1,6 @@
 { pkgs, unstable, ... }:
 
 {
-  # Prefer Ladybird from nixos-unstable while keeping the rest of the system on stable.
-  nixpkgs.overlays = [
-    (final: prev: {
-      ladybird = unstable.ladybird;
-    })
-  ];
-
   imports = [
     ../configuration.nix
     ../gui.nix
@@ -16,6 +9,38 @@
     ../extra.nix
     ../gaming.nix
     ./hardware-configuration.nix
+  ];
+
+  # Prefer Ladybird from nixos-unstable while keeping the rest of the system on stable.
+  nixpkgs.overlays = [
+    (final: prev: {
+      ladybird = unstable.ladybird;
+
+      # Expose the Intel VA-API media driver only to Firefox.
+      #
+      # Do not add intel-media-driver to hardware.graphics.extraPackages:
+      # doing that exposes iHD globally and currently crashes other
+      # GPU-accelerated applications on this Arc B580.
+      firefox = prev.symlinkJoin {
+        name = "firefox-intel-vaapi-${prev.firefox.version}";
+
+        paths = [
+          prev.firefox
+        ];
+
+        nativeBuildInputs = [
+          prev.makeWrapper
+        ];
+
+        postBuild = ''
+          wrapProgram "$out/bin/firefox" \
+            --set LIBVA_DRIVER_NAME "iHD" \
+            --set LIBVA_DRIVERS_PATH "${prev.intel-media-driver}/lib/dri"
+        '';
+
+        meta = prev.firefox.meta;
+      };
+    })
   ];
 
   security.pam.loginLimits = [
