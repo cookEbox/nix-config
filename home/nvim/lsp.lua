@@ -145,7 +145,9 @@ vim.g.haskell_tools = {
     },
   },
   hls = {
+    cmd = { "haskell-language-server-wrapper", "--lsp" },
     capabilities = capabilities,
+
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
 

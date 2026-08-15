@@ -33,6 +33,7 @@ in
       # LSP server binaries (used by Neovim's built-in LSP)
       nil
       lua-language-server
+      nix-direnv
 
       # Custom scripts
       concat

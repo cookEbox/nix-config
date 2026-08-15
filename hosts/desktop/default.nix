@@ -9,6 +9,7 @@
     ../extra.nix
     ../gaming.nix
     ./hardware-configuration.nix
+    ./keyd.nix
   ];
 
   # Prefer Ladybird from nixos-unstable while keeping the rest of the system on stable.

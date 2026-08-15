@@ -89,7 +89,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_space ), spawn "rofi -show drun")
 
     -- clipboard history picker (cliphist + rofi)
-    , ((modm,               xK_v     ), spawn "cliphist-rofi-picker")
+    -- , ((modm,               xK_v     ), spawn "cliphist-rofi-picker")
 
     -- launch qutebrowser
     , ((modm,               xK_b     ), spawn "firefox")
@@ -98,7 +98,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_b     ), spawn "brave")
 
     -- launch discord
-    , ((modm,               xK_c    ), spawn "discord")
+    , ((modm .|. controlMask, xK_c    ), spawn "discord")
 
     -- launch whatsapp
     , ((modm .|. shiftMask, xK_c     ), spawn "karere")

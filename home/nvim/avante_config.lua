@@ -107,6 +107,6 @@ local function pick_avante_preset_and_insert()
   end)
 end
 
-vim.keymap.set({ "n", "i" }, "<leader>ap", pick_avante_preset_and_insert, {
+vim.keymap.set({ "n", "i" }, "<leader>aP", pick_avante_preset_and_insert, {
   desc = "Avante: insert prompt preset",
 })
