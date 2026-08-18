@@ -9,10 +9,14 @@
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
     };
+
     gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+      dates = "monthly";
+      options = "--delete-older-than 60d";
+    };
+    settings = {
+      keep-derivations = true;
+      keep-outputs = true;
     };
   };
 
