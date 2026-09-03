@@ -10,6 +10,7 @@
     ../gaming.nix
     ./hardware-configuration.nix
     ./keyd.nix
+    ./chatgpt.nix
   ];
 
   # Prefer Ladybird from nixos-unstable while keeping the rest of the system on stable.

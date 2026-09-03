@@ -13,7 +13,9 @@ Default behaviour:
   * Uses `git ls-files -co --exclude-standard` inside Git repositories.
   * Respects .gitignore for untracked files.
   * Includes only an explicit allowlist of source/text file types.
-  * Excludes build/cache/database/media/generated-output trees.
+  * Excludes build/cache/database/generated-output trees.
+  * Excludes staticSite/, staticAssets/, minified JS/CSS and dependency lockfiles by default.
+  * Excludes bulk blog/question/feed content by default.
   * Excludes filenames that look like credentials or private keys.
   * Skips files larger than 1 MiB by default.
   * Refuses binary files even when their extension is allowlisted.
@@ -26,6 +28,8 @@ Options:
       --output-file NAME    Alias for --output
       --max-bytes N         Maximum input file size in bytes (default: 1048576)
       --include-sensitive   Disable filename-based secret filtering
+      --include-static      Include staticSite/ and staticAssets/
+      --include-content     Include bulk content/data trees (blogs, question CSVs, feed results)
       --no-git              Do not use Git enumeration; fall back to find
   -h, --help                Show this help and exit
 
@@ -53,6 +57,8 @@ base_dir="."
 output_name="all_files_output.txt"
 max_bytes=1048576
 include_sensitive=0
+include_static=0
+include_content=0
 use_git=1
 
 while [ "$#" -gt 0 ]; do
@@ -103,6 +109,16 @@ while [ "$#" -gt 0 ]; do
 
     --include-sensitive)
       include_sensitive=1
+      shift
+      ;;
+
+    --include-static)
+      include_static=1
+      shift
+      ;;
+
+    --include-content)
+      include_content=1
       shift
       ;;
 
@@ -174,6 +190,7 @@ skipped_self=0
 is_excluded_path() {
   local rel="$1"
 
+  # Always-excluded operational/build/database/cache trees.
   case "/$rel/" in
     */.git/*|\
     */.hoogle/*|\
@@ -209,7 +226,37 @@ is_excluded_path() {
       ;;
   esac
 
-  # Generated Node/Nix files that are usually very large and reproducible.
+  # Static website/assets are mostly duplicated/generated presentation material.
+  # Opt in with --include-static if they are relevant to the review.
+  if [ "$include_static" -eq 0 ]; then
+    case "/$rel/" in
+      */staticSite/*|\
+      */staticAssets/*)
+        return 0
+        ;;
+    esac
+  fi
+
+  # Bulk content/data can dominate an LLM context without helping code review.
+  # Opt in with --include-content when reviewing these datasets/content files.
+  if [ "$include_content" -eq 0 ]; then
+    case "/$rel/" in
+      */config/backend/Blog/*|\
+      */config/backend/questions/*|\
+      */scripts/feed-results/*)
+        return 0
+        ;;
+    esac
+
+    case "$rel" in
+      config/backend/Chapter0.md|\
+      config/backend/test.html)
+        return 0
+        ;;
+    esac
+  fi
+
+  # Generated Node/Nix files that are large and reproducible.
   case "$rel" in
     */node/node-packages.nix|\
     */node/node-env.nix)
@@ -229,7 +276,15 @@ is_generated_output() {
     ob-out.txt|\
     ghcid-output.txt|\
     concat-output.txt|\
-    concat-*.txt)
+    concat-*.txt|\
+    *.min.js|\
+    *.min.css|\
+    package-lock.json|\
+    pnpm-lock.yaml|\
+    yarn.lock|\
+    Cargo.lock|\
+    Gemfile.lock|\
+    composer.lock)
       return 0
       ;;
   esac
@@ -481,6 +536,8 @@ fi
 
 printf 'Created: %s\n' "$output_file_abs" >&2
 printf 'Enumeration: %s\n' "$enumeration" >&2
+printf 'Static assets included: %s\n' "$([ "$include_static" -eq 1 ] && echo yes || echo no)" >&2
+printf 'Bulk content included: %s\n' "$([ "$include_content" -eq 1 ] && echo yes || echo no)" >&2
 printf 'Included files: %d\n' "$included" >&2
 printf 'Skipped by path/output rule: %d\n' "$skipped_path" >&2
 printf 'Skipped by type allowlist: %d\n' "$skipped_type" >&2

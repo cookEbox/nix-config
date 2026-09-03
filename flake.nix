@@ -32,6 +32,8 @@
         forgejo = forgejoInfra.forgejo or forgejoInfra.package;
         nginx = nginxInfra.nginx or nginxInfra.package;
         certbot = pkgs.certbot;
+        chatgpt-linux =
+          pkgs.callPackage ./packages/chatgpt-linux { };
 
         tools = pkgs.buildEnv {
           name = "nix-config-tools";
