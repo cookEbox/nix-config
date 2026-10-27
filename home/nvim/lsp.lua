@@ -114,6 +114,11 @@ local function on_attach(_, bufnr)
   local ht = safe_require("haskell-tools")
   if ht then
     vim.keymap.set("n", "<leader>hs", ht.hoogle.hoogle_signature, opts2)
+    vim.keymap.set("n", "<leader>ts", function()
+      vim.lsp.codelens.run()
+    end, {
+      desc = "Apply HLS inferred type signature",
+    })
   end
 end
 
