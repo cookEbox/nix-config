@@ -93,6 +93,6 @@ let
     sudo systemctl --no-pager status forgejo.service
   '';
 in {
-  forgejo = pkgs.forgejo;
+  forgejo = pkgs.forgejo-lts;
   app = { type = "app"; program = toString deployScript; };
 }
