@@ -46,7 +46,10 @@ let
     sudo chown -R forgejo:forgejo /var/lib/forgejo /var/log/forgejo
 
     SECRETS="/var/lib/forgejo/custom/conf/secrets.env"
-    if [ ! -f "$SECRETS" ]; then
+    if sudo test -f "$SECRETS"; then
+      sudo chown root:root "$SECRETS"
+      sudo chmod 0600 "$SECRETS"
+    else
       echo "Generating Forgejo secrets: $SECRETS"
 
       INTERNAL_TOKEN="$(openssl rand -hex 32)"
@@ -62,9 +65,20 @@ let
       rm -f "$TMP_SECRETS"
     fi
 
-    INTERNAL_TOKEN="$(sudo awk -F= '$1=="INTERNAL_TOKEN"{print $2}' "$SECRETS")"
-    SECRET_KEY="$(sudo awk -F= '$1=="SECRET_KEY"{print $2}' "$SECRETS")"
-    OAUTH2_JWT_SECRET="$(sudo awk -F= '$1=="OAUTH2_JWT_SECRET"{print $2}' "$SECRETS")"
+    read_secret() {
+      local key="$1"
+      sudo awk -v key="$key" '
+        index($0, key "=") == 1 {
+          sub("^[^=]*=", "")
+          print
+          exit
+        }
+      ' "$SECRETS"
+    }
+
+    INTERNAL_TOKEN="$(read_secret INTERNAL_TOKEN)"
+    SECRET_KEY="$(read_secret SECRET_KEY)"
+    OAUTH2_JWT_SECRET="$(read_secret OAUTH2_JWT_SECRET)"
 
     # Sanity: fail fast if something went wrong
     if [ -z "$INTERNAL_TOKEN" ] || [ -z "$SECRET_KEY" ] || [ -z "$OAUTH2_JWT_SECRET" ]; then
