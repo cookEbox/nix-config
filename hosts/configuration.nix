@@ -6,6 +6,8 @@
     settings = {
       substituters = [ "https://nixcache.reflex-frp.org" ];
       trusted-public-keys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+      extra-substituters = [ "https://haskell-miso-cachix.cachix.org" ];
+      extra-trusted-public-keys = [ "haskell-miso-cachix.cachix.org-1:m8hN1cvFMJtYib4tj+06xkKt5ABMSGfe8W7s40x1kQ0=" ];
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
     };
