@@ -142,7 +142,10 @@
           ];
         };
         workMac = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config.allowUnfree = true;
+          };
           modules = [
             ./hosts/workMac/home
           ];
