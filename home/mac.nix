@@ -10,6 +10,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      haskell-language-server
       python314
       aws-vault
       awscli2
