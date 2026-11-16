@@ -22,6 +22,9 @@ in
     # Keep core language servers available to Neovim even when it is opened
     # outside a project-specific `nix develop` shell.
     extraPackages = with pkgs; [
+      # Haskell 
+      haskell-language-server
+
       # Scala / Metals
       metals
       coursier
