@@ -88,41 +88,27 @@
 
       unalias macup 2>/dev/null || true
 
-      macup () {
+      macup() {
         local repo="$HOME/Dev/utils/nix-config"
-        local old_dir="$PWD"
 
-        export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
-        export NIXPKGS_ALLOW_UNFREE=1
-        export NIXPKGS_ALLOW_INSECURE=1
-
-        cd "$repo" || return 1
-
-        if [ "$(git branch --show-current)" != "mac" ]; then
-          echo "Switching nix-config to mac branch..."
-          git switch mac || {
-            cd "$old_dir"
-            return 1
-          }
+        if [ "$(uname -s)" != "Darwin" ]; then
+          echo "macup: this command is for macOS only" >&2
+          return 1
         fi
 
-        echo "Building local workMac Home Manager activation package..."
-        nix build --impure --no-write-lock-file '.#homeConfigurations."workMac".activationPackage' || {
-          cd "$old_dir"
-          return 1
-        }
+        (
+          cd "$repo" || exit 1
 
-        echo "Activating workMac Home Manager generation..."
-        ./result/activate || {
-          cd "$old_dir"
-          return 1
-        }
+          echo "Building workMac from $(git branch --show-current)..."
 
-        cd "$old_dir" || return 1
+          nix build \
+            --out-link result-workMac \
+            '.#homeConfigurations.workMac.activationPackage' || exit 1
 
-        echo "Home Manager activation complete. Starting a fresh login shell..."
-        exec zsh -l
-      } 
+          echo "Activating Home Manager..."
+          ./result-workMac/activate
+        )
+      }
     '';
     shellAliases = {
       ".." = "cd ..";
