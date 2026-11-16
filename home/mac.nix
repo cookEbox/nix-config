@@ -10,6 +10,7 @@
 	];
   home = { 
     packages = with pkgs; [ 
+      python314
       aws-vault
       awscli2
       awsls
