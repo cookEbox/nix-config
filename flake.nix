@@ -145,6 +145,23 @@
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
             config.allowUnfree = true;
+
+            overlays = [
+              (final: prev: {
+                libfyaml = prev.libfyaml.overrideAttrs (old: {
+                  patches = (old.patches or []) ++ [
+                    (final.fetchpatch {
+                      url = "https://github.com/pantoniou/libfyaml/commit/24b18e7363b336962fe160c1dc05ca57ba95783c.diff";
+                      hash = "sha256-g5QKI4HuS8MEQ9ddIQNC0j+28Dh9zLAp5RaZX5SWBHk=";
+                    })
+                    (final.fetchpatch {
+                      url = "https://github.com/pantoniou/libfyaml/commit/9f2492ca27bb1fda64f2b12edc2da17406208b93.diff";
+                      hash = "sha256-E4wS+P7R3VGrBpD7swWMMi/QPTF+9rzAeEyxhbmdiwk=";
+                    })
+                  ];
+                });
+              })
+            ];
           };
           modules = [
             ./hosts/workMac/home
