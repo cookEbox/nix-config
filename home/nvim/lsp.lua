@@ -122,13 +122,12 @@ local function on_attach(_, bufnr)
   end
 end
 
--- Ensure keymaps are applied even when a server is started by another plugin
--- (e.g. haskell-tools). Ignore Copilot here because it can attach before the
--- real language server and otherwise mark the buffer as already configured.
+-- Apply keymaps to language servers started by other plugins,
+-- including haskell-tools.
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client and client.name ~= "copilot" then
+    if client then
       on_attach(client, args.buf)
     end
   end,

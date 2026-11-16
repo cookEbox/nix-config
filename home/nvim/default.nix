@@ -49,9 +49,6 @@ in
       require("oil_config")
       require("cmp_config")
       require("snippets_config")
-      require("copilot_config")
-      require("copilot_chat_config")
-      require("avante_config")
 
       require("lsp")
 
@@ -79,9 +76,6 @@ in
       oil-nvim
       nvim-web-devicons
       nui-nvim
-      avante-nvim
-      copilot-lua
-      CopilotChat-nvim
 
       (luaPluginWithConfig goto-preview ''
         require("goto-preview").setup({
@@ -163,8 +157,5 @@ in
     ".config/nvim/lua/dap_config.lua".source = ./dap_config.lua;
     ".config/nvim/lua/telescope_config.lua".source = ./telescope_config.lua;
     ".config/nvim/lua/oil_config.lua".source = ./oil_config.lua;
-    ".config/nvim/lua/avante_config.lua".source = ./avante_config.lua;
-    ".config/nvim/lua/copilot_config.lua".source = ./copilot_config.lua;
-    ".config/nvim/lua/copilot_chat_config.lua".source = ./copilot_chat_config.lua;
   };
 }
