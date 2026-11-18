@@ -1,54 +1,52 @@
+
 #!/usr/bin/env sh
 
-# Multi-monitor layout helper for XMonad.
-#
-# This script is intentionally host-agnostic:
-# - It auto-detects connected outputs via xrandr
-# - It supports overriding outputs via environment variables:
-#   - XRANDR_PRIMARY
-#   - XRANDR_SECONDARY
-#
-# Default behaviour:
-# - If 2+ outputs are connected: enable the first as primary, place the second to the right
-# - Disable any other connected outputs
-# - If only 1 output is connected: enable it as primary
+# Configure XMonad monitors using XRandR.
+# DP-2 runs at 2560x1440 @ 144 Hz; other outputs use automatic modes.
 
 set -eu
 
-if ! command -v xrandr >/dev/null 2>&1; then
-  exit 0
-fi
+command -v xrandr >/dev/null 2>&1 || exit 0
 
 connected_outputs() {
-  # Print connected outputs, one per line.
-  xrandr --query | awk '/\sconnected/{print $1}'
+  xrandr --query | awk '$2 == "connected" { print $1 }'
 }
 
-outputs="$(connected_outputs || true)"
+outputs="$(connected_outputs)"
 
 primary="${XRANDR_PRIMARY:-$(printf '%s\n' "$outputs" | sed -n '1p')}"
 secondary="${XRANDR_SECONDARY:-$(printf '%s\n' "$outputs" | sed -n '2p')}"
 
-# Nothing connected? Nothing to do.
-if [ -z "${primary:-}" ]; then
-  exit 0
+[ -n "$primary" ] || exit 0
+
+# Configure the primary monitor.
+set -- xrandr --output "$primary" --primary
+
+if [ "$primary" = "DP-2" ]; then
+  set -- "$@" --mode 2560x1440 --rate 143.97
+else
+  set -- "$@" --auto
 fi
 
-cmd="xrandr --output $primary --primary --auto"
+# Place the secondary monitor to the right.
+if [ -n "$secondary" ] && [ "$secondary" != "$primary" ]; then
+  set -- "$@" --output "$secondary"
 
-if [ -n "${secondary:-}" ] && [ "$secondary" != "$primary" ]; then
-  cmd="$cmd --output $secondary --auto --right-of $primary"
-fi
-
-# Disable any other connected outputs.
-for out in $outputs; do
-  if [ "$out" != "$primary" ] && [ -n "${secondary:-}" ] && [ "$out" != "$secondary" ]; then
-    cmd="$cmd --output $out --off"
+  if [ "$secondary" = "DP-2" ]; then
+    set -- "$@" --mode 2560x1440 --rate 143.97
+  else
+    set -- "$@" --auto
   fi
-  if [ "$out" != "$primary" ] && [ -z "${secondary:-}" ]; then
-    cmd="$cmd --output $out --off"
+
+  set -- "$@" --right-of "$primary"
+fi
+
+# Disable unused connected outputs.
+for out in $outputs; do
+  if [ "$out" != "$primary" ] && [ "$out" != "$secondary" ]; then
+    set -- "$@" --output "$out" --off
   fi
 done
 
-# shellcheck disable=SC2086
-$cmd
+"$@"
+
