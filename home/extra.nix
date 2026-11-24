@@ -22,7 +22,6 @@
       lutris
       ferium
       brave
-      unstable.ladybird
       zoom-us
       discord
       teams-for-linux
@@ -44,7 +43,6 @@
       nix-prefetch-git
       mpv
       karere
-      # wasistlos
       cmus
       gccgo13
       go
@@ -61,7 +59,6 @@
       direnv
       bash-language-server
       freecad
-      # kicad
       keymapp
       mesa-demos
       proton-vpn

@@ -6,9 +6,10 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.8.0";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable }:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, nix-flatpak }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -32,8 +33,6 @@
         forgejo = forgejoInfra.forgejo or forgejoInfra.package;
         nginx = nginxInfra.nginx or nginxInfra.package;
         certbot = pkgs.certbot;
-        chatgpt-linux =
-          pkgs.callPackage ./packages/chatgpt-linux { };
 
         tools = pkgs.buildEnv {
           name = "nix-config-tools";
@@ -90,6 +89,7 @@
                 imports = [ ./hosts/desktop/home ];
               };
             }
+            nix-flatpak.nixosModules.nix-flatpak
           ];
         };
         nixLap = lib.nixosSystem {

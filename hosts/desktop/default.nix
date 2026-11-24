@@ -13,11 +13,8 @@
     ./chatgpt.nix
   ];
 
-  # Prefer Ladybird from nixos-unstable while keeping the rest of the system on stable.
   nixpkgs.overlays = [
     (final: prev: {
-      ladybird = unstable.ladybird;
-
       # Expose the Intel VA-API media driver only to Firefox.
       #
       # Do not add intel-media-driver to hardware.graphics.extraPackages:
@@ -90,6 +87,22 @@
       '';
     }; 
     tailscale.enable = true;
+    flatpak = {
+      enable = true;
+      packages = [
+        "org.kicad.KiCad"
+        {
+          appId = "org.ladybird.Ladybird";
+          origin = "ladybird";
+          flatpakref = "https://flatpak.ladybird.org/ladybird.flatpakref";
+          sha256 = "11yvglmzxaxzhlkiy2qvybvas2djl8rzzcad1j86dksb528csr3q";
+        }
+      ];
+      update.auto = {
+        enable = true;
+        onCalendar = "weekly";
+      };
+    };
   };
 
   # virtualisation services
